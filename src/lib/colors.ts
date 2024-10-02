@@ -1,0 +1,18 @@
+export const base16 = {
+	baseF: "#db4b4b",
+	baseE: "#bb9af7",
+	baseD: "#7aa2f7",
+	baseC: "#73daca",
+	baseB: "#9ece6a",
+	baseA: "#e0af68",
+	base9: "#ff9e64",
+	base8: "#f7768e",
+	base7: "#d5d6db",
+	base6: "#cfc9c2",
+	base5: "#c0caf5",
+	base4: "#9aa5ce",
+	base3: "#565f89",
+	base2: "#414868",
+	base1: "#24283b",
+	base0: "#1a1b26",
+}
