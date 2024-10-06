@@ -1,17 +1,8 @@
-@import "@fontsource/fira-mono";
-
-body {
-	@apply h-screen max-h-screen overflow-hidden dark:bg-neutral-0 bg-neutral-7 dark:text-neutral-7 text-neutral-1;
-}
-
-.visually-hidden {
-	border: 0;
-	clip: rect(0 0 0 0);
-	height: auto;
-	margin: 0;
-	overflow: hidden;
-	padding: 0;
-	position: absolute;
-	width: 1px;
-	white-space: nowrap;
+@layer base {
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
 }

@@ -1,4 +1,5 @@
 <script>
+	import "@unocss/reset/tailwind.css"
 	import Header from "./Header.svelte"
 	import "virtual:uno.css"
 	import "../app.css"

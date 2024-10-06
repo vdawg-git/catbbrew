@@ -15,7 +15,7 @@
 		"@neoconfetti/svelte": "^2.0.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",
-		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+		"@sveltejs/vite-plugin-svelte": "4.0.0-next.7",
 		"@types/chroma-js": "^2.4.4",
 		"prettier": "^3.3.2",
 		"prettier-plugin-svelte": "^3.2.5",
@@ -28,8 +28,17 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@iconify-json/mingcute": "^1.2.0",
+		"@iconify-json/solar": "^1.2.0",
 		"@unocss/extractor-svelte": "^0.63.1",
+		"@unocss/reset": "^0.63.3",
+		"bits-ui": "^0.21.16",
 		"chroma-js": "^3.1.1",
-		"shiki": "^1.21.0"
+		"clsx": "^2.1.1",
+		"hsluv": "^1.0.1",
+		"shiki": "^1.21.0",
+		"tailwind-merge": "^2.5.3",
+		"tailwind-variants": "^0.2.1",
+		"unocss-preset-animations": "^1.1.0"
 	}
 }
