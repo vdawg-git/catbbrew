@@ -1,6 +1,10 @@
-import { base16 } from "$lib/colors";
-import { writable } from "svelte/store";
+import { baseColors } from "$lib/colors"
+import { writable } from "svelte/store"
+import type { ColorName } from "$lib/types"
 
-export const colors$ = writable( 
-    base16
+export const colors$ = writable(
+	Object.fromEntries(baseColors.map(([name, { value }]) => [name, value] as const)) as Record<
+		ColorName,
+		string
+	>
 )

@@ -8,7 +8,7 @@
 	const mainColors$ = derived(colorsArray$, (colors) => colors.slice(8))
 </script>
 
-<div class="bg-secondary rounded-3xl min-w-max flex gap5 px6 py3">
+<div class="bg-surface0 rounded-3xl min-w-max flex gap5 px6 py3">
 	<div class="grid grid-cols-4 rounded-2xl overflow-hidden">
 		{#each $baseColors$ as [name, color]}
 			<div class="size-5">

@@ -1,15 +1,26 @@
 <script lang="ts">
 	import { codeToHtml } from "shiki"
 
-	const code = `const array: number[] = Array(10) // array size is 10
-  .fill(undefined)
-  .map(() => 50 * Math.random()); // numbers from 0-50 (exclusive)
+	const code = `
+import { createHighlighter } from 'shiki'
 
-console.log(array);`
+// \`createHighlighter\` is async, it initializes the internal and
+// loads the themes and languages specified.
+const highlighter = await createHighlighter({
+  themes: ['nord'],
+  langs: ['javascript'],
+})
+
+// then later you can use \`highlighter.codeToHtml\` synchronously
+// with the loaded themes and languages.
+const code = highlighter.codeToHtml('const a = 1', {
+  lang: 'javascript',
+  theme: 'nord'
+})`
 </script>
 
-<div class="text-xl">
-	{#await codeToHtml(code, { lang: "ts", theme: "tokyo-night" }) then html}
+<div class="max-w-5xl text-lg overflow-hidden">
+	{#await codeToHtml(code, { lang: "ts", theme: "catppuccin-macchiato" }) then html}
 		{@html html}
 	{/await}
 </div>

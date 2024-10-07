@@ -36,6 +36,7 @@
 		"chroma-js": "^3.1.1",
 		"clsx": "^2.1.1",
 		"hsluv": "^1.0.1",
+		"remeda": "^2.14.0",
 		"shiki": "^1.21.0",
 		"tailwind-merge": "^2.5.3",
 		"tailwind-variants": "^0.2.1",

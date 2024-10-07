@@ -32,6 +32,9 @@ importers:
       hsluv:
         specifier: ^1.0.1
         version: 1.0.1
+      remeda:
+        specifier: ^2.14.0
+        version: 2.14.0
       shiki:
         specifier: ^1.21.0
         version: 1.21.0
@@ -1290,6 +1293,9 @@ packages:
   regex@4.3.3:
     resolution: {integrity: sha512-r/AadFO7owAq1QJVeZ/nq9jNS1vyZt+6t1p/E59B56Rn2GCya+gr1KSyOzNL/er+r+B7phv5jG2xU2Nz1YkmJg==}
 
+  remeda@2.14.0:
+    resolution: {integrity: sha512-OSOhr9gGcb3AshMxlu9YnnUtKSkeYhj+AxWiWGfVh3HolYtJP5IF9vC1j1tq15uI7lxCPVd9qnnp43dOvZ840A==}
+
   resolve-pkg-maps@1.0.0:
     resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
 
@@ -1437,6 +1443,10 @@ packages:
     resolution: {integrity: sha512-0flMz1lh74BR4wOvBjuh9olbnwqCPc35OOlfyzHba0Dc+QNUeWX/Gq2YTbnwcWPO3BMd8fkzRVrHcsR+a7z7rA==}
     engines: {node: '>=18.0.0'}
     hasBin: true
+
+  type-fest@4.26.1:
+    resolution: {integrity: sha512-yOGpmOAL7CkKe/91I5O3gPICmJNLJ1G4zFYVAsRHg7M64biSnPtRj0WNQt++bRkjYOqjWXrhnUw1utzmVErAdg==}
+    engines: {node: '>=16'}
 
   typescript@5.6.2:
     resolution: {integrity: sha512-NW8ByodCSNCwZeghjN3o+JX5OFH0Ojg6sadjEKY4huZ52TqbJTJnDo5+Tw98lSy63NZvi4n+ez5m2u5d4PkZyw==}
@@ -2668,6 +2678,10 @@ snapshots:
 
   regex@4.3.3: {}
 
+  remeda@2.14.0:
+    dependencies:
+      type-fest: 4.26.1
+
   resolve-pkg-maps@1.0.0: {}
 
   resolve@1.22.8:
@@ -2876,6 +2890,8 @@ snapshots:
       get-tsconfig: 4.8.1
     optionalDependencies:
       fsevents: 2.3.3
+
+  type-fest@4.26.1: {}
 
   typescript@5.6.2: {}
 
