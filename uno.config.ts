@@ -1,4 +1,4 @@
-import { defineConfig, presetIcons, presetMini, transformerDirectives } from "unocss"
+import { defineConfig, presetIcons, presetUno, transformerDirectives } from "unocss"
 import { baseColors } from "./src/lib/colors"
 import { ColorName } from "./src/lib/types"
 import chroma from "chroma-js"
@@ -29,19 +29,25 @@ const shadcnVariables = [
 	"ring"
 ] as const
 
+type ColorVariable = ColorName | (typeof shadcnVariables)[number] | "active-color"
+
 export default defineConfig({
-	presets: [presetMini({ dark: "class" }), presetIcons()],
+	presets: [presetUno({ dark: "class" }), presetIcons()],
 	shortcuts: [],
 	transformers: [transformerDirectives()],
 	theme: {
-		colors: {
-			...createBase16Classes(),
-			...createShadcnClasses()
-		},
 		screens: {
 			"2xl": "1400px"
 		}
 	},
+	extendTheme: (theme) => ({
+		...theme,
+		colors: {
+			...createBaseClasses(),
+			...createShadcnClasses(),
+			activeColor: createRgbaVar("active-color")
+		}
+	}),
 	preflights: [{ getCSS: createGlobalVariables, layer: "base" }],
 	content: {
 		pipeline: {
@@ -74,7 +80,7 @@ function createGlobalVariables() {
 
 		border: cssVar("surface1"),
 		input: cssVar("surface2"),
-		accent: cssVar("surface0"),
+		accent: cssVar("surface1"),
 		muted: cssVar("surface0"),
 		secondary: cssVar("surface0"),
 
@@ -95,7 +101,7 @@ function createGlobalVariables() {
 	}`
 }
 
-function createBase16Classes() {
+function createBaseClasses() {
 	const vars = baseAsRGBA
 		.map(([key]) => ({ [key]: `rgba(var(--${key}))` }))
 		.reduce((acc, curr) => ({ ...acc, ...curr }), {})
@@ -109,10 +115,10 @@ function createShadcnClasses() {
 		.reduce((acc, curr) => ({ ...acc, ...curr }), {})
 }
 
-function cssVar(name: ColorName | (typeof shadcnVariables)[number]) {
+function cssVar(name: ColorVariable) {
 	return `var(--${name})`
 }
 
-function createRgbaVar(name: ColorName | (typeof shadcnVariables)[number]) {
+function createRgbaVar(name: ColorVariable) {
 	return `rgba(${cssVar(name)})`
 }

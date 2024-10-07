@@ -3,23 +3,27 @@
 	import Header from "./Header.svelte"
 	import "virtual:uno.css"
 	import "../app.css"
+	import { activeColorValue$ } from "$lib/state/state"
+	import chroma from "chroma-js"
 </script>
 
-<div class="app h-full">
+<div
+	class="app"
+	style:--active-color={$activeColorValue$ && chroma.hex($activeColorValue$).rgb().join(",")}
+>
 	<Header />
 
-	<main class="h-full">
+	<main class="grow min-h-0 flex flex-col items-center justify-center">
 		<slot />
 	</main>
-
-	<footer class="">
-		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
-	</footer>
 </div>
 
 <style>
 	.app {
-		min-height: 100%;
+		min-height: 100vh;
+		height: 100vh;
+		max-height: 100vh;
+		overflow: hidden;
 		display: flex;
 		flex-direction: column;
 	}

@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@catppuccin/vscode':
+        specifier: ^3.15.2
+        version: 3.15.2
       '@iconify-json/mingcute':
         specifier: ^1.2.0
         version: 1.2.0
@@ -106,6 +109,12 @@ packages:
 
   '@antfu/utils@0.7.10':
     resolution: {integrity: sha512-+562v9k4aI80m1+VuMHehNJWLOFjBnXn3tdOitzD0il5b7smkSBal4+a3oKiQTbrwMmN/TBUMDvbdoWDehgOww==}
+
+  '@catppuccin/palette@1.4.0':
+    resolution: {integrity: sha512-Npdg/QFeMAEbRVlnJqc1xE3i7NI4liSq4tTTXk4U/L3vPEiqw3bZQJRLYjuP0Vq2AEDNS5H5Li+lk27c38sP4g==}
+
+  '@catppuccin/vscode@3.15.2':
+    resolution: {integrity: sha512-ZHuMaJ4SRFmwDTaLPi3ckh/qSt8YngRlwUxMTMgtnsCQZGkEoWtMkG6Egx/0fWnJnLk+xsLzwmFI0uU8+ilY8w==}
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -1584,6 +1593,12 @@ snapshots:
       tinyexec: 0.3.0
 
   '@antfu/utils@0.7.10': {}
+
+  '@catppuccin/palette@1.4.0': {}
+
+  '@catppuccin/vscode@3.15.2':
+    dependencies:
+      '@catppuccin/palette': 1.4.0
 
   '@esbuild/aix-ppc64@0.21.5':
     optional: true

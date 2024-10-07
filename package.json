@@ -28,6 +28,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@catppuccin/vscode": "^3.15.2",
 		"@iconify-json/mingcute": "^1.2.0",
 		"@iconify-json/solar": "^1.2.0",
 		"@unocss/extractor-svelte": "^0.63.1",

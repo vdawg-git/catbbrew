@@ -1,6 +1,6 @@
 @layer base {
 	* {
-		@apply border-border;
+		@apply border-border selection:bg-overlay2/25 selection:text-inherit;
 	}
 	body {
 		@apply bg-background text-foreground;
