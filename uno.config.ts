@@ -1,35 +1,14 @@
 import { defineConfig, presetIcons, presetUno, transformerDirectives } from "unocss"
 import { baseColors } from "./src/lib/colors"
 import { ColorName } from "./src/lib/types"
+import { formatRgb, rgb } from "culori"
 import chroma from "chroma-js"
+import { createRgbaVar, cssVar, shadcnVariables } from "./src/lib/utils"
 
-const baseAsRGBA = baseColors.map(
-	([key, { value }]) => [key, chroma(value).rgb().join(",")] as const
-)
-
-const shadcnVariables = [
-	"background",
-	"popover",
-	"card",
-	"muted-foreground",
-	"card-foreground",
-	"foreground",
-	"popover-foreground",
-	"primary",
-	"secondary-foreground",
-	"accent-foreground",
-	"destructive-foreground",
-	"border",
-	"input",
-	"accent",
-	"muted",
-	"secondary",
-	"primary-foreground",
-	"destructive",
-	"ring"
-] as const
-
-type ColorVariable = ColorName | (typeof shadcnVariables)[number] | "active-color"
+const baseAsRGBA = baseColors.map(([key, { value }]) => {
+	const { r, g, b } = rgb(value)!
+	return [key, [r, g, b].map((i) => i * 255).join(",")] as const
+})
 
 export default defineConfig({
 	presets: [presetUno({ dark: "class" }), presetIcons()],
@@ -45,7 +24,8 @@ export default defineConfig({
 		colors: {
 			...createBaseClasses(),
 			...createShadcnClasses(),
-			activeColor: createRgbaVar("active-color")
+			activeColor: createRgbaVar("active-color"),
+			activeColorForeground: createRgbaVar("active-colorForeground")
 		}
 	}),
 	preflights: [{ getCSS: createGlobalVariables, layer: "base" }],
@@ -62,7 +42,7 @@ export default defineConfig({
 })
 
 function createGlobalVariables() {
-	const base = baseAsRGBA.map(([key, value]) => `--${key}: ${value};`)
+	// const base = baseAsRGBA.map(([key, value]) => `--${key}: ${value};`)
 	const neutrals = {
 		background: cssVar("base"),
 		popover: cssVar("base"),
@@ -89,7 +69,7 @@ function createGlobalVariables() {
 		ring: cssVar("subtext1")
 	} satisfies Record<(typeof shadcnVariables)[number], string>
 
-	const root: string[] = [...base]
+	const root: string[] = []
 
 	for (const element of Object.entries(neutrals)) {
 		const [key, value] = element
@@ -113,12 +93,4 @@ function createShadcnClasses() {
 	return shadcnVariables
 		.map((variable) => ({ [variable]: createRgbaVar(variable) }))
 		.reduce((acc, curr) => ({ ...acc, ...curr }), {})
-}
-
-function cssVar(name: ColorVariable) {
-	return `var(--${name})`
-}
-
-function createRgbaVar(name: ColorVariable) {
-	return `rgba(${cssVar(name)})`
 }

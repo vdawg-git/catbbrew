@@ -1,3 +1,5 @@
+import type { shadcnVariables } from "./utils.ts"
+
 export type ColorName =
 	| "rosewater"
 	| "flamingo"
@@ -27,3 +29,11 @@ export type ColorName =
 	| "crust"
 
 export type Color = [ColorName, { value: string; accent: boolean }]
+
+export type ColorVariable =
+	| ColorName
+	| (typeof shadcnVariables)[number]
+	| "active-color"
+	| "active-color-foreground"
+
+export type Identity<T = unknown> = (x: T) => T

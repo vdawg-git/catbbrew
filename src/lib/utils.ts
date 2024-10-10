@@ -2,6 +2,10 @@ import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { cubicOut } from "svelte/easing"
 import type { TransitionConfig } from "svelte/transition"
+import type { ColorVariable } from "./types"
+import { Observable, share } from "rxjs"
+import type { Writable } from "svelte/store"
+import type { Readable } from "svelte/motion"
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
@@ -53,4 +57,49 @@ export const flyAndScale = (
 		},
 		easing: cubicOut
 	}
+}
+
+export const shadcnVariables = [
+	"background",
+	"popover",
+	"card",
+	"muted-foreground",
+	"card-foreground",
+	"foreground",
+	"popover-foreground",
+	"primary",
+	"secondary-foreground",
+	"accent-foreground",
+	"destructive-foreground",
+	"border",
+	"input",
+	"accent",
+	"muted",
+	"secondary",
+	"primary-foreground",
+	"destructive",
+	"ring"
+] as const
+
+export function cssVar(name: ColorVariable) {
+	return `var(--${name})`
+}
+
+export function createRgbaVar(name: ColorVariable) {
+	return `rgba(${cssVar(name)})`
+}
+
+/**
+ * Convert a Svelte store to an Rxjs observable
+ * @param store The Svelte store to convert to an obserable
+ */
+export function fromStore<T>(store: Writable<T> | Readable<T>): Observable<T> {
+	return new Observable((subscriber) => {
+		const unsubscribe = store.subscribe((value) => subscriber.next(value))
+
+		return unsubscribe
+	}).pipe(
+		// @ts-expect-error
+		share()
+	)
 }

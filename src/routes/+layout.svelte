@@ -1,15 +1,17 @@
-<script>
+<script lang="ts">
 	import "@unocss/reset/tailwind.css"
 	import Header from "./Header.svelte"
 	import "virtual:uno.css"
 	import "../app.css"
-	import { activeColorValue$ } from "$lib/state/state"
-	import chroma from "chroma-js"
+	import { activeColorRgb$, activeColorHsl$, activeColor$, colors$ } from "$lib/state/state"
+	import { cssVar, fromStore } from "$lib/utils"
 </script>
 
 <div
 	class="app"
-	style:--active-color={$activeColorValue$ && chroma.hex($activeColorValue$).rgb().join(",")}
+	style:--active-color={$activeColor$ && cssVar($activeColor$)}
+	style:--active-colorForeground={$activeColorHsl$ &&
+		($activeColorHsl$.l > 0.5 ? cssVar("background") : cssVar("foreground"))}
 >
 	<Header />
 

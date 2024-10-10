@@ -1,9 +1,11 @@
 <script lang="ts">
+	import Slider from "$lib/components/ui/slider/slider.svelte"
 	import Button from "$lib/components/ui/button/button.svelte"
 	import { Separator } from "$lib/components/ui/separator/index"
 	import { activeColor$, colors$ } from "$lib/state/state"
 	import type { ColorName } from "$lib/types"
 	import { derived } from "svelte/store"
+	import type { Okhsl } from "culori"
 
 	const neutrals$ = derived(
 		colors$,
@@ -34,7 +36,7 @@
 				subtext0,
 				subtext1,
 				text
-			}) as readonly [ColorName, string][]
+			}) as readonly [ColorName, Okhsl][]
 	)
 	const mainColors$ = derived(
 		colors$,
@@ -69,20 +71,12 @@
 				pink,
 				flamingo,
 				rosewater
-			}) as readonly [ColorName, string][]
+			}) as readonly [ColorName, Okhsl][]
 	)
 </script>
 
-{#if $activeColor$}
-	<div
-		class="bg-surface0 mb4 items-center gap3 outline shadow-base shadow outline-activeColor rounded-3xl min-w-max flex"
-	>
-		{$activeColor$}
-	</div>
-{/if}
-
 <div
-	class="bg-surface0 items-center gap3 outline shadow-base shadow outline-border h-21 rounded-3xl min-w-max flex"
+	class="bg-surface0 items-center gap3 outline shadow-base shadow outline-border h-21 rounded-3xl w-max flex"
 >
 	<div class="gap5 flex pl4">
 		<div class="grid grid-cols-6 grid-rows-2">
