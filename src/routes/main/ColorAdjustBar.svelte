@@ -84,10 +84,6 @@
 	})
 </script>
 
-<div class="bg-background">
-	Input: {JSON.stringify($input$$ ?? undefined)} <br />
-</div>
-
 <div
 	class="bg-surface0 px6 py3 ani items-center gap8 outline shadow-base shadow outline-activeColor rounded-3xl min-w-max w-max flex"
 >
@@ -95,10 +91,22 @@
 		<div class="flex flex-col gap-5">
 			<div class="flex gap6 flex-col items-center">
 				<div class="flex gap6">
+					<input
+						type="color"
+						value={$activeColorHex$}
+						on:input={({ currentTarget }) => {
+							const ok = okhsl(currentTarget.value)
+							if (!ok) return
+							const { h, s, l } = ok
+							h$.next(h)
+							s$.next(s)
+							l$.next(l)
+						}}
+					/>
 					<button
-						class="bg-activeColor min-w-22 font-mono text-center text-activeColorForeground rounded-lg outline-activeColor px2 py1"
+						class="bg-activeColor min-w-22 font-mono text-center text-activeColorForeground rounded-lg outline-activeColor px2 py1 text-sm"
 					>
-						<div class="">
+						<div class="text-sm">
 							{$activeColor$}
 						</div>
 						<div class="">
@@ -198,10 +206,11 @@
 		-webkit-appearance: none; /* Override default look */
 		appearance: none;
 		margin-top: 0px; /* Centers thumb on the track */
-		background-color: theme("colors.subtext1");
+		background-color: theme("colors.background");
 		border-radius: 26rem;
 		height: 1.5rem;
 		width: 1.5rem;
+		border: 2px solid theme("colors.foreground");
 	}
 
 	input[type="range"]:focus::-webkit-slider-thumb {
@@ -220,7 +229,7 @@
 	/* slider thumb */
 	input[type="range"]::-moz-range-thumb {
 		background-color: theme("colors.subtext1");
-		border: none; /*Removes extra border that FF applies*/
+		border: 2px solid theme("colors.background");
 		border-radius: 99rem;
 		height: 1.5rem;
 		width: 1.5rem;
@@ -229,5 +238,23 @@
 	input[type="range"]:focus::-moz-range-thumb {
 		outline: 3px solid theme("colors.subtext1");
 		outline-offset: 0.125rem;
+	}
+
+	input[type="color"] {
+		-webkit-appearance: none;
+		appearance: none;
+		background-color: transparent;
+		border: none !important;
+		cursor: pointer;
+		outline: none;
+	}
+	input[type="color"]::-webkit-color-swatch-wrapper {
+		padding: 0;
+	}
+	input[type="color"]::-webkit-color-swatch {
+		border: none;
+	}
+	input[type="color"]::-moz-color-swatch {
+		border: none;
 	}
 </style>
