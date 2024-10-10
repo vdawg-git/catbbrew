@@ -1,4 +1,7 @@
 import type { Color } from "./types"
+import { compile } from "@catppuccin/vscode"
+import { createRgbaVar, cssVar } from "./utils"
+import type { ThemeRegistration, ThemeRegistrationResolved } from "shiki"
 
 /**
  * The base colors of the palette taken from the Catppuccin color palette
@@ -32,6 +35,25 @@ export const baseColors: Color[] = [
 	["mantle", { value: "#1e2030", accent: false }],
 	["crust", { value: "#181926", accent: false }]
 ] as const
+
+const shiki = compile("mocha", {
+	colorOverrides: {
+		all: Object.fromEntries(
+			baseColors.map(([name_]) => {
+				return [name_, createRgbaVar(name_)]
+			})
+		)
+	}
+})
+console.log(shiki.semanticTokenColors)
+export const shikiTheme: ThemeRegistration = {
+	...shiki,
+	fg: createRgbaVar("text"),
+	bg: createRgbaVar("background"),
+	type: "dark",
+	name: "theme",
+	semanticTokenColors: {}
+}
 
 // export function createPaletteFromColor(
 // 	/** This is the `500` middle color */

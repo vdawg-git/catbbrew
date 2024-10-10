@@ -39,7 +39,8 @@ export const activeColorHsl$: Readable<Okhsl | undefined> = derived(
 export const activeColorHex$ = derived(activeColorHsl$, (activeColor) => {
 	if (!activeColor) return undefined
 
-	return formatHex(activeColor)
+	const hex = formatHex(activeColor)
+	return hex
 })
 
 export const activeColorRgb$ = derived(activeColorHex$, (activeColorValue) => {

@@ -76,17 +76,17 @@
 </script>
 
 <div
-	class="bg-surface0 items-center gap3 outline shadow-base shadow outline-border h-21 rounded-3xl w-max flex"
+	class="bg-surface0 items-center flex-col gap3 outline shadow-base shadow outline-border w-21 rounded-3xl w-max flex"
 >
-	<div class="gap5 flex pl4">
-		<div class="grid grid-cols-6 grid-rows-2">
+	<div class="gap5 flex p4 flex-col">
+		<div class="grid grid-cols-2 grid-rows-6">
 			{#each $neutrals$ as [name, color], index (name)}
 				<button
 					aria-label="Change color of {name}"
 					class="size-[1.875rem] min-w-[1.875rem] hover:outline-2 hover:outline outline-overlay1 active:outline-rosewater hover:z-2"
 					class:rounded-tl-2xl={index === 0}
-					class:rounded-tr-2xl={index === 5}
-					class:rounded-bl-2xl={index === 6}
+					class:rounded-tr-2xl={index === 1}
+					class:rounded-bl-2xl={index === 10}
 					class:rounded-br-2xl={index === 11}
 					style="background: rgba(var(--{name}))"
 					onclick={() => activeColor$.set(name)}
@@ -94,14 +94,14 @@
 			{/each}
 		</div>
 
-		<div class="grid grid-rows-2 grid-cols-7 w-fit">
+		<div class="grid grid-rows-7 grid-cols-2 w-fit">
 			{#each $mainColors$ as [name, color], index (name)}
 				<button
 					aria-label="Change color of {name}"
 					class="size-[1.875rem] min-w-[1.875rem] hover:outline-2 hover:outline outline-overlay1 active:outline-crust hover:z-2"
 					class:rounded-tl-2xl={index === 0}
-					class:rounded-tr-2xl={index === 6}
-					class:rounded-bl-2xl={index === 7}
+					class:rounded-tr-2xl={index === 1}
+					class:rounded-bl-2xl={index === 12}
 					class:rounded-br-2xl={index === 13}
 					style="background: rgba(var(--{name}))"
 					onclick={() => activeColor$.set(name)}
@@ -110,9 +110,9 @@
 		</div>
 	</div>
 
-	<Separator class="" orientation="vertical" />
+	<Separator class="" orientation="horizontal" />
 
-	<div class="flex gap2 h-full pr4 items-center rounded-r-3xl">
+	<div class="flex gap2 h-full pb4 items-center rounded-r-3xl">
 		<!-- <Button class="rounded-full" variant="outline" size="icon" aria-label="shuffle">
 			<div class="size-6 i-solar-shuffle-outline"></div>
 		</Button> -->

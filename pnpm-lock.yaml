@@ -50,6 +50,9 @@ importers:
       shiki:
         specifier: ^1.21.0
         version: 1.21.0
+      svelte-color-select:
+        specifier: ^0.0.13
+        version: 0.0.13(svelte@5.0.0-next.260)
       tailwind-merge:
         specifier: ^2.5.3
         version: 2.5.3
@@ -1399,6 +1402,11 @@ packages:
     peerDependencies:
       svelte: ^4.0.0 || ^5.0.0-next.0
       typescript: '>=5.0.0'
+
+  svelte-color-select@0.0.13:
+    resolution: {integrity: sha512-t9DqcG4uuddHxQE8B8DKBg0IjeR4vCkd9/I73lnlMDJDowx2Nwx7ZKpfwr/+JQUhn0EJltmUsREj6mralbp7/A==}
+    peerDependencies:
+      svelte: ^3.54.0 || ^4.0.0 || ^5.0.0
 
   svelte@5.0.0-next.260:
     resolution: {integrity: sha512-TGcvG71DUklf5P4UmJxOQiVxWYLPp4c6o+NUjmVMsAXKsCMXOTXw+QpnmEWw5D95Sj7SrmAGeIT+p/uvHAUZXg==}
@@ -2825,6 +2833,12 @@ snapshots:
       typescript: 5.6.2
     transitivePeerDependencies:
       - picomatch
+
+  svelte-color-select@0.0.13(svelte@5.0.0-next.260):
+    dependencies:
+      '@types/culori': 2.1.1
+      culori: 4.0.1
+      svelte: 5.0.0-next.260
 
   svelte@5.0.0-next.260:
     dependencies:

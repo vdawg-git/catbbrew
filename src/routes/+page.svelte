@@ -32,12 +32,14 @@
 	</div>
 </section>
 
-<div class="fixed flex flex-col items-center bottom-6 z-6 left-1/2 -translate-x-1/2">
+<nav class="fixed left-8 top-1/2 -translate-y-1/2">
+	<MainBar />
+</nav>
+
+<div class="fixed flex flex-col items-center bottom-4 z-6 left-1/2 -translate-x-1/2">
 	{#if $activeColor$}
 		<ColorAdjustBar />
 	{/if}
-
-	<MainBar />
 </div>
 
 <style></style>

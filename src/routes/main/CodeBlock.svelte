@@ -1,5 +1,16 @@
 <script lang="ts">
 	import { codeToHtml } from "shiki"
+	import { shikiTheme } from "$lib/colors"
+	import { createHighlighter } from "shiki"
+
+	import type { Action } from "svelte/action"
+	import { activeColor$ } from "$lib/state/state"
+	import type { ColorName } from "$lib/types"
+
+	const highlighter = createHighlighter({
+		themes: [shikiTheme],
+		langs: ["typescript"]
+	})
 
 	const code = `
 import { createHighlighter } from 'shiki'
@@ -75,8 +86,28 @@ export {
 `
 </script>
 
-<div class="text-base !cursor-text" aria-label="Preview code">
-	{#await codeToHtml(code, { lang: "ts", theme: "catppuccin-macchiato" }) then html}
-		{@html html}
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div
+	class="[&_span:not(:has(span)):hover]:outline !cursor-text"
+	aria-label="Preview code"
+	on:click={({ target }) => {
+		if (!target || !("tagName" in target) || !("style" in target)) return
+		if (target.tagName !== "SPAN") return
+
+		const style = target.style as CSSStyleDeclaration
+		const colorRg = /(?<=--).*(?=\)\))/
+		const color = style.getPropertyValue("color").match(colorRg)?.[0]
+
+		if (!color) return
+
+		activeColor$.set(color as ColorName)
+	}}
+>
+	{#await highlighter then hl}
+		{@html hl.codeToHtml(code, { lang: "ts", theme: "theme" })}
 	{/await}
 </div>
+
+<style>
+</style>

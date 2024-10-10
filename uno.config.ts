@@ -1,8 +1,6 @@
 import { defineConfig, presetIcons, presetUno, transformerDirectives } from "unocss"
 import { baseColors } from "./src/lib/colors"
-import { ColorName } from "./src/lib/types"
-import { formatRgb, rgb } from "culori"
-import chroma from "chroma-js"
+import { rgb } from "culori"
 import { createRgbaVar, cssVar, shadcnVariables } from "./src/lib/utils"
 
 const baseAsRGBA = baseColors.map(([key, { value }]) => {
