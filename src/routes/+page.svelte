@@ -4,6 +4,7 @@
 	import CodeBlock from "./main/CodeBlock.svelte"
 	import ColorAdjustBar from "./main/ColorAdjustBar.svelte"
 	import MainBar from "./main/MainBar.svelte"
+	import tsIcon from "$lib/icons/typescript.svg"
 </script>
 
 <svelte:head>
@@ -17,7 +18,7 @@
 	<aside
 		class="absolute px2 py4 flex flex-col items-center justify-center bg-mantle -left-12 top-[max(11vh,2rem)] rounded-2xl"
 	>
-		<Button>TS</Button>
+		<Button>{@html tsIcon}</Button>
 	</aside>
 
 	<div
