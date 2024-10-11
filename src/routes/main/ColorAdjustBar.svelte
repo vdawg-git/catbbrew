@@ -1,6 +1,3 @@
-<script lang="ts" context="module">
-</script>
-
 <script lang="ts">
 	import { produce } from "immer"
 	import { activeColor$, activeColorHex$, activeColorHsl$, colors$ } from "$lib/state/state"
@@ -18,6 +15,7 @@
 	import * as R from "remeda"
 	import { formatHex, hsl, okhsl, round, samples, type Okhsl } from "culori"
 	import { derived, type Readable } from "svelte/store"
+	import { copyToClipboard } from "$lib/utils"
 
 	// const input$ = writable<Partial<HSL>>({})
 	const h$ = new Subject<number | undefined>()
@@ -85,41 +83,54 @@
 </script>
 
 <div
-	class="bg-surface0 px6 py3 ani items-center gap8 outline shadow-base shadow outline-activeColor rounded-3xl min-w-max w-max flex"
+	class="bg-surface0 ani items-center gap8 outline shadow-base shadow outline-border rounded-3xl min-w-max w-max flex"
 >
 	{#if $activeColorHsl$}
-		<div class="flex flex-col gap-5">
-			<div class="flex gap6 flex-col items-center">
-				<div class="flex gap6">
-					<input
-						type="color"
-						value={$activeColorHex$}
-						on:input={({ currentTarget }) => {
-							const ok = okhsl(currentTarget.value)
-							if (!ok) return
-							const { h, s, l } = ok
-							h$.next(h)
-							s$.next(s)
-							l$.next(l)
-						}}
-					/>
+		<div class="flex gap-5">
+			<div class="grid ml-3 grid-cols-2 items-center group">
+				<input
+					class="h18 rounded-xl grid-row-start-1 grid-row-end-2 grid-col-end-1 grid-col-end-3 grid-col-start-1 w-full flex"
+					type="color"
+					value={$activeColorHex$}
+					on:input={({ currentTarget }) => {
+						const ok = okhsl(currentTarget.value)
+						if (!ok) return
+						const { h, s, l } = ok
+						h$.next(h)
+						s$.next(s)
+						l$.next(l)
+					}}
+				/>
+				<div
+					class="opacity-0 group-hover:opacity-100 transition-opacity grid-col-start-2 z-1 grid-row-start-1 grid-row-end-2 grid-col-end-3 right-0 top-0 pointer-events-none flex justify-center items-center"
+				>
+					<div class="i-mingcute-color-picker-line text-activeColorForeground size-8"></div>
+				</div>
+
+				<div
+					class="flex-col grid-row-start-1 grid-row-end-2 grid-col-start-1 grid-col-end-2 pointer-events-none items-center justify-center h17 font-mono text-center text-activeColorForeground rounded-r-lg outline-activeColor px2 py1 text-sm"
+				>
 					<button
-						class="bg-activeColor min-w-22 font-mono text-center text-activeColorForeground rounded-lg outline-activeColor px2 py1 text-sm"
+						class="block grow hover:bg-background/20 rounded pointer-events-auto"
+						on:click={() => $activeColor$ && copyToClipboard($activeColor$)}
 					>
-						<div class="text-sm">
-							{$activeColor$}
-						</div>
-						<div class="">
-							{$activeColorHex$}
-						</div>
+						{$activeColor$}
 					</button>
-					<div class="flex flex-col gap-3">
-						{@render control(1, 0.01, $saturationBackground, s$, $activeColorHsl$.s)}
-						{@render control(1, 0.01, lightnessBackground, l$, $activeColorHsl$.l)}
-					</div>
+					<button
+						class="block grow hover:bg-background/20 rounded pointer-events-auto"
+						on:click={() => $activeColorHex$ && copyToClipboard($activeColorHex$)}
+					>
+						{$activeColorHex$}
+					</button>
 				</div>
 			</div>
-			{@render control(360, 1, $hueBackground, h$, Math.round($activeColorHsl$.h ?? 0), "28rem")}
+			<div class="flex flex-col gap-3 py3 pr-3">
+				<div class="flex gap-3">
+					{@render control(1, 0.01, $saturationBackground, s$, $activeColorHsl$.s)}
+					{@render control(1, 0.01, lightnessBackground, l$, $activeColorHsl$.l)}
+				</div>
+				{@render control(360, 1, $hueBackground, h$, Math.round($activeColorHsl$.h ?? 0), "28rem")}
+			</div>
 		</div>
 	{/if}
 </div>
@@ -130,7 +141,7 @@
 	background: string,
 	input: Subject<number | undefined>,
 	value: number,
-	width: string = "15rem"
+	width: string = "10rem"
 )}
 	<div class="flex items-center gap-2">
 		<input
@@ -144,7 +155,7 @@
 				if (Number.isNaN(number) || number < 0 || number > max) return
 				input.next(number)
 			}}
-			class="w-[8ch] px2 text-sm rounded text-background outline-overlay0 py1 bg-subtext1 placeholder-foreground text-center"
+			class="w-[8ch] px2 text-sm rounded text-background outline-overlay0 py1 bg-overlay2 placeholder-foreground text-center"
 		/>
 		<input
 			type="range"

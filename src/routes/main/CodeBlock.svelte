@@ -89,7 +89,7 @@ export {
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
-	class="[&_span:not(:has(span)):hover]:outline !cursor-text"
+	class="[&_span:not(:has(span)):hover]:outline [&_span:not(:has(span)):hover]:rounded !cursor-text"
 	aria-label="Preview code"
 	on:click={({ target }) => {
 		if (!target || !("tagName" in target) || !("style" in target)) return

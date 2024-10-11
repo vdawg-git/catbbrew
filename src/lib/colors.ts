@@ -45,7 +45,7 @@ const shiki = compile("mocha", {
 		)
 	}
 })
-console.log(shiki.semanticTokenColors)
+
 export const shikiTheme: ThemeRegistration = {
 	...shiki,
 	fg: createRgbaVar("text"),

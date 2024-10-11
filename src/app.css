@@ -5,4 +5,20 @@
 	body {
 		@apply bg-background text-foreground;
 	}
+
+	body::-webkit-scrollbar-track {
+		background: theme("colors.overlay1");
+		border-radius: 999px;
+	}
+
+	body::-webkit-scrollbar-thumb {
+		background: theme("colors.foreground");
+		border-radius: 999px;
+	}
+
+	@supports not selector(::-webkit-scrollbar) {
+		* {
+			scrollbar-color: theme("colors.foreground") transparent;
+		}
+	}
 }

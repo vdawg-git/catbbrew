@@ -6,6 +6,7 @@ import type { ColorVariable } from "./types"
 import { Observable, share } from "rxjs"
 import type { Writable } from "svelte/store"
 import type { Readable } from "svelte/motion"
+import { toast } from "svelte-sonner"
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
@@ -102,4 +103,16 @@ export function fromStore<T>(store: Writable<T> | Readable<T>): Observable<T> {
 		// @ts-expect-error
 		share()
 	)
+}
+
+export function copyToClipboard(text: string) {
+	navigator.clipboard
+		.writeText(text)
+		.then(() => {
+			toast(`Copied: ${text}`, { dismissable: true })
+		})
+		.catch((err) => {
+			console.error(err)
+			toast("Failed to copy to clipboard.")
+		})
 }
