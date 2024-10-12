@@ -13,7 +13,7 @@
 <section
 	class="flex flex-col relative h-full items-center justify-center max-h-full grow min-h-0 min-w-0"
 >
-	<h1>Create your own color theme</h1>
+	<h1 class="text-2xl lg:text-5xl font-medium">Create your own color theme</h1>
 	<p>Based on the awesome Catppuccin theme</p>
 
 	<Button>Create your own flavor</Button>
