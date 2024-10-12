@@ -5,7 +5,6 @@
 	import "../app.css"
 	import { activeColorHsl$, activeColor$, colors$ } from "$lib/state/state"
 	import { cssVar } from "$lib/utils"
-	import { Toaster } from "$lib/components/ui/sonner"
 	import { type Okhsl } from "culori"
 
 	function getActiveColorForeground(active: Okhsl) {
@@ -19,8 +18,6 @@
 	}
 </script>
 
-<Toaster />
-
 <div
 	class="app"
 	style:--active-color={$activeColor$ && cssVar($activeColor$)}
@@ -33,13 +30,4 @@
 	</main>
 </div>
 
-<style>
-	.app {
-		min-height: 100vh;
-		height: 100vh;
-		max-height: 100vh;
-		overflow: hidden;
-		display: flex;
-		flex-direction: column;
-	}
-</style>
+<style></style>

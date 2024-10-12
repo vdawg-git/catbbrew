@@ -1,0 +1,12 @@
+<script lang="ts"> type $Props = Partial<SVGImageElement & { class: string }> </script>
+
+<svg xmlns="http://www.w3.org/2000/svg" {...$$restProps}   viewBox="0 0 16 16">
+	<g fill="none">
+		<circle cx="8" cy="8" r="4.5" stroke="rgb(var(--text)" />
+		<path stroke="rgb(var(--maroon)" stroke-linecap="round" stroke-linejoin="round" d="M9.58 14.3a6.5 6.5 0 0 1-4.55-.52" />
+		<path stroke="rgb(var(--blue)" stroke-linecap="round" stroke-linejoin="round" d="M8.52 1.52a6.5 6.5 0 0 1 5.84 5.12" />
+		<path stroke="rgb(var(--maroon)" stroke-linecap="round" stroke-linejoin="round" d="M13.91 10.7a6.5 6.5 0 0 1-2.78 3" />
+		<path stroke="rgb(var(--mauve)" stroke-linecap="round" stroke-linejoin="round" d="M14.38 6.76a6.5 6.5 0 0 1-.42 3.83" />
+		<path stroke="rgb(var(--maroon)" stroke-linecap="round" stroke-linejoin="round" d="M3.63 12.8a6.5 6.5 0 0 1-2.1-4.14" />
+	</g>
+</svg>

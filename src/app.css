@@ -22,3 +22,7 @@
 		}
 	}
 }
+
+:root {
+	--un-default-border-color: theme("colors.surface1");
+}

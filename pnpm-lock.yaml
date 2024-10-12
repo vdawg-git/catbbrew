@@ -14,12 +14,12 @@ importers:
       '@unocss/reset':
         specifier: ^0.63.4
         version: 0.63.4
-      bits-ui:
-        specifier: ^0.21.16
-        version: 0.21.16(svelte@5.0.0-next.264)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      cmdk-sv:
+        specifier: ^0.0.18
+        version: 0.0.18(svelte@5.0.0-next.264)
       culori:
         specifier: ^4.0.1
         version: 4.0.1
@@ -29,9 +29,6 @@ importers:
       immer:
         specifier: ^10.1.1
         version: 10.1.1
-      mode-watcher:
-        specifier: ^0.4.1
-        version: 0.4.1(svelte@5.0.0-next.264)
       remeda:
         specifier: ^2.15.0
         version: 2.15.0
@@ -41,9 +38,6 @@ importers:
       shiki:
         specifier: ^1.22.0
         version: 1.22.0
-      svelte-sonner:
-        specifier: ^0.3.28
-        version: 0.3.28(svelte@5.0.0-next.264)
       tailwind-merge:
         specifier: ^2.5.3
         version: 2.5.3
@@ -75,6 +69,9 @@ importers:
       '@unocss/extractor-svelte':
         specifier: ^0.63.4
         version: 0.63.4
+      bits-ui:
+        specifier: ^0.21.16
+        version: 0.21.16(svelte@5.0.0-next.264)
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
@@ -836,6 +833,11 @@ packages:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
     engines: {node: '>=6'}
 
+  cmdk-sv@0.0.18:
+    resolution: {integrity: sha512-istixiQSy9Ez/mQ4VXWB69btqNyDZckbd1XFEwR46Vw+n5zjdmvoWAcOTj0uX3FZXtw9ikwLVmfoW2nwwMClRg==}
+    peerDependencies:
+      svelte: ^4.0.0 || ^5.0.0-next.1
+
   color-convert@2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
     engines: {node: '>=7.0.0'}
@@ -1155,11 +1157,6 @@ packages:
   mlly@1.7.2:
     resolution: {integrity: sha512-tN3dvVHYVz4DhSXinXIk7u9syPYaJvio118uomkovAtWBT+RdbP6Lfh/5Lvo519YMmwBafwlh20IPTXIStscpA==}
 
-  mode-watcher@0.4.1:
-    resolution: {integrity: sha512-bNC+1NXmwEFZtziCdZSgP7HFQTpqJPcQn9GwwJQGSf6SBF3neEPYV1uRwkYuAQwbsvsXIYtzaqgedDzJ7D1mhg==}
-    peerDependencies:
-      svelte: ^4.0.0 || ^5.0.0-next.1
-
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
     engines: {node: '>=4'}
@@ -1424,11 +1421,6 @@ packages:
     peerDependencies:
       svelte: ^4.0.0 || ^5.0.0-next.0
       typescript: '>=5.0.0'
-
-  svelte-sonner@0.3.28:
-    resolution: {integrity: sha512-K3AmlySeFifF/cKgsYNv5uXqMVNln0NBAacOYgmkQStLa/UoU0LhfAACU6Gr+YYC8bOCHdVmFNoKuDbMEsppJg==}
-    peerDependencies:
-      svelte: ^3.0.0 || ^4.0.0 || ^5.0.0-next.1
 
   svelte@5.0.0-next.264:
     resolution: {integrity: sha512-vmlzMGxYTdIPhVl1vQhbcqHmSztG/sXzi+TooHiv57FgAVSBc/66cpvqtT5Wfxg9gQOEKOXl9tUV9OzBrBBwiw==}
@@ -2281,6 +2273,12 @@ snapshots:
 
   clsx@2.1.1: {}
 
+  cmdk-sv@0.0.18(svelte@5.0.0-next.264):
+    dependencies:
+      bits-ui: 0.21.16(svelte@5.0.0-next.264)
+      nanoid: 5.0.7
+      svelte: 5.0.0-next.264
+
   color-convert@2.0.1:
     dependencies:
       color-name: 1.1.4
@@ -2625,10 +2623,6 @@ snapshots:
       pkg-types: 1.2.1
       ufo: 1.5.4
 
-  mode-watcher@0.4.1(svelte@5.0.0-next.264):
-    dependencies:
-      svelte: 5.0.0-next.264
-
   mri@1.2.0: {}
 
   mrmime@2.0.0: {}
@@ -2889,10 +2883,6 @@ snapshots:
       typescript: 5.6.3
     transitivePeerDependencies:
       - picomatch
-
-  svelte-sonner@0.3.28(svelte@5.0.0-next.264):
-    dependencies:
-      svelte: 5.0.0-next.264
 
   svelte@5.0.0-next.264:
     dependencies:

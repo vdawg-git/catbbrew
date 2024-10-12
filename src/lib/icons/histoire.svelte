@@ -1,0 +1,8 @@
+<script lang="ts"> type $Props = Partial<SVGImageElement & { class: string }> </script>
+
+<svg xmlns="http://www.w3.org/2000/svg" {...$$restProps}   viewBox="0 0 16 16">
+	<g fill="none" stroke="rgb(var(--green)" stroke-linecap="round" stroke-linejoin="round">
+		<path d="m5 4.5 2.5 3 3-2 1.5 6-2.5-3-3 2z" />
+		<path d="m2.5 1.5 11-1 1 14-11 1z" />
+	</g>
+</svg>

@@ -1,0 +1,16 @@
+<script lang="ts"> type $Props = Partial<SVGImageElement & { class: string }> </script>
+
+<svg xmlns="http://www.w3.org/2000/svg" {...$$restProps}   viewBox="0 0 16 16">
+	<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+		<path stroke="rgb(var(--sapphire)" d="M4.5 13.5 3.05 8.42m-.06-3.86a2 2 0 10.06 3.86L4.5 13.5" />
+		<path stroke="rgb(var(--red)" d="m2.5 6.5 3.88-2.82A2 2 0 1110 2.3" />
+		<path stroke="rgb(var(--blue)" d="M14.3 8.33a2 2 0 10-2.43-3L8.01 2.5" />
+		<path stroke="rgb(var(--green)" d="M10.06 14.89a2 2 0 102-3.3L13.5 6.5" />
+		<path stroke="rgb(var(--mauve)" d="M11.5 13.5h-5a2 2 0 11-3.73-1" />
+		<path stroke="rgb(var(--mauve)" d="M12 13.5a.5.5 0 01-.5.5.5.5 0 01-.5-.5.5.5 0 01.5-.5.5.5 0 01.5.5" />
+		<path stroke="rgb(var(--sapphire)" d="M5 13.5a.5.5 0 01-.5.5.5.5 0 01-.5-.5.5.5 0 01.5-.5.5.5 0 01.5.5" />
+		<path stroke="rgb(var(--red)" d="M3 6.5a.5.5 0 01-.5.5.5.5 0 01-.5-.5.5.5 0 01.5-.5.5.5 0 01.5.5" />
+		<path stroke="rgb(var(--blue)" d="M8.5 2.5A.5.5 0 018 3a.5.5 0 01-.5-.5A.5.5 0 018 2a.5.5 0 01.5.5" />
+		<path stroke="rgb(var(--green)" d="M14 6.5a.5.5 0 01-.5.5.5.5 0 01-.5-.5.5.5 0 01.5-.5.5.5 0 01.5.5" />
+	</g>
+</svg>

@@ -34,6 +34,6 @@ export type ColorVariable =
 	| ColorName
 	| (typeof shadcnVariables)[number]
 	| "active-color"
-	| "active-color-foreground"
+	| "active-colorForeground"
 
 export type Identity<T = unknown> = (x: T) => T

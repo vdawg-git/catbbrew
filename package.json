@@ -1,5 +1,5 @@
 {
-	"name": "create-syntax",
+	"name": "bbrew",
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",
@@ -20,6 +20,7 @@
 		"@types/culori": "^2.1.1",
 		"@types/node": "^22.7.5",
 		"@unocss/extractor-svelte": "^0.63.4",
+		"bits-ui": "^0.21.16",
 		"prettier": "^3.3.3",
 		"prettier-plugin-svelte": "^3.2.7",
 		"replace-in-file": "^8.2.0",
@@ -35,16 +36,14 @@
 	"dependencies": {
 		"@catppuccin/vscode": "^3.15.2",
 		"@unocss/reset": "^0.63.4",
-		"bits-ui": "^0.21.16",
 		"clsx": "^2.1.1",
+		"cmdk-sv": "^0.0.18",
 		"culori": "^4.0.1",
 		"hsluv": "^1.0.1",
 		"immer": "^10.1.1",
-		"mode-watcher": "^0.4.1",
 		"remeda": "^2.15.0",
 		"rxjs": "^7.8.1",
 		"shiki": "^1.22.0",
-		"svelte-sonner": "^0.3.28",
 		"tailwind-merge": "^2.5.3",
 		"tailwind-variants": "^0.2.1"
 	},

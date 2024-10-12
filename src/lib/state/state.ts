@@ -19,6 +19,7 @@ const colorVars$ = derived(colors$, (colors) =>
 		return [`--${key}`, `${newValue}`]
 	})
 )
+
 if (globalThis.document) {
 	colorVars$.subscribe((newVariables) => {
 		newVariables.forEach(([key, value]) => {
