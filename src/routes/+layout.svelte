@@ -19,7 +19,7 @@
 </script>
 
 <div
-	class="app"
+	class="min-h-screen flex flex-col"
 	style:--active-color={$activeColor$ && cssVar($activeColor$)}
 	style:--active-colorForeground={$activeColorHsl$ && getActiveColorForeground($activeColorHsl$)}
 >
@@ -29,5 +29,3 @@
 		<slot />
 	</main>
 </div>
-
-<style></style>

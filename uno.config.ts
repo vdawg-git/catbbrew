@@ -23,7 +23,8 @@ export default defineConfig({
 			...createBaseClasses(),
 			...createShadcnClasses(),
 			activeColor: createRgbaVar("active-color"),
-			activeColorForeground: createRgbaVar("active-colorForeground")
+			activeColorForeground: createRgbaVar("active-colorForeground"),
+			transparent: "transparent"
 		}
 	}),
 	preflights: [{ getCSS: createGlobalVariables, layer: "base" }],

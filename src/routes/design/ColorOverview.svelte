@@ -75,7 +75,7 @@
 </script>
 
 <div
-	class="bg-transparent fixed transform-origin-t right-6 top-1/2 -translate-y-1/2 bg-surface0 items-center flex-col gap3 outline shadow-base shadow outline-border w-21 rounded-3xl w-max flex h-[90%] overflow-auto justify-stretch items-stretch flex flex-col rounded-3xl !p-0 m-0 z-10"
+	class=" fixed transform-origin-t right-6 top-1/2 -translate-y-1/2 bg-surface0 items-center flex-col gap3 outline shadow-base shadow outline-border w-21 rounded-3xl w-max flex h-[90%] overflow-auto justify-stretch items-stretch flex flex-col rounded-3xl !p-0 m-0 z-10"
 >
 	<div class="gap5 flex grow p4 flex-col items-center">
 		<div class="grid grid-cols-2 w-fit grid-rows-6">

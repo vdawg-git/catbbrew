@@ -3,7 +3,7 @@
 </script>
 
 <header class="flex items-center justify-center w-full">
-	<div class="max-w-screen-sm flex items-center justify-between w-full px-4 py-2">
+	<div class="max-w-screen-sm flex items-center justify-between w-full px-4">
 		<div class="text-center text-lg">
 			<a href="/">Bbrew</a>
 		</div>
@@ -12,10 +12,12 @@
 			<li>
 				<a
 					href="https://github.com/vdawg-git/bbrew"
-					class="p2 text-subtext0 hover:text-subtext1"
+					class=""
 					aria-label="Toggle dark and light mode"
 				>
-					<div class="i-mingcute-github-2-line size-6"></div>
+					<div class="p-2">
+						<div class="i-mingcute-github-2-line size-6"></div>
+					</div>
 				</a>
 			</li>
 		</ul>
@@ -36,4 +38,8 @@
 	</div>
 </header>
 
-<style></style>
+<style>
+	ul a {
+		--at-apply: "text-subtext0 hover:text-subtext1 transition-colors";
+	}
+</style>
