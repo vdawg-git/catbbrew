@@ -3,7 +3,7 @@
 	import { activeColor$ } from "$lib/state/state"
 	import ColorAdjustBar from "./design/ColorAdjustBar.svelte"
 	import ColorOverview from "./design/ColorOverview.svelte"
-	import foam from "$lib/images/foam.svg?raw"
+	import Foam from "$lib/images/foam.svelte"
 </script>
 
 <svelte:head>
@@ -13,6 +13,8 @@
 		content="Catbrew, brew your own flavor. A color scheme generator based on Catppuccin."
 	/>
 </svelte:head>
+
+<Foam />
 
 <section class="flex flex-col relative overflow-hidden items-center justify-center">
 	<div class="flex flex-col gap-3 items-center text-lg">
@@ -34,21 +36,8 @@
 	<ColorOverview />
 </section>
 
-<div class="">
-	{@html foam}
-</div>
-
 {#if $activeColor$}
 	<div class="fixed flex flex-col items-center bottom-4 z-6 left-1/2 -translate-x-1/2">
 		<ColorAdjustBar />
 	</div>
 {/if}
-
-<style>
-	:global(.foam-bg) {
-		--at-apply: fixed inset-0;
-		width: max(100vw, 100vh);
-		height: max(100vw, 100vh);
-		z-index: -1;
-	}
-</style>
