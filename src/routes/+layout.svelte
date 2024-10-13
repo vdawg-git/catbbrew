@@ -1,4 +1,7 @@
 <script lang="ts">
+	import "@fontsource/m-plus-rounded-1c/400.css"
+	import "@fontsource/m-plus-rounded-1c/500.css"
+	import "@fontsource/m-plus-rounded-1c/800.css"
 	import "@unocss/reset/tailwind.css"
 	import Header from "./Header.svelte"
 	import "virtual:uno.css"
@@ -19,7 +22,7 @@
 </script>
 
 <div
-	class="min-h-screen flex flex-col"
+	class="min-h-screen flex flex-col font-sans"
 	style:--active-color={$activeColor$ && cssVar($activeColor$)}
 	style:--active-colorForeground={$activeColorHsl$ && getActiveColorForeground($activeColorHsl$)}
 >

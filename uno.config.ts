@@ -19,6 +19,10 @@ export default defineConfig({
 	},
 	extendTheme: (theme) => ({
 		...theme,
+
+		// @ts-expect-error
+		fontFamily: { ...theme.fontFamily, sans: "'M PLUS Rounded 1c', sans-serif" },
+
 		colors: {
 			...createBaseClasses(),
 			...createShadcnClasses(),

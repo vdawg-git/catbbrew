@@ -1,17 +1,16 @@
 <script lang="ts">
-	import { Dialog as DialogPrimitive } from "bits-ui";
-	import X from "lucide-svelte/icons/x";
-	import * as Dialog from "./index.js";
-	import { cn, flyAndScale } from "$lib/utils.js";
+	import { Dialog as DialogPrimitive } from "bits-ui"
+	import * as Dialog from "./index.js"
+	import { cn, flyAndScale } from "$lib/utils.js"
 
-	type $$Props = DialogPrimitive.ContentProps;
+	type $$Props = DialogPrimitive.ContentProps
 
-	let className: $$Props["class"] = undefined;
-	export let transition: $$Props["transition"] = flyAndScale;
+	let className: $$Props["class"] = undefined
+	export let transition: $$Props["transition"] = flyAndScale
 	export let transitionConfig: $$Props["transitionConfig"] = {
-		duration: 200,
-	};
-	export { className as class };
+		duration: 200
+	}
+	export { className as class }
 </script>
 
 <Dialog.Portal>
@@ -29,7 +28,7 @@
 		<DialogPrimitive.Close
 			class="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none"
 		>
-			<X class="h-4 w-4" />
+			<div class="i-mingcute-cclose-circle-line h-4 w-4"></div>
 			<span class="sr-only">Close</span>
 		</DialogPrimitive.Close>
 	</DialogPrimitive.Content>

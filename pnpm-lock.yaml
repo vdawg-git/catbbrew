@@ -11,6 +11,9 @@ importers:
       '@catppuccin/vscode':
         specifier: ^3.15.2
         version: 3.15.2
+      '@fontsource/m-plus-rounded-1c':
+        specifier: ^5.1.0
+        version: 5.1.0
       '@unocss/reset':
         specifier: ^0.63.4
         version: 0.63.4
@@ -415,6 +418,9 @@ packages:
 
   '@floating-ui/utils@0.2.8':
     resolution: {integrity: sha512-kym7SodPp8/wloecOpcmSnWJsK7M0E5Wg8UcFA+uO4B9s5d0ywXOEro/8HM9x0rW+TljRzul/14UYz3TleT3ig==}
+
+  '@fontsource/m-plus-rounded-1c@5.1.0':
+    resolution: {integrity: sha512-e+Tjn5gKwQGQAePMNKudvYjnKHcHUL2qsXYAOzVfXT3vFatw1/mZsh6V1Fg3gKSUn9hu8xKHKaPOHQ4C+M/6tQ==}
 
   '@iconify-json/mingcute@1.2.1':
     resolution: {integrity: sha512-rv682dBsjKUs1/AVg5tOegAunjCLuqyQufXU0D6Kbmgg5jMoUcl/9K2C+9MAiepBP0Eyb05YwXQvGaXMLPu/YA==}
@@ -1795,6 +1801,8 @@ snapshots:
       '@floating-ui/utils': 0.2.8
 
   '@floating-ui/utils@0.2.8': {}
+
+  '@fontsource/m-plus-rounded-1c@5.1.0': {}
 
   '@iconify-json/mingcute@1.2.1':
     dependencies:
