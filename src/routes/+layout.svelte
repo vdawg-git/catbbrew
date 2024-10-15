@@ -1,12 +1,12 @@
 <script lang="ts">
+	import "@fontsource-variable/m-plus-code-latin"
 	import "@fontsource/m-plus-rounded-1c/400.css"
 	import "@fontsource/m-plus-rounded-1c/500.css"
 	import "@fontsource/m-plus-rounded-1c/800.css"
 	import "@unocss/reset/tailwind.css"
-	import Header from "./Header.svelte"
 	import "virtual:uno.css"
 	import "../app.css"
-	import { activeColorHsl$, activeColor$, colors$ } from "$lib/state/state"
+	import { activeColorHsl$, activeColor$, colors$ } from "$lib/state/colors"
 	import { cssVar } from "$lib/utils"
 	import { type Okhsl } from "culori"
 
@@ -22,13 +22,11 @@
 </script>
 
 <div
-	class="min-h-screen flex flex-col font-sans"
+	class="min-h-screen flex flex-col max-h-screen h-screen font-sans"
 	style:--active-color={$activeColor$ && cssVar($activeColor$)}
 	style:--active-colorForeground={$activeColorHsl$ && getActiveColorForeground($activeColorHsl$)}
 >
-	<Header />
-
-	<main class="grow min-h-0 flex flex-col items-center justify-center">
+	<main class="grow min-h-0 flex flex-col">
 		<slot />
 	</main>
 </div>

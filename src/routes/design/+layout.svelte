@@ -1,11 +1,9 @@
 <script lang="ts">
 </script>
 
-<div class="app">
-	<main class="grow min-h-0 flex flex-col items-center justify-center">
-		<slot />
-	</main>
-</div>
+<main class="grow min-h-0 flex flex-col">
+	<slot />
+</main>
 
 <style>
 	.app {

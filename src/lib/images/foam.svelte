@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { activeColor$ } from "$lib/state/state"
+	import { activeColor$ } from "$lib/state/colors"
 	import type { ColorName } from "$lib/types"
 	import { createRgbaVar } from "$lib/utils"
 </script>

@@ -1,12 +1,11 @@
 <script lang="ts">
-	import ChevronsUpDown from "lucide-svelte/icons/chevrons-up-down"
 	import * as Collapsible from "$lib/components/ui/collapsible/index.js"
 
 	import { Button } from "$lib/components/ui/button/index.js"
 	import * as Card from "$lib/components/ui/card/index.js"
 	import Vscode from "$lib/icons/vscode.svelte"
 	import Vim from "$lib/icons/vim.svelte"
-	import { colors$ } from "$lib/state/state"
+	import { colors$ } from "$lib/state/colors"
 	import * as R from "remeda"
 	import { formatHex } from "culori"
 	import CollapsibleContent from "$lib/components/ui/collapsible/collapsible-content.svelte"

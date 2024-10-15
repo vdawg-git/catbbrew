@@ -1,101 +1,53 @@
 <script lang="ts">
-	import { codeToHtml } from "shiki"
 	import { shikiTheme } from "$lib/colors"
 	import { createHighlighter } from "shiki"
 
-	import type { Action } from "svelte/action"
-	import { activeColor$ } from "$lib/state/state"
+	import { activeColor$ } from "$lib/state/colors"
 	import type { ColorName } from "$lib/types"
+	import { language, languages } from "$lib/state/language"
+	import { fromStore } from "$lib/utils"
+	import {
+		combineLatest,
+		debounceTime,
+		filter,
+		map,
+		merge,
+		share,
+		startWith,
+		Subject,
+		switchMap,
+		type pipe
+	} from "rxjs"
 
 	const highlighter = createHighlighter({
 		themes: [shikiTheme],
-		langs: ["typescript"]
+		langs: Object.keys(languages)
 	})
 
-	const code = `
-// Click on the code to change the color 
-// Or use the sidebar to the right :)
-import { createHighlighter } from 'shiki'
-
-
-
-// \`createHighlighter\` is async, it initializes the internal and
-// loads the themes and languages specified.
-const highlighter = await createHighlighter({
-  themes: ['nord'],
-  langs: ['javascript'],
-})
-
-type Highlighter = ReturnType<typeof createHighlighter>
-const regex = /([A-Z])\w+/g
-const a = 1 + 1
-
-// then later you can use \`highlighter.codeToHtml\` synchronously
-// with the loaded themes and languages.
-const code = highlighter.codeToHtml('const a = 1', {
-  lang: 'javascript',
-  theme: 'nord'
-})
-
-import { type VariantProps, tv } from "tailwind-variants"
-import type { Button as ButtonPrimitive } from "bits-ui"
-import Root from "./button.svelte"
-
-const buttonVariants = tv({
-	base: "",
-	variants: {
-		variant: {
-			default:
-				"bg-primary  text-base0/50",
-			destructive: "bg-destructive  hover:bg-destructive/90",
-			outline: "border-input   hover:text-accent-foreground border",
-			secondary: "bg-secondary  hover:bg-secondary/80",
-			ghost: "hover:bg-accent hover:text-accent-foreground",
-			link: "text-primary  hover:underline"
-		},
-		size: {
-			default: "h-10 px-4 py-2",
-			sm: "h-9 rounded-md px-3",
-			lg: "h-11 rounded-md px-8",
-			icon: "h-10 w-10"
-		}
-	},
-	defaultVariants: {
-		variant: "default",
-		size: "default"
-	}
-})
-
-type Variant = VariantProps<typeof buttonVariants>["variant"]
-type Size = VariantProps<typeof buttonVariants>["size"]
-
-type Props = ButtonPrimitive.Props & {
-	variant?: Variant
-	size?: Size
-}
-
-type Events = ButtonPrimitive.Events
-
-export {
-	Root,
-	type Props,
-	type Events,
-	//
-	Root as Button,
-	type Props as ButtonProps,
-	type Events as ButtonEvents,
-	buttonVariants
-}
-
-`
+	const languageText$ = fromStore(language).pipe(map(({ text }) => text))
+	const codeInput$ = new Subject<string>()
+	const code$ = codeInput$.pipe(debounceTime(1450))
+	const toRender$ = merge(languageText$, code$).pipe(
+		filter(Boolean),
+		switchMap(async (text) => {
+			console.log("\n\n\n\n\n\n\n\n\n\n\n\n", text)
+			const hl = await highlighter
+			const toRender = hl
+				.codeToHtml(text, { lang: $language.name, theme: "theme" })
+				.replace('class="shiki theme"', 'contenteditable class="shiki theme"')
+			// console.log(toRender)
+			return toRender
+		}),
+		share()
+	)
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
-	class="[&_span:not(:has(span)):hover]:outline [&_span:not(:has(span)):active]:bg-overlay1/20 [&_span:not(:has(span)):hover]:rounded !cursor-text"
+	class="bg-base p6 [&_span:not(:has(span)):hover]:outline font-mono [&_span:not(:has(span)):active]:bg-overlay1/20 [&_span:not(:has(span)):hover]:rounded !cursor-text ![&_pre]:outline-none"
 	aria-label="Preview code"
-	on:click={({ target }) => {
+	onclick={({ target }) => {
 		if (!target || !("tagName" in target) || !("style" in target)) return
 		if (target.tagName !== "SPAN") return
 
@@ -107,10 +59,11 @@ export {
 
 		activeColor$.set(color as ColorName)
 	}}
+	oninput={(e) => {
+		codeInput$.next(e.currentTarget.innerText)
+	}}
 >
-	{#await highlighter then hl}
-		{@html hl.codeToHtml(code, { lang: "ts", theme: "theme" })}
-	{/await}
+	{@html $toRender$}
 </div>
 
 <style>

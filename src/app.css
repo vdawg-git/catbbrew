@@ -28,6 +28,13 @@
 	--un-default-border-color: theme("colors.surface1");
 }
 
+code,
+kbd,
+samp,
+pre {
+	font-family: theme("fontFamily.mono");
+}
+
 /* font-family:
 			"M PLUS Rounded 1c",
 			system-ui,

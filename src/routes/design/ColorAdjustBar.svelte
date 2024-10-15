@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { produce } from "immer"
-	import { activeColor$, activeColorHex$, activeColorHsl$, colors$ } from "$lib/state/state"
+	import { activeColor$, activeColorHex$, activeColorHsl$, colors$ } from "$lib/state/colors"
 	import {
 		distinctUntilChanged,
 		combineLatest,
