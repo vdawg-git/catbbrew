@@ -34,7 +34,10 @@
 			const hl = await highlighter
 			const toRender = hl
 				.codeToHtml(text, { lang: $language.name, theme: "theme" })
-				.replace('class="shiki theme"', 'contenteditable class="shiki theme"')
+				.replace(
+					'class="shiki theme"',
+					'contenteditable spellcheck="false" autocorrect="off" class="shiki theme"'
+				)
 			// console.log(toRender)
 			return toRender
 		}),

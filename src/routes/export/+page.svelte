@@ -9,6 +9,32 @@
 	import * as R from "remeda"
 	import { formatHex } from "culori"
 	import CollapsibleContent from "$lib/components/ui/collapsible/collapsible-content.svelte"
+	import * as RadioGroup from "$lib/components/ui/radio-group/index.js"
+	import Label from "$lib/components/ui/label/label.svelte"
+	import type { Component } from "svelte"
+
+	let selected = $state<SupportedExport>("vscode")
+
+	type SupportedExport = "vscode" | "vim"
+	type Exportable = {
+		name: string
+		Icon: Component
+		value: SupportedExport
+	}
+	const exportables: readonly Exportable[] = [
+		{
+			name: "VSCode",
+			value: "vscode",
+			Icon: Vscode
+		},
+		{
+			name: "(Neo)Vim",
+			value: "vim",
+			Icon: Vim
+		}
+	]
+
+	let selectedData = $derived(exportables.find((item) => item.value === selected))!
 
 	function createVsCodeSnippet() {
 		return `catppuccin.colorOverrides": {
@@ -30,17 +56,33 @@ ${Object.entries($colors$)
 	<title>Export colors</title>
 </svelte:head>
 
-<div class="flex gap-6 justify-start items-start flex-col flex-wrap">
-	<div class="p-6 border rounded-2xl">
-		<Collapsible.Root class="">
-			<Collapsible.Trigger asChild let:builder>
-				<Button builders={[builder]} variant="ghost" size="default" class="gap-5">
-					<Vscode class="size-8" />
-					<h2>VS Code</h2>
-				</Button>
-			</Collapsible.Trigger>
+<div class="flex gap-6 flex-wrap w-full h-full">
+	<div class="p-6">
+		<Button onclick={() => window.history.back()}>Go back</Button>
+		<div class="flex gap-3 items-center">
+			<h1 class="font-bold text-xl text-rosewater">Export for your favorite editor</h1>
+		</div>
 
-			<Collapsible.Content class="space-y-2">
+		<div class="">
+			{#each exportables as { name, value, Icon }}
+				<label
+					class="py-3 px-6 border-t flex [&:has(:selected)]:bg-red has-[:selected]:font-bold gap3 text-xl"
+				>
+					<input type="radio" bind:group={selected} {value} class="hiddenx checked:p-8" />
+					<Icon class="size-6" />
+					{name}
+				</label>
+			{/each}
+		</div>
+	</div>
+
+	<div class="flex flex-col border-l p6 gap-6 grow">
+		<div class="flex gap-3 items-center font-medium text-lg">
+			<selectedData.Icon class="size-8" />
+			<h2>{selectedData.name}</h2>
+		</div>
+		<div class="">
+			{#if selected === "vscode"}
 				Install the <a
 					href="https://marketplace.visualstudio.com/items?itemName=Catppuccin.catppuccin-vsc"
 					target="_blank">Catppuccin theme</a
@@ -48,36 +90,22 @@ ${Object.entries($colors$)
 				and add this to your <code>settings.json</code>
 				<pre><code>{createVsCodeSnippet()}</code></pre>
 				<Button>Copy</Button>
-			</Collapsible.Content>
-		</Collapsible.Root>
-	</div>
-
-	<div class="p-6 border rounded-2xl">
-		<Collapsible.Root class="">
-			<Collapsible.Trigger asChild let:builder>
-				<Button builders={[builder]} variant="ghost" size="default" class="gap-5">
-					<Vim class="size-8" />
-					<h2>VS Code</h2>
-				</Button>
-			</Collapsible.Trigger>
-
-			<Collapsible.Content class="space-y-2">
+			{:else if selected === "vim"}
 				Install the <a href="https://github.com/catppuccin/nvim">Catppuccin theme</a> and add this
 				in the <code>setup call</code>.
-				<pre><code>{createVsCodeSnippet()}</code></pre>
+				<pre><code>{createVimSnippet()}</code></pre>
 				<Button>Copy</Button>
-			</Collapsible.Content>
-		</Collapsible.Root>
+			{/if}
+		</div>
 	</div>
 </div>
 
 <style>
 	a {
-		color: theme("colors.subtext1");
-		font-weight: medium;
+		--at-apply: "text-blue font-medium hover:underline";
 	}
 
 	pre {
-		@apply rounded-lg bg-mantle p-4 text-sm;
+		@apply rounded-2xl my-4 bg-mantle p-4 text-sm border;
 	}
 </style>

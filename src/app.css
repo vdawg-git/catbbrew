@@ -1,6 +1,6 @@
 @layer base {
 	* {
-		@apply border-border selection:bg-overlay2/25 selection:text-inherit;
+		@apply border-border selection:bg-overlay2/25 selection:text-inherit caret-rosewater;
 	}
 
 	body {

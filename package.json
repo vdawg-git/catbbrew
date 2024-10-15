@@ -21,6 +21,7 @@
 		"@types/node": "^22.7.5",
 		"@unocss/extractor-svelte": "^0.63.4",
 		"bits-ui": "^0.21.16",
+		"lucide-svelte": "^0.453.0",
 		"prettier": "^3.3.3",
 		"prettier-plugin-svelte": "^3.2.7",
 		"replace-in-file": "^8.2.0",

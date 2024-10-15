@@ -118,8 +118,8 @@
 			</div>
 			<div class="flex flex-col gap-3 py3 pr-3">
 				<div class="flex gap-3">
-					{@render control(1, 0.01, $saturationBackground ?? "", s$, $activeColorHsl$.s)}
-					{@render control(1, 0.01, lightnessBackground, l$, $activeColorHsl$.l)}
+					{@render control(1, 0.005, $saturationBackground ?? "", s$, $activeColorHsl$.s)}
+					{@render control(1, 0.005, lightnessBackground, l$, $activeColorHsl$.l)}
 				</div>
 				{@render control(
 					360,

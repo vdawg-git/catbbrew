@@ -75,6 +75,9 @@ importers:
       bits-ui:
         specifier: ^0.21.16
         version: 0.21.16(svelte@5.0.0-next.264)
+      lucide-svelte:
+        specifier: ^0.453.0
+        version: 0.453.0(svelte@5.0.0-next.264)
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
@@ -1119,6 +1122,11 @@ packages:
 
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
+
+  lucide-svelte@0.453.0:
+    resolution: {integrity: sha512-K+eE2ZeE00ThIEbAmZB3Hq0sVS+1ZLj+7nqtJvN0Xrh/KZnfnEChG+do80sctqXQEE+iG1dA2T+5fVcJS1awfA==}
+    peerDependencies:
+      svelte: ^3 || ^4 || ^5.0.0-next.42
 
   magic-string@0.30.12:
     resolution: {integrity: sha512-Ea8I3sQMVXr8JhN4z+H/d8zwo+tYDgHE9+5G4Wnrwhs0gaK9fXTKx0Tw5Xwsd/bCPTTZNRAdpyzvoeORe9LYpw==}
@@ -2575,6 +2583,10 @@ snapshots:
   locate-character@3.0.0: {}
 
   lru-cache@10.4.3: {}
+
+  lucide-svelte@0.453.0(svelte@5.0.0-next.264):
+    dependencies:
+      svelte: 5.0.0-next.264
 
   magic-string@0.30.12:
     dependencies:

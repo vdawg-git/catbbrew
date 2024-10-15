@@ -1,5 +1,4 @@
 <script lang="ts">
-	import "@fontsource-variable/m-plus-code-latin"
 	import "@fontsource/m-plus-rounded-1c/400.css"
 	import "@fontsource/m-plus-rounded-1c/500.css"
 	import "@fontsource/m-plus-rounded-1c/800.css"

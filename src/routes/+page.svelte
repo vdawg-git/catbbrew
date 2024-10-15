@@ -4,7 +4,6 @@
 	import ColorOverview from "./design/ColorOverview.svelte"
 	import Foam from "$lib/images/foam.svelte"
 	import Coffeescript from "$lib/icons/coffeescript.svelte"
-	import Header from "./Header.svelte"
 </script>
 
 <svelte:head>
@@ -28,20 +27,14 @@
 <section class="flex z-10 self-center my-auto flex-col relative items-center justify-center">
 	<p
 		class="text-stroke-8 text-pink text-lg md:text-3xl text-stroke-crust font-bold self-start ml-6 -rotate-15"
-		onclick={() => activeColor$.set("pink")}
 	>
 		Catbbrew
 	</p>
 	<div class="flex flex-col gap-3 items-center text-lg">
-		<h1
-			class="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold max-w-[15ch] text-center"
-			onclick={() => activeColor$.set("maroon")}
-		>
+		<h1 class="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold max-w-[15ch] text-center">
 			Create your own color theme
 		</h1>
-		<p class="font-medium p bg-peach tracking-wider" onclick={() => activeColor$.set("peach")}>
-			Based on the awesome Catppuccin theme
-		</p>
+		<p class="font-medium p bg-peach tracking-wider">Based on the awesome Catppuccin system</p>
 	</div>
 
 	<div class="flex gap-1 items-center">
@@ -60,8 +53,8 @@
 		>
 			<div class="p-2">
 				<div class="i-mingcute-github-2-line size-8"></div>
-			</div>
-		</a>
+			</div></a
+		>
 	</div>
 </section>
 
@@ -74,7 +67,7 @@
 <div
 	class="fixed transform-origin-t right-6 top-1/2 -translate-y-1/2 bg-surface0 items-center flex-col gap3 outline shadow-base shadow outline-border rounded-3xl flex overflow-auto justify-stretch items-stretch flex flex-col rounded-3xl !p-0 m-0 z-10"
 >
-	<ColorOverview />
+	<ColorOverview class="flex-col" />
 </div>
 
 <Foam />
@@ -95,10 +88,6 @@
 
 	:global(.stroke) {
 		filter: drop-shadow(0 0 1px theme("colors.crust"));
-	}
-
-	ul a {
-		--at-apply: "text-subtext0 hover:text-subtext1 transition-colors";
 	}
 
 	* {

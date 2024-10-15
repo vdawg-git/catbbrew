@@ -824,7 +824,7 @@ m60 -10 c-7 -2 -21 -2 -30 0 -10 3 -4 5 12 5 17 0 24 -2 18 -5z m75 -10 c-10
 -9 14 -9 5z"
 		/>
 		<path
-			fill={createRgbaVar("purple")}
+			fill={createRgbaVar("pink")}
 			d="M581 2054 c0 -11 3 -14 6 -6 3 7 2 16 -1 19 -3 4 -6 -2 -5 -13z"
 		/>
 		<path
