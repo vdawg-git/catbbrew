@@ -30,22 +30,23 @@
 		<div class="flex flex-col gap-6 grow">
 			<LanguageSelection />
 
-			<div class="flex flex-col gap-1.5 px-3">
-				<Label for="font selector">Font</Label>
-				<Input
-					id="font selector"
-					value={"ui-monospace"}
-					oninput={({ currentTarget: { value } }) => {
-						document.documentElement.style.setProperty("--font-mono", value)
-					}}
-				/>
-			</div>
-
 			<div class="mx-3 flex flex-col gap-1.5">
 				<Label>Colors</Label>
 				<div class="border p-3 rounded-md flex items-center justify-center">
 					<ColorOverview />
 				</div>
+			</div>
+
+			<div class="flex flex-col gap-1.5 px-3">
+				<Label for="font selector">Font</Label>
+				<Input
+					id="font selector"
+					value={"ui-monospace"}
+					spellcheck="false"
+					oninput={({ currentTarget: { value } }) => {
+						document.documentElement.style.setProperty("--font-mono", value)
+					}}
+				/>
 			</div>
 		</div>
 
