@@ -1,35 +1,32 @@
-import { applyPatches, enablePatches, produceWithPatches, type Patch } from "immer"
+import { applyPatches, enablePatches, nothing, produceWithPatches, type Patch } from "immer"
 import {
 	filter,
 	map,
 	merge,
 	Observable,
 	of,
+	pairwise,
 	pipe as rxpipe,
 	share,
+	startWith,
 	switchMap,
 	type MonoTypeOperatorFunction
 } from "rxjs"
 
 enablePatches()
 
-type Patches = {
-	patches: Patch[]
-	inversePatches: Patch[]
+type HistoryItem<T> = {
+	undone: T[]
+	undoable: T[]
 }
 
-type HistoryItem = {
-	undone: Patches[]
-	undoable: Patches[]
-	previous: any
-}
+type History<T> = Record<string, HistoryItem<T>>
 
-type History = Record<string, HistoryItem>
-
-const history: History = {}
+const history: History<unknown> = {}
 const toUndos: string[] = []
+let toRedos: string[] = []
 
-const undoRedo$ = new Observable<"undo" | "redo">((subscriber) => {
+const undoRedo$ = new Observable<[action: "undo" | "redo", item: string]>((subscriber) => {
 	if (typeof document === "undefined") return
 	document.addEventListener("keydown", onKeydown)
 
@@ -38,11 +35,17 @@ const undoRedo$ = new Observable<"undo" | "redo">((subscriber) => {
 	function onKeydown(event: KeyboardEvent) {
 		if (event.key === "z" && event.ctrlKey) {
 			console.log("undo")
-			subscriber.next("undo")
+			const toUndo = toUndos.splice(-2, 2)[0]
+			if (!toUndo) return
+			toRedos.push(toUndo)
+			subscriber.next(["undo", toUndo])
 		}
 		if (event.key === "y" && event.ctrlKey) {
 			console.log("redo")
-			subscriber.next("redo")
+			const toRedo = toRedos.splice(-2, 2)[0]
+			if (!toRedo) return
+			toUndos.push(toRedo)
+			subscriber.next(["redo", toRedo])
 		}
 	}
 }).pipe(share())
@@ -55,53 +58,45 @@ export function undo<T>(
 ): MonoTypeOperatorFunction<T> {
 	history[name] ??= {
 		undone: [],
-		undoable: [],
-		previous: undefined
+		undoable: []
 	}
+	let isFirstRun = true
 
 	return rxpipe(
 		switchMap((data) => {
-			history[name].undone = []
-			toUndos.push(name)
-			const previous = history[name].previous
-
-			produceWithPatches(
-				previous ?? {},
-				(_draft) => data,
-				(patches, inversePatches) => {
-					history[name].undoable.push({ patches, inversePatches })
-					history[name].previous = data
-				}
-			)
-
-			console.log(history[name].undoable)
+			if (!isFirstRun) {
+				history[name].undoable.push(data)
+				history[name].undone = []
+				toUndos.push(name)
+				toRedos = toRedos.filter((item) => item !== name)
+			}
+			isFirstRun = false
 
 			const undoRedoData$ = undoRedo$.pipe(
-				map((action) => {
+				filter(([, itemName]) => itemName === name),
+				map(([action]) => {
 					if (action === "undo") {
-						const undo = history[name].undoable.pop()
+						// the latest undoable is the current state
+						const undo = history[name].undoable.splice(-2, 2)[0] as T | undefined
 						console.log("undo patches", undo)
+						console.log("undos", toUndos)
 
 						if (!undo) return
 
 						history[name].undone.push(undo)
 
-						const newData = applyPatches(previous ?? {}, undo.inversePatches)
-						history[name].previous = newData
-						console.log("undo data", newData)
-						return newData
+						return undo
 					}
 
 					if (action === "redo") {
-						const redo = history[name].undone.pop()
+						const redo = history[name].undone.pop() as T | undefined
 
 						if (!redo) return
 
 						history[name].undoable.push(redo)
 
-						const newData = applyPatches(previous ?? {}, redo.patches)
-						history[name].previous = newData
-						return newData
+						console.log("redo data", redo)
+						return redo
 					}
 				}),
 				filter(Boolean)
