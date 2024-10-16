@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge"
 import { cubicOut } from "svelte/easing"
 import type { TransitionConfig } from "svelte/transition"
 import type { ColorVariable } from "./types"
-import { Observable, share } from "rxjs"
+import { Observable, share, shareReplay } from "rxjs"
 import type { Writable } from "svelte/store"
 import type { Readable } from "svelte/motion"
 
@@ -100,7 +100,7 @@ export function fromStore<T>(store: Writable<T> | Readable<T>): Observable<T> {
 		return unsubscribe
 	}).pipe(
 		// @ts-expect-error
-		share()
+		shareReplay(1)
 	)
 }
 

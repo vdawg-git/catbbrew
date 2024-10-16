@@ -3,7 +3,7 @@
 	import Input from "$lib/components/ui/input/input.svelte"
 	import Label from "$lib/components/ui/label/label.svelte"
 	import Separator from "$lib/components/ui/separator/separator.svelte"
-	import { activeColor$, activeColorHsl$ } from "$lib/state/colors"
+	import { activeColor, activeColorHsl$ } from "$lib/state/colors"
 	import CodeBlock from "./CodeBlock.svelte"
 	import ColorAdjustBar from "./ColorAdjustBar.svelte"
 	import ColorOverview from "./ColorOverview.svelte"
@@ -71,7 +71,7 @@
 	<div
 		class="shrink-77 overflow-hidden justify-center items-center relative flex grow max-h-screen min-h-0"
 	>
-		{#if $activeColor$ && $activeColorHsl$}
+		{#if $activeColor && $activeColorHsl$}
 			<!-- <div
 				class="bg-gradient-to-t z-2 from-base h-45 via-base/70 pointer-events-none absolute bottom-0 w-full"
 			></div> -->

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { activeColor$ } from "$lib/state/colors"
+	import { activeColor } from "$lib/state/colors"
 	import type { ColorName } from "$lib/types"
 	import { createRgbaVar } from "$lib/utils"
 </script>
@@ -21,10 +21,7 @@
 		const colorRg = /(?<=--).*(?=\)\))/
 		const color = path.attributes.getNamedItem("fill")?.value?.match(colorRg)?.[0]
 
-		console.log(color)
-		if (!color) return
-
-		activeColor$.set(color as ColorName)
+		activeColor.set((color ?? "blue") as ColorName)
 	}}
 >
 	<g

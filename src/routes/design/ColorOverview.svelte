@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { activeColor$, colors$ } from "$lib/state/colors"
+	import { activeColor, colors$ } from "$lib/state/colors"
 	import type { ColorName } from "$lib/types"
 	import { derived } from "svelte/store"
 	import type { Okhsl } from "culori"
 	import { cn } from "$lib/utils"
+	import { map, startWith } from "rxjs"
 
 	let {
 		vibrantsColumns = 2,
@@ -13,23 +14,9 @@
 		class: className = ""
 	} = $props()
 
-	const neutrals$ = derived(
-		colors$,
-		({
-			crust,
-			mantle,
-			base,
-			surface0,
-			surface1,
-			surface2,
-			overlay0,
-			overlay1,
-			overlay2,
-			subtext0,
-			subtext1,
-			text
-		}) =>
-			Object.entries({
+	const neutrals$ = colors$.pipe(
+		map(
+			({
 				crust,
 				mantle,
 				base,
@@ -42,27 +29,28 @@
 				subtext0,
 				subtext1,
 				text
-			}) as readonly [ColorName, Okhsl][]
+			}) =>
+				Object.entries({
+					crust,
+					mantle,
+					base,
+					surface0,
+					surface1,
+					surface2,
+					overlay0,
+					overlay1,
+					overlay2,
+					subtext0,
+					subtext1,
+					text
+				}) as readonly [ColorName, Okhsl][]
+		),
+		startWith([])
 	)
-	const mainColors$ = derived(
-		colors$,
-		({
-			lavender,
-			blue,
-			sapphire,
-			sky,
-			teal,
-			green,
-			yellow,
-			peach,
-			maroon,
-			red,
-			mauve,
-			pink,
-			flamingo,
-			rosewater
-		}) =>
-			Object.entries({
+
+	const mainColors$ = colors$.pipe(
+		map(
+			({
 				lavender,
 				blue,
 				sapphire,
@@ -77,7 +65,25 @@
 				pink,
 				flamingo,
 				rosewater
-			}) as readonly [ColorName, Okhsl][]
+			}) =>
+				Object.entries({
+					lavender,
+					blue,
+					sapphire,
+					sky,
+					teal,
+					green,
+					yellow,
+					peach,
+					maroon,
+					red,
+					mauve,
+					pink,
+					flamingo,
+					rosewater
+				}) as readonly [ColorName, Okhsl][]
+		),
+		startWith([])
 	)
 
 	function getEdge(
@@ -112,7 +118,7 @@
 				class:rounded-bl-2xl={getEdge(index, vibrantsRows, vibrantsColumns) === "bottom-left"}
 				class:rounded-br-2xl={getEdge(index, vibrantsRows, vibrantsColumns) === "bottom-right"}
 				style="background: rgba(var(--{name}))"
-				onclick={() => activeColor$.set(name)}
+				onclick={() => activeColor.set(name)}
 			></button>
 		{/each}
 	</div>
@@ -130,7 +136,7 @@
 				class:rounded-bl-2xl={getEdge(index, neutralsRows, neutralsColumns) === "bottom-left"}
 				class:rounded-br-2xl={getEdge(index, neutralsRows, neutralsColumns) === "bottom-right"}
 				style="background: rgba(var(--{name}))"
-				onclick={() => activeColor$.set(name)}
+				onclick={() => activeColor.set(name)}
 			></button>
 		{/each}
 	</div>

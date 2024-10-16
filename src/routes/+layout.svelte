@@ -5,7 +5,7 @@
 	import "@unocss/reset/tailwind.css"
 	import "virtual:uno.css"
 	import "../app.css"
-	import { activeColorHsl$, activeColor$, colors$ } from "$lib/state/colors"
+	import { activeColorHsl$, activeColor, colors$ } from "$lib/state/colors"
 	import { cssVar } from "$lib/utils"
 	import { type Okhsl } from "culori"
 
@@ -20,9 +20,13 @@
 	}
 </script>
 
+<noscript class="fixed inset-0 bg-crust/40"
+	>You need to enable JavaScript to run this app.
+</noscript>
+
 <div
 	class="min-h-screen flex flex-col max-h-screen h-screen font-sans"
-	style:--active-color={$activeColor$ && cssVar($activeColor$)}
+	style:--active-color={$activeColor && cssVar($activeColor)}
 	style:--active-colorForeground={$activeColorHsl$ && getActiveColorForeground($activeColorHsl$)}
 >
 	<main class="grow min-h-0 flex flex-col">

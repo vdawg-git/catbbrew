@@ -20,6 +20,12 @@ export default defineConfig({
 	extendTheme: (theme) => ({
 		...theme,
 
+		fontWeight: {
+			normal: 400,
+			medium: 500,
+			bold: 800
+		},
+
 		fontFamily: {
 			// @ts-expect-error
 			...theme.fontFamily,

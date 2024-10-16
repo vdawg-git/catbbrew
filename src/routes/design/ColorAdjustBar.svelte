@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { produce } from "immer"
-	import { activeColor$, activeColorHex$, activeColorHsl$, colors$ } from "$lib/state/colors"
+	import { activeColor, activeColorHex$, activeColorHsl$, updateColors } from "$lib/state/colors"
 	import {
 		distinctUntilChanged,
 		combineLatest,
@@ -8,20 +8,18 @@
 		map,
 		Subject,
 		throttleTime,
-		tap,
 		share,
 		startWith
 	} from "rxjs"
 	import * as R from "remeda"
-	import { formatHex, hsl, okhsl, round, samples, type Okhsl } from "culori"
-	import { derived, type Readable } from "svelte/store"
+	import { formatHex, okhsl, samples } from "culori"
 	import { copyToClipboard } from "$lib/utils"
 
 	// const input$ = writable<Partial<HSL>>({})
 	const h$ = new Subject<number | undefined>()
 	const s$ = new Subject<number | undefined>()
 	const l$ = new Subject<number | undefined>()
-	activeColor$.subscribe(() => {
+	activeColor.subscribe(() => {
 		h$.next(undefined)
 		s$.next(undefined)
 		l$.next(undefined)
@@ -41,20 +39,26 @@
 	)
 
 	const input$$ = input$.pipe(filter(R.isDefined))
-	const hueBackground = derived(activeColorHsl$, (hsl) =>
-		hsl
-			? samples(64)
-					.map((h) => formatHex(okhsl(`color(--okhsl ${h * 360} ${hsl.s ?? 1} ${hsl.l ?? 0.8})`)))
-					.join(", ")
-			: undefined
+	const hueBackground = activeColorHsl$.pipe(
+		map((hsl) =>
+			hsl
+				? samples(64)
+						.map((h) => formatHex(okhsl(`color(--okhsl ${h * 360} ${hsl.s ?? 1} ${hsl.l ?? 0.8})`)))
+						.join(", ")
+				: undefined
+		)
 	)
-	const saturationBackground = derived(activeColorHsl$, (hsl) =>
-		hsl
-			? samples(64)
-					.map((s) => formatHex(okhsl(`color(--okhsl ${hsl.h ?? 180} ${s ?? 1} 0.5)`)))
-					.join(", ")
-			: undefined
+
+	const saturationBackground = activeColorHsl$.pipe(
+		map((hsl) =>
+			hsl
+				? samples(64)
+						.map((s) => formatHex(okhsl(`color(--okhsl ${hsl.h ?? 180} ${s ?? 1} 0.5)`)))
+						.join(", ")
+				: undefined
+		)
 	)
+
 	const lightnessBackground = samples(64)
 		.map((l) => formatHex(okhsl(`color(--okhsl 0 0 ${l})`)))
 		.join(", ")
@@ -62,13 +66,13 @@
 	const output$ = input$$.pipe(throttleTime(15))
 
 	output$.subscribe((current) => {
-		if (!$activeColor$) {
+		if (!$activeColor) {
 			console.warn("no active color hgoj")
 			return
 		}
-		colors$.update(
+		updateColors(
 			produce((colors) => {
-				colors[$activeColor$!] = { ...colors[$activeColor$!], ...current }
+				colors[$activeColor!] = { ...colors[$activeColor!], ...current }
 			})
 		)
 	})
@@ -104,9 +108,9 @@
 				>
 					<button
 						class="block grow hover:bg-background/20 rounded pointer-events-auto"
-						on:click={() => $activeColor$ && copyToClipboard($activeColor$)}
+						on:click={() => $activeColor && copyToClipboard($activeColor)}
 					>
-						{$activeColor$}
+						{$activeColor}
 					</button>
 					<button
 						class="block grow hover:bg-background/20 rounded pointer-events-auto"

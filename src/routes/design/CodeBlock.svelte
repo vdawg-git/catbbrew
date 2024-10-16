@@ -2,7 +2,7 @@
 	import { shikiTheme } from "$lib/colors"
 	import { createHighlighter } from "shiki"
 
-	import { activeColor$ } from "$lib/state/colors"
+	import { activeColor } from "$lib/state/colors"
 	import type { ColorName } from "$lib/types"
 	import { language, languages } from "$lib/state/language"
 	import { fromStore } from "$lib/utils"
@@ -30,7 +30,6 @@
 	const toRender$ = merge(languageText$, code$).pipe(
 		filter(Boolean),
 		switchMap(async (text) => {
-			console.log("\n\n\n\n\n\n\n\n\n\n\n\n", text)
 			const hl = await highlighter
 			const toRender = hl
 				.codeToHtml(text, { lang: $language.name, theme: "theme" })
@@ -60,7 +59,7 @@
 
 		if (!color) return
 
-		activeColor$.set(color as ColorName)
+		activeColor.set(color as ColorName)
 	}}
 	oninput={(e) => {
 		codeInput$.next(e.currentTarget.innerText)

@@ -1,5 +1,5 @@
 <script>
-	import { activeColor$ } from "$lib/state/colors"
+	import { activeColor, colors$ } from "$lib/state/colors"
 	import ColorAdjustBar from "./design/ColorAdjustBar.svelte"
 	import ColorOverview from "./design/ColorOverview.svelte"
 	import Foam from "$lib/images/foam.svelte"
@@ -58,7 +58,7 @@
 	</div>
 </section>
 
-{#if $activeColor$}
+{#if $activeColor}
 	<div class="fixed flex flex-col items-center bottom-4 z-6 left-1/2 -translate-x-1/2">
 		<ColorAdjustBar />
 	</div>
@@ -77,7 +77,7 @@
 		-webkit-text-stroke: 8px theme("colors.crust");
 		-webkit-text-fill-color: theme("colors.maroon");
 		paint-order: stroke fill;
-		text-shadow: 0.5rem 0.5rem 0 theme("colors.crust");
+		text-shadow: 0.6rem 0.6rem 0 theme("colors.crust");
 	}
 	.p {
 		-webkit-text-stroke: 8px theme("colors.base");
