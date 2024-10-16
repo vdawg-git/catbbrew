@@ -43,7 +43,7 @@
 			class=" bg-gradient-to-bl text-crust flex gap-3 items-center px4 py2 m6 rounded-2xl bg-gradient-from-peach bg-gradient-to-red ring-offset-background focus-visible:ring-ring font-bold border-crust border border-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 hover:outline outline-offset-2 outline-yellow uppercase"
 		>
 			Brew your own flavor
-			<Coffeescript class="size-8 stroke" />
+			<Coffeescript class="size-7 stroke" />
 		</a>
 
 		<a
