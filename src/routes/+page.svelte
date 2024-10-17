@@ -26,35 +26,39 @@
 
 <section class="flex z-10 self-center my-auto flex-col relative items-center justify-center">
 	<p
-		class="text-stroke-8 text-pink text-lg md:text-3xl text-stroke-crust font-bold self-start ml-6 -rotate-15"
+		class="text-stroke-8 text-pink text-lg absolute left-0 -top-8 md:text-3xl text-stroke-crust font-bold self-start ml-6 -rotate-15"
 	>
 		Catbbrew
 	</p>
+
+	<a
+		href="https://github.com/vdawg-git/catbbrew"
+		class="rotate-12 absolute hover:-translate-y-1 hover:rotate-10 transition-transform right-0 -top-28 xl:-top-1"
+		aria-label="Github"
+	>
+		<div class="p-2 rounded-full border-yellow b-dotted border-2 text-yellow">
+			<div class="i-mingcute-github-2-fill size-8"></div>
+		</div></a
+	>
 	<div class="flex flex-col gap-3 items-center text-lg">
-		<h1 class="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold max-w-[15ch] text-center">
+		<h1 class="text-4xl md:text-7xl lg:text-8xl font-bold max-w-[15ch] text-center">
 			Create your own color theme
 		</h1>
 		<p class="font-medium p bg-peach tracking-wider">Based on the awesome Catppuccin system</p>
 	</div>
 
-	<div class="flex gap-1 items-center">
+	<div class="flex gap-1 items-center mt-10 relative">
 		<a
 			href="/design"
-			class=" bg-gradient-to-bl text-crust flex gap-3 items-center px4 py2 m6 rounded-2xl bg-gradient-from-peach bg-gradient-to-red ring-offset-background focus-visible:ring-ring font-bold border-crust border border-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 hover:outline outline-offset-2 outline-yellow uppercase"
+			class=" bg-gradient-to-bl outline-8 outline text-crust flex gap-3 items-center px4 py2 m6 rounded-2xl hover:outline-offset-4 transition-all hover:scale-105 bg-gradient-from-peach bg-gradient-to-red ring-offset-background focus-visible:ring-ring text-lg lg:text-xl font-bold border-crust border border-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 hover:outline outline-offset-2 outline-yellow uppercase"
 		>
 			Brew your own flavor
-			<Coffeescript class="size-7 stroke" />
+			<!-- <Coffeescript class="size-7 stroke" /> -->
 		</a>
 
-		<a
-			href="https://github.com/vdawg-git/catbbrew"
-			class=""
-			aria-label="Toggle dark and light mode"
-		>
-			<div class="p-2">
-				<div class="i-mingcute-github-2-line size-8"></div>
-			</div></a
-		>
+		<div
+			class="i-mingcute-large-arrow-left-line size-24 absolute -right-16 -bottom-12 rotate-38 text-pink"
+		></div>
 	</div>
 </section>
 
