@@ -12,8 +12,10 @@
 		startWith
 	} from "rxjs"
 	import * as R from "remeda"
-	import { formatHex, okhsl, samples } from "culori"
+	import { formatHex, okhsl, parse, samples, converter } from "culori"
 	import { copyToClipboard } from "$lib/utils"
+
+	const toOkhsl = converter("okhsl")
 
 	// const input$ = writable<Partial<HSL>>({})
 	const h$ = new Subject<number | undefined>()
@@ -98,7 +100,7 @@
 					}}
 				/>
 				<div
-					class="opacity-0 group-hover:opacity-100 transition-opacity grid-col-start-2 z-1 grid-row-start-1 grid-row-end-2 grid-col-end-3 right-0 top-0 pointer-events-none flex justify-center items-center"
+					class="transition-opacity opacity-80 grid-col-start-2 z-1 grid-row-start-1 grid-row-end-2 grid-col-end-3 right-0 top-0 pointer-events-none flex justify-center items-center"
 				>
 					<div class="i-mingcute-color-picker-line text-activeColorForeground size-8"></div>
 				</div>
@@ -112,11 +114,25 @@
 					>
 						{$activeColor}
 					</button>
+					<input
+						type="text"
+						class="block max-w-8ch bg-transparent grow hover:outline-background/20 rounded cursor-text pointer-events-auto"
+						value={$activeColorHex$}
+						on:input={({ currentTarget: { value } }) => {
+							const ok = toOkhsl(value)
+							if (!ok) return
+							const { h, s, l } = ok
+							h$.next(h)
+							s$.next(s)
+							l$.next(l)
+						}}
+					/>
 					<button
 						class="block grow hover:bg-background/20 rounded pointer-events-auto"
 						on:click={() => $activeColorHex$ && copyToClipboard($activeColorHex$)}
+						aria-label="Copy to clipboard"
 					>
-						{$activeColorHex$}
+						<div class="i-mingcute-copy-3-line size-5"></div>
 					</button>
 				</div>
 			</div>
