@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { activeColor, colors$ } from "$lib/state/colors"
-	import type { ColorName } from "$lib/types"
-	import { derived } from "svelte/store"
 	import type { Okhsl } from "culori"
 	import { cn } from "$lib/utils"
 	import { map, startWith } from "rxjs"
+	import type { ColorName } from "@catppuccin/palette"
 
 	let {
 		vibrantsColumns = 2,
@@ -104,7 +103,7 @@
 	}
 </script>
 
-<div class={cn("gap5 flex grow p4 items-start max-w-max", className)}>
+<div class={cn("gap5 flex grow p-4 items-start max-w-max", className)}>
 	<div
 		class="grid w-fit"
 		style="grid-template-columns: repeat({vibrantsColumns}, 1fr); grid-template-rows: repeat({vibrantsRows}, 1fr);"

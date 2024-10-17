@@ -18,7 +18,7 @@
 
 <section class="flex relative max-h-screen overflow-clip grow min-h-0 min-w-0">
 	<aside
-		class="py-2 relative px-3 flex flex-col overflow-auto justify-start gap-6 max-w-60 lg:max-w-70 xl:max-w-80 bg-mantle min-h-0"
+		class="py-2 relative px-3 flex flex-col pb-28 overflow-auto justify-start gap-4 max-w-60 lg:max-w-70 xl:max-w-80 bg-mantle min-h-0"
 	>
 		<div class="flex justify-between px-2 mt-1">
 			<a
@@ -28,31 +28,32 @@
 			>
 		</div>
 
-		<div class="flex flex-col gap-6 grow">
-			<PresetsPicker />
+		<PresetsPicker />
 
-			<div class="mx-3 flex flex-col gap-1.5">
-				<Label>Colors</Label>
-				<div class="border p-3 rounded-md flex items-center justify-center">
-					<ColorOverview />
-				</div>
-			</div>
+		<div class="mx-3 flex flex-col gap-1.5">
+			<Label>Colors</Label>
+			<ColorOverview
+				vibrantsColumns={7}
+				vibrantsRows={2}
+				neutralsColumns={6}
+				neutralsRows={2}
+				class="flex-col p-0 items-start"
+			/>
+		</div>
 
-			<div class="flex flex-col"></div>
+		<Separator class="" orientation="horizontal" />
+		<LanguageSelection />
 
-			<LanguageSelection />
-
-			<div class="flex flex-col gap-1.5 px-3">
-				<Label for="font selector">Font</Label>
-				<Input
-					id="font selector"
-					value={"ui-monospace"}
-					spellcheck="false"
-					oninput={({ currentTarget: { value } }) => {
-						document.documentElement.style.setProperty("--font-mono", value)
-					}}
-				/>
-			</div>
+		<div class="flex flex-col gap-1.5 px-3">
+			<Label for="font selector">Font</Label>
+			<Input
+				id="font selector"
+				value={"ui-monospace"}
+				spellcheck="false"
+				oninput={({ currentTarget: { value } }) => {
+					document.documentElement.style.setProperty("--font-mono", value)
+				}}
+			/>
 		</div>
 
 		<div class="absolute bg-mantle bottom-0 inset-x-0">
