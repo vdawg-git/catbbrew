@@ -8,6 +8,7 @@
 	import ColorAdjustBar from "./ColorAdjustBar.svelte"
 	import ColorOverview from "./ColorOverview.svelte"
 	import LanguageSelection from "./LanguageSelection.svelte"
+	import PresetsPicker from "./PresetsPicker.svelte"
 </script>
 
 <svelte:head>
@@ -28,7 +29,7 @@
 		</div>
 
 		<div class="flex flex-col gap-6 grow">
-			<LanguageSelection />
+			<PresetsPicker />
 
 			<div class="mx-3 flex flex-col gap-1.5">
 				<Label>Colors</Label>
@@ -36,6 +37,10 @@
 					<ColorOverview />
 				</div>
 			</div>
+
+			<div class="flex flex-col"></div>
+
+			<LanguageSelection />
 
 			<div class="flex flex-col gap-1.5 px-3">
 				<Label for="font selector">Font</Label>

@@ -12,7 +12,7 @@
 		startWith
 	} from "rxjs"
 	import * as R from "remeda"
-	import { formatHex, okhsl, parse, samples, converter } from "culori"
+	import { formatHex, okhsl, samples, converter } from "culori"
 	import { copyToClipboard } from "$lib/utils"
 
 	const toOkhsl = converter("okhsl")

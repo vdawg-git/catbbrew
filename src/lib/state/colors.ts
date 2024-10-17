@@ -1,17 +1,13 @@
-import { baseColors } from "$lib/colors"
-import { derived, writable, type Readable } from "svelte/store"
-import type { Color, ColorName } from "$lib/types"
+import { writable } from "svelte/store"
 import { formatHex, okhsl, rgb, type Okhsl } from "culori"
 import * as R from "remeda"
 import { fromStore } from "$lib/utils"
 import { undo } from "$lib/undo"
-import { combineLatest, map, share, shareReplay, type Observable } from "rxjs"
+import { combineLatest, map, shareReplay, type Observable } from "rxjs"
+import type { ColorName } from "@catppuccin/palette"
+import { mocha, presetToOkhsl } from "$lib/presets"
 
-const colors = writable(
-	Object.fromEntries(
-		baseColors.map(([name, { value }]) => [name, okhsl(value)] as const)
-	) as Record<ColorName, Okhsl>
-)
+const colors = writable(presetToOkhsl(mocha))
 
 export const updateColors = colors.update
 export const setColors = colors.set

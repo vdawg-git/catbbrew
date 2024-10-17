@@ -3,11 +3,10 @@
 	import * as Command from "$lib/components/ui/command/index.js"
 	import * as Popover from "$lib/components/ui/popover/index.js"
 	import { Button } from "$lib/components/ui/button/index.js"
-	import TypescriptIcon from "$lib/icons/typescript.svelte"
-	import Rust from "$lib/icons/rust.svelte"
-	import { setLanguage, language, languages, type LanguageName } from "$lib/state/language"
+	import { presets, presetToOkhsl } from "$lib/presets"
+	import { setColors } from "$lib/state/colors"
 
-	let Icon = $derived($language.icon)
+	let activePreset = $state("Mocha")
 
 	let open = $state(false)
 	// We want to refocus the trigger button when the user selects
@@ -32,8 +31,7 @@
 			class="border-none flex group  justify-between  "
 		>
 			<div class="flex gap-3 items-center">
-				<Icon class="size-6" />
-				{$language.display}
+				{activePreset}
 			</div>
 			<div class="i-mingcute-down-line size-6 text-overlay0 group-hover:text-subtext1"></div>
 		</Button>
@@ -43,16 +41,16 @@
 			<!-- <Command.Input placeholder="Search framework..." /> -->
 			<Command.Empty>Nothing here</Command.Empty>
 			<Command.Group>
-				{#each Object.entries(languages) as [name_, data]}
+				{#each presets as preset}
 					<Command.Item
-						value={name_}
-						onSelect={(currentValue) => {
-							setLanguage(currentValue as LanguageName)
-							closeAndFocusTrigger(ids.trigger)
+						value={preset.name}
+						onSelect={() => {
+							activePreset = preset.name
+							setColors(presetToOkhsl(preset))
+							// closeAndFocusTrigger(ids.trigger)
 						}}
 					>
-						<data.icon class="mr-2 h-4 w-4" />
-						{data.display}
+						{preset.name}
 					</Command.Item>
 				{/each}
 			</Command.Group>

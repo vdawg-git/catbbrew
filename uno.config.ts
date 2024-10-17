@@ -1,9 +1,15 @@
-import { defineConfig, presetIcons, presetUno, transformerDirectives } from "unocss"
-import { baseColors } from "./src/lib/colors"
+import {
+	defineConfig,
+	presetIcons,
+	presetUno,
+	transformerDirectives,
+	transformerVariantGroup
+} from "unocss"
 import { rgb } from "culori"
 import { createRgbaVar, cssVar, shadcnVariables } from "./src/lib/utils"
+import { mocha } from "./src/lib/presets"
 
-const baseAsRGBA = baseColors.map(([key, { value }]) => {
+const baseAsRGBA = Object.entries(mocha).map(([key, value]) => {
 	const { r, g, b } = rgb(value)!
 	return [key, [r, g, b].map((i) => i * 255).join(",")] as const
 })
@@ -11,7 +17,7 @@ const baseAsRGBA = baseColors.map(([key, { value }]) => {
 export default defineConfig({
 	presets: [presetUno({ dark: "class" }), presetIcons()],
 	shortcuts: [],
-	transformers: [transformerDirectives()],
+	transformers: [transformerDirectives(), transformerVariantGroup()],
 	theme: {
 		screens: {
 			"2xl": "1400px"

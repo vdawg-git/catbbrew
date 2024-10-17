@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { shikiTheme } from "$lib/colors"
+	import { shikiTheme } from "$lib/shiki"
 	import { createHighlighter } from "shiki"
 
 	import { activeColor } from "$lib/state/colors"
@@ -47,7 +47,7 @@
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
-	class="bg-base p6 [&_span:not(:has(span)):hover]:outline font-mono [&_span:not(:has(span)):active]:bg-overlay1/20 [&_span:not(:has(span)):hover]:rounded !cursor-text ![&_pre]:outline-none"
+	class="bg-base p6 [&_span:not(:has(span)):hover]:outline [&_span:not(:has(span)):hover]:outline-offset-2 font-mono [&_span:not(:has(span)):active]:bg-overlay1/20 [&_span:not(:has(span)):hover]:rounded !cursor-text ![&_pre]:outline-none"
 	aria-label="Preview code"
 	onclick={({ target }) => {
 		if (!target || !("tagName" in target) || !("style" in target)) return

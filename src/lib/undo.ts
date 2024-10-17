@@ -35,6 +35,9 @@ const undoRedo$ = new Observable<[action: "undo" | "redo", item: string]>((subsc
 	function onKeydown(event: KeyboardEvent) {
 		if (event.key === "z" && event.ctrlKey) {
 			console.log("undo")
+			// not sure if this will work with multiple undo streams
+			// right now this works with one, as when an undo is done,
+			// a new value comes in which triggers a push to `toUndos` again
 			const toUndo = toUndos.splice(-2, 2)[0]
 			if (!toUndo) return
 			toRedos.push(toUndo)
