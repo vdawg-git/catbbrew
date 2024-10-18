@@ -1,28 +1,10 @@
 <script lang="ts">
-	import { shikiTheme } from "$lib/shiki"
-	import { createHighlighter } from "shiki"
-
 	import { activeColor } from "$lib/state/colors"
-	import type { ColorName } from "$lib/types"
-	import { language, languages } from "$lib/state/language"
+	import { language } from "$lib/state/language"
 	import { fromStore } from "$lib/utils"
-	import {
-		combineLatest,
-		debounceTime,
-		filter,
-		map,
-		merge,
-		share,
-		startWith,
-		Subject,
-		switchMap,
-		type pipe
-	} from "rxjs"
-
-	const highlighter = createHighlighter({
-		themes: [shikiTheme],
-		langs: Object.keys(languages)
-	})
+	import { debounceTime, filter, map, merge, share, Subject, switchMap } from "rxjs"
+	import type { ColorName } from "@catppuccin/palette"
+	import { highlighter } from "$lib/shiki"
 
 	const languageText$ = fromStore(language).pipe(map(({ text }) => text))
 	const codeInput$ = new Subject<string>()
@@ -30,14 +12,13 @@
 	const toRender$ = merge(languageText$, code$).pipe(
 		filter(Boolean),
 		switchMap(async (text) => {
-			const hl = await highlighter
-			const toRender = hl
+			const toRender = highlighter
 				.codeToHtml(text, { lang: $language.name, theme: "theme" })
 				.replace(
 					'class="shiki theme"',
 					'contenteditable spellcheck="false" autocorrect="off" class="shiki theme"'
 				)
-			// console.log(toRender)
+
 			return toRender
 		}),
 		share()

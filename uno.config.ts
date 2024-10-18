@@ -9,7 +9,7 @@ import { rgb } from "culori"
 import { createRgbaVar, cssVar, shadcnVariables } from "./src/lib/utils"
 import { mocha } from "./src/lib/presets"
 
-const baseAsRGBA = Object.entries(mocha).map(([key, value]) => {
+const baseAsRGBA = Object.entries(mocha.colors).map(([key, value]) => {
 	const { r, g, b } = rgb(value)!
 	return [key, [r, g, b].map((i) => i * 255).join(",")] as const
 })

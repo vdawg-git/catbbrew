@@ -1,6 +1,7 @@
 import { compile } from "@catppuccin/vscode"
 import { createRgbaVar } from "./utils"
-import type { ThemeRegistration } from "shiki"
+import { createHighlighter, type ThemeRegistration } from "shiki"
+import { languages } from "$lib/state/language"
 import { mocha } from "./presets"
 import type { ColorName } from "@catppuccin/palette"
 
@@ -22,3 +23,8 @@ export const shikiTheme: ThemeRegistration = {
 	name: "theme",
 	semanticTokenColors: {}
 }
+
+export const highlighter = await createHighlighter({
+	themes: [shikiTheme],
+	langs: [...Object.keys(languages), "json", "lua", "bash"]
+})

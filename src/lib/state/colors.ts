@@ -14,10 +14,6 @@ export const setColors = colors.set
 
 export const colors$ = fromStore(colors).pipe(undo("colors"), shareReplay(1))
 
-colors$.subscribe((colors) => {
-	console.log("colors", colors)
-})
-
 const colorVars$ = colors$.pipe(
 	map((colors) =>
 		Object.entries(colors).map(([key, value]) => {

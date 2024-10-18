@@ -47,6 +47,7 @@
 		"remeda": "^2.15.0",
 		"rxjs": "^7.8.1",
 		"shiki": "^1.22.0",
+		"svelte-sonner": "^0.3.28",
 		"tailwind-merge": "^2.5.3",
 		"tailwind-variants": "^0.2.1"
 	},

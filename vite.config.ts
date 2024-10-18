@@ -10,5 +10,8 @@ export default defineConfig({
 			/* more options */
 		}),
 		sveltekit()
-	]
+	],
+	optimizeDeps: {
+		include: ["svelte-sonner"]
+	}
 })

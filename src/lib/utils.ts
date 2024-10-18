@@ -4,6 +4,7 @@ import { cubicOut } from "svelte/easing"
 import type { TransitionConfig } from "svelte/transition"
 import type { ColorVariable } from "./types"
 import { Observable, share, shareReplay } from "rxjs"
+import { toast } from "svelte-sonner"
 import type { Writable } from "svelte/store"
 import type { Readable } from "svelte/motion"
 
@@ -108,10 +109,10 @@ export function copyToClipboard(text: string) {
 	navigator.clipboard
 		.writeText(text)
 		.then(() => {
-			// toast.success(`Copied: ${text}`, { closable: true })
+			// toast.success(`Copied: ${text}`, { dismissable: true })
 		})
 		.catch((err) => {
 			console.error(err)
-			// toast.error("Failed to copy to clipboard.", { closable: true })
+			// toast.error("Failed to copy to clipboard.", { dismissable: true })
 		})
 }

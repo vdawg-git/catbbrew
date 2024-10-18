@@ -1,9 +1,8 @@
 <script>
-	import { activeColor, colors$ } from "$lib/state/colors"
+	import { activeColor } from "$lib/state/colors"
 	import ColorAdjustBar from "./design/ColorAdjustBar.svelte"
 	import ColorOverview from "./design/ColorOverview.svelte"
 	import Foam from "$lib/images/foam.svelte"
-	import Coffeescript from "$lib/icons/coffeescript.svelte"
 </script>
 
 <svelte:head>

@@ -7,6 +7,7 @@
 	import "../app.css"
 	import { activeColorHsl$, activeColor, colors$ } from "$lib/state/colors"
 	import { cssVar } from "$lib/utils"
+	// import { Toaster } from "svelte-sonner"
 	import { type Okhsl } from "culori"
 
 	function getActiveColorForeground(active: Okhsl) {
@@ -23,6 +24,8 @@
 <noscript class="fixed inset-0 bg-crust/40"
 	>You need to enable JavaScript to run this app.
 </noscript>
+
+<!-- <Toaster /> -->
 
 <div
 	class="min-h-screen flex flex-col max-h-screen h-screen font-sans"
