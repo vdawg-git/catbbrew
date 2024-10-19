@@ -12,6 +12,7 @@
 	import PresetsPicker from "./PresetsPicker.svelte"
 	import Snapshot from "./Snapshot.svelte"
 	import UploadModal from "./Upload.svelte"
+	import { base } from "$app/paths"
 
 	let uploadModal: SvelteComponent<Record<string, never>, never, never> & {
 		show: () => void
@@ -30,7 +31,7 @@
 	>
 		<div class="flex justify-between px-2 mt-1">
 			<a
-				href="/"
+				href="{base}/"
 				class="text-stroke-text text-crust stroke text-stroke-4 hover:text-stroke-peach font-bold"
 				>Catbbrew</a
 			>
@@ -89,7 +90,7 @@
 					size="lg"
 					variant="outline"
 					aria-label="export"
-					href="/export"
+					href="{base}/export"
 				>
 					Export
 					<div class="size-6 i-mingcute-file-export-line"></div>

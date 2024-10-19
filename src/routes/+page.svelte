@@ -3,6 +3,7 @@
 	import ColorAdjustBar from "./design/ColorAdjustBar.svelte"
 	import ColorOverview from "./design/ColorOverview.svelte"
 	import Foam from "$lib/images/foam.svelte"
+	import { base } from "$app/paths"
 </script>
 
 <svelte:head>
@@ -48,7 +49,7 @@
 
 	<div class="flex gap-1 items-center mt-10 relative">
 		<a
-			href="/design"
+			href="{base}/design"
 			class=" bg-gradient-to-bl outline-8 outline text-crust flex gap-3 items-center px4 py2 m6 rounded-2xl hover:outline-offset-4 transition-all hover:scale-105 bg-gradient-from-peach bg-gradient-to-red ring-offset-background focus-visible:ring-ring text-lg lg:text-xl font-bold border-crust border border-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 hover:outline outline-offset-2 outline-yellow uppercase"
 		>
 			Brew your own flavor

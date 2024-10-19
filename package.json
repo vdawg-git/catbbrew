@@ -8,7 +8,7 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
-		"lint": "prettier --check .",
+		"deploy": "pnpm run build && gh-pages --dist build --no-history",
 		"updateIcons": "node ./scripts/updateIcons.js"
 	},
 	"devDependencies": {
@@ -42,6 +42,7 @@
 		"clsx": "^2.1.1",
 		"cmdk-sv": "^0.0.18",
 		"culori": "^4.0.1",
+		"gh-pages": "^6.2.0",
 		"hsluv": "^1.0.1",
 		"immer": "^10.1.1",
 		"remeda": "^2.15.2",
