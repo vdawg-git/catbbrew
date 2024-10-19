@@ -1,0 +1,6 @@
+{
+	"unocss.colorPreview": false,
+	"search.exclude": {
+		"src/lib/icons/*": true
+	}
+}

@@ -1,0 +1,1 @@
+import{a as m,t as e}from"../chunks/disclose-version.CoWuH1YL.js";import{c as s,r as n}from"../chunks/runtime.vS2xcihM.js";import{s as i}from"../chunks/slot.CfiUG1nG.js";var l=e('<main class="grow min-h-0 flex flex-col"><!></main>');function d(o,r){var a=l(),t=s(a);i(t,r,"default",{}),n(a),m(o,a)}export{d as component};
