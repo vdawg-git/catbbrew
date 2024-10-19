@@ -31,15 +31,17 @@
 
 		<PresetsPicker />
 
-		<div class="mx-3 flex flex-col gap-1.5">
-			<Label>Colors</Label>
-			<ColorOverview
-				vibrantsColumns={7}
-				vibrantsRows={2}
-				neutralsColumns={6}
-				neutralsRows={2}
-				class="flex-col p-0 items-start"
-			/>
+		<div class="mx-3 flex items-start flex-col gap-1.5">
+			<Label size="xs">Colors</Label>
+			<div class="p-3 border rounded-2xl">
+				<ColorOverview
+					vibrantsColumns={7}
+					vibrantsRows={2}
+					neutralsColumns={6}
+					neutralsRows={2}
+					class="flex-col p-0 gap-2 items-start"
+				/>
+			</div>
 		</div>
 
 		<Snapshot />
@@ -48,7 +50,7 @@
 		<LanguageSelection />
 
 		<div class="flex flex-col gap-1.5 px-3">
-			<Label for="font selector">Font</Label>
+			<Label for="font selector" size="xs">Font</Label>
 			<Input
 				id="font selector"
 				value={"ui-monospace"}

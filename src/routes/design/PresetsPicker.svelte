@@ -42,8 +42,22 @@
 								setColors(presetToOkhsl(preset))
 								// closeAndFocusTrigger(ids.trigger)
 							}}
+							class="justify-between"
 						>
-							{preset.name}
+							<p>
+								{preset.name}
+							</p>
+							<div class="flex gap-1">
+								<div class="rounded-full size-2" style={`background: ${preset.colors.base}`}></div>
+								<div class="rounded-full size-2" style={`background: ${preset.colors.text}`}></div>
+								<div class="rounded-full size-2" style={`background: ${preset.colors.mauve}`}></div>
+								<div class="rounded-full size-2" style={`background: ${preset.colors.blue}`}></div>
+								<div class="rounded-full size-2" style={`background: ${preset.colors.green}`}></div>
+								<div
+									class="rounded-full size-2"
+									style={`background: ${preset.colors.rosewater}`}
+								></div>
+							</div>
 						</Command.Item>
 					{/each}
 				</Command.Group>

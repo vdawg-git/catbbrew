@@ -9,7 +9,7 @@
 		variants: {
 			size: {
 				default: "",
-				xs: "text-xs text-subtext1 tracking-[0.015em] font-bold "
+				xs: "text-xs uppercase text-subtext0 tracking-[0.015em] font-bold "
 			}
 		},
 		defaultVariants: {

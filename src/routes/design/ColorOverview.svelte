@@ -103,7 +103,7 @@
 	}
 </script>
 
-<div class={cn("gap5 flex grow p-4 items-start max-w-max", className)}>
+<div class={cn("gap-5 flex grow p-4 items-start max-w-max", className)}>
 	<div
 		class="grid w-fit"
 		style="grid-template-columns: repeat({vibrantsColumns}, 1fr); grid-template-rows: repeat({vibrantsRows}, 1fr);"
