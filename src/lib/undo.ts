@@ -65,6 +65,8 @@ export function undo<T>(
 	}
 	let isFirstRun = true
 
+	// todo fix redo
+
 	return rxpipe(
 		switchMap((data) => {
 			if (!isFirstRun) {

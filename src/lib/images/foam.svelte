@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { activeColor } from "$lib/state/colors"
-	import type { ColorName } from "$lib/types"
+	import type { ColorName } from "@catppuccin/palette"
 	import { createRgbaVar } from "$lib/utils"
 </script>
 

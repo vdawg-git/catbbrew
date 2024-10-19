@@ -16,13 +16,13 @@ function convertPreset(preset: CatppuccinFlavor): ColorPreset {
 	} as ColorPreset
 }
 
-type ColorPaletteOkhsl = Record<ColorName, Okhsl>
+export type ColorPaletteOkhsl = Record<ColorName, Okhsl>
 
 export function presetToOkhsl(preset: ColorPreset): ColorPaletteOkhsl {
 	return R.mapValues(preset.colors, (value) => okhsl(value) ?? okhsl("black")!)
 }
 
-const ayu: ColorPreset = {
+/* const ayu: ColorPreset = {
 	name: "Ayune",
 	author: {
 		name: "Pete Kazmier",
@@ -56,7 +56,7 @@ const ayu: ColorPreset = {
 		mantle: "#11111a",
 		crust: "#191926"
 	}
-}
+} */
 
-export const presets: ColorPreset[] = [...Object.values(flavors).map(convertPreset), ayu]
+export const presets: ColorPreset[] = [...Object.values(flavors).map(convertPreset)]
 export const mocha = presets.find((preset) => preset.name === "Mocha")!
