@@ -4,6 +4,7 @@
 	import Label from "$lib/components/ui/label/label.svelte"
 	import Separator from "$lib/components/ui/separator/separator.svelte"
 	import { activeColor, activeColorHsl$ } from "$lib/state/colors"
+	import type { SvelteComponent } from "svelte"
 	import CodeBlock from "./CodeBlock.svelte"
 	import ColorAdjustBar from "./ColorAdjustBar.svelte"
 	import ColorOverview from "./ColorOverview.svelte"
@@ -12,17 +13,20 @@
 	import Snapshot from "./Snapshot.svelte"
 	import UploadModal from "./Upload.svelte"
 
-	let uploadModal: typeof UploadModal
+	let uploadModal: SvelteComponent<Record<string, never>, never, never> & {
+		show: () => void
+		hide: () => void
+	}
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>Color palette creator - Catbbrew</title>
+	<meta name="description" content="Color palette creator based on Catppucin" />
 </svelte:head>
 
 <section class="flex relative max-h-screen overflow-clip grow min-h-0 min-w-0">
 	<aside
-		class="py-2 relative px-3 flex flex-col pb-28 overflow-auto justify-start gap-4 max-w-74 xl:max-w-80 bg-mantle min-h-0"
+		class="py-2 relative px-3 flex flex-col pb-24 overflow-auto justify-start gap-4 max-w-74 xl:max-w-80 bg-mantle min-h-0"
 	>
 		<div class="flex justify-between px-2 mt-1">
 			<a
@@ -32,7 +36,7 @@
 			>
 
 			<button
-				class=""
+				class="text-subtext0 hover:text-text"
 				aria-label="Import colors"
 				title="Import colors"
 				onclick={() => uploadModal.show()}
@@ -56,12 +60,10 @@
 			</div>
 		</div>
 
-		<Snapshot />
-
-		<Separator class="" orientation="horizontal" />
+		<Separator />
 		<LanguageSelection />
 
-		<div class="flex flex-col gap-1.5 px-3">
+		<div class="flex flex-col gap-1.5 px-3 grow">
 			<Label for="font selector" size="xs">Font</Label>
 			<Input
 				id="font selector"
@@ -73,6 +75,10 @@
 				title="Change editor font"
 			/>
 		</div>
+
+		<Separator />
+
+		<Snapshot />
 
 		<div class="absolute bg-mantle bottom-0 inset-x-0">
 			<Separator class="" orientation="horizontal" />

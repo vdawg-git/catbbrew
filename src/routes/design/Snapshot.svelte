@@ -1,71 +1,47 @@
 <script lang="ts">
-	import { activeSnapshot, activeSnapshotId, snapshots } from "$lib/state/snapshots.svelte"
-	import { tick } from "svelte"
-	import * as Command from "$lib/components/ui/command/index.js"
-	import * as Popover from "$lib/components/ui/popover/index.js"
-	import { Button } from "$lib/components/ui/button/index.js"
-	import { colors$ } from "$lib/state/colors"
+	import { snapshots, type Snapshot } from "$lib/state/snapshots.svelte"
+	import { colors$, setColors } from "$lib/state/colors"
+	import Label from "$lib/components/ui/label/label.svelte"
 
-	let open = $state(false)
-	// let {} = $props()
+	function addSnapshot() {
+		const toAdd = {
+			colors: $colors$,
+			timestamp: Date.now()
+		}
+		$snapshots = [toAdd, ...$snapshots]
+	}
 
-	function closeAndFocusTrigger(triggerId: string) {
-		open = false
-		tick().then(() => {
-			document.getElementById(triggerId)?.focus()
-		})
+	function formatSnapshot(snapshot: Snapshot): string {
+		const date = new Date(snapshot.timestamp)
+
+		const hour = date.getHours()
+		const minutes = date.getMinutes()
+		return `${hour}:${minutes}:${date.getSeconds()} ${date.getDay()}`
 	}
 </script>
 
-<Button
-	onclick={() => {
-		const id = crypto.randomUUID()
-		$snapshots[id] = {
-			timestamp: new Date().toISOString(),
-			colors: $colors$
-		}
-		$snapshots = $snapshots
-		open = true
-	}}>Add snapshot</Button
->
+<div class="flex justify-between items-center">
+	<Label size="xs" class="flex  justify-between">Snapshots</Label>
 
-<Popover.Root bind:open let:ids>
-	<Popover.Trigger asChild let:builder>
-		<Button
-			builders={[builder]}
-			variant="outline"
-			role="combobox"
-			aria-expanded={open}
-			size="sm"
-			class="border-none flex group  justify-between  "
-		>
-			<div class="flex gap-3 items-center">
-				{#if $activeSnapshot}
-					{$activeSnapshot?.name ?? $activeSnapshot.timestamp}
-				{:else}
-					No snapshots. Should not happen here
-				{/if}
-			</div>
-			<div class="i-mingcute-down-line size-6 text-overlay0 group-hover:text-subtext1"></div>
-		</Button>
-	</Popover.Trigger>
-	<Popover.Content class="w-[200px] p-0 border-accent">
-		<Command.Root>
-			<!-- <Command.Input placeholder="Search framework..." /> -->
-			<Command.Empty>Nothing here</Command.Empty>
-			<Command.Group>
-				{#each Object.entries($snapshots) as [id, snapshot]}
-					<Command.Item
-						value={id}
-						onSelect={() => {
-							$activeSnapshotId = id
-							closeAndFocusTrigger(ids.trigger)
-						}}
-					>
-						{snapshot.name ?? snapshot.timestamp}
-					</Command.Item>
-				{/each}
-			</Command.Group>
-		</Command.Root>
-	</Popover.Content>
-</Popover.Root>
+	<button
+		class="hover:text-text text-subtext1 items-center flex gap-1 font-bold text-xs uppercase"
+		onclick={() => addSnapshot()}
+		>Add <div class="i-mingcute-plus-line size-4"></div></button
+	>
+</div>
+{#if $snapshots.length > 0}
+	<ul class="max-h-[200px] overflow-auto">
+		{#each $snapshots as snapshot, i (snapshot.timestamp)}
+			<li>
+				<button
+					onclick={() => {
+						setColors(snapshot.colors)
+					}}
+					class="hover:text-yellow text-text"
+				>
+					{formatSnapshot(snapshot)}
+				</button>
+			</li>
+		{/each}
+	</ul>
+{/if}

@@ -41,7 +41,7 @@
 				<div class="i-mingcute-down-line size-6 text-overlay0 group-hover:text-subtext1"></div>
 			</Button>
 		</Popover.Trigger>
-		<Popover.Content class="w-[200px] p-0 border-accent">
+		<Popover.Content class="w-[240px] p-0 border-accent">
 			<Command.Root>
 				<!-- <Command.Input placeholder="Search framework..." /> -->
 				<Command.Empty>Nothing here</Command.Empty>
