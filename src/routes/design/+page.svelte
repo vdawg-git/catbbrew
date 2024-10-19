@@ -9,6 +9,7 @@
 	import ColorOverview from "./ColorOverview.svelte"
 	import LanguageSelection from "./LanguageSelection.svelte"
 	import PresetsPicker from "./PresetsPicker.svelte"
+	import Snapshot from "./Snapshot.svelte"
 </script>
 
 <svelte:head>
@@ -40,6 +41,8 @@
 				class="flex-col p-0 items-start"
 			/>
 		</div>
+
+		<Snapshot />
 
 		<Separator class="" orientation="horizontal" />
 		<LanguageSelection />
