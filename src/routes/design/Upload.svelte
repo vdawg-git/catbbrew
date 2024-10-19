@@ -92,7 +92,7 @@
 	}
 </script>
 
-<dialog bind:this={modal} open class="bg-base text-text border-2 p-8 rounded-2xl">
+<dialog bind:this={modal} class="bg-base text-text border-2 p-8 rounded-2xl">
 	<div
 		class="max-w-xl"
 		role="dialog"
