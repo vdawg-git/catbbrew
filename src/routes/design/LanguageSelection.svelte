@@ -32,6 +32,7 @@
 				size="sm"
 				class="border-none flex group self-stretch  justify-between  "
 				id="language-select-trigger"
+				title="Select programming language"
 			>
 				<div class="flex gap-3 items-center">
 					<Icon class="size-6" />

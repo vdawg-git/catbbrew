@@ -81,7 +81,7 @@ ${Object.entries($colors$)
 				<div class="i-mingcute-arrow-left-line size-5"></div>
 			</button>
 
-			<h1 class="font-bold text-base text-rosewater">Export palette</h1>
+			<h1 class="font-bold text-size-base text-rosewater">Export palette</h1>
 		</div>
 
 		<div class="">

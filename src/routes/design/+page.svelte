@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Button from "$lib/components/ui/button/button.svelte"
 	import Input from "$lib/components/ui/input/input.svelte"
 	import Label from "$lib/components/ui/label/label.svelte"
@@ -10,6 +10,9 @@
 	import LanguageSelection from "./LanguageSelection.svelte"
 	import PresetsPicker from "./PresetsPicker.svelte"
 	import Snapshot from "./Snapshot.svelte"
+	import UploadModal from "./Upload.svelte"
+
+	let uploadModal: typeof UploadModal
 </script>
 
 <svelte:head>
@@ -19,7 +22,7 @@
 
 <section class="flex relative max-h-screen overflow-clip grow min-h-0 min-w-0">
 	<aside
-		class="py-2 relative px-3 flex flex-col pb-28 overflow-auto justify-start gap-4 max-w-60 lg:max-w-70 xl:max-w-80 bg-mantle min-h-0"
+		class="py-2 relative px-3 flex flex-col pb-28 overflow-auto justify-start gap-4 max-w-74 xl:max-w-80 bg-mantle min-h-0"
 	>
 		<div class="flex justify-between px-2 mt-1">
 			<a
@@ -27,6 +30,15 @@
 				class="text-stroke-text text-crust stroke text-stroke-4 hover:text-stroke-peach font-bold"
 				>Catbbrew</a
 			>
+
+			<button
+				class=""
+				aria-label="Import colors"
+				title="Import colors"
+				onclick={() => uploadModal.show()}
+			>
+				<div class="i-mingcute-upload-2-line size-5"></div>
+			</button>
 		</div>
 
 		<PresetsPicker />
@@ -58,6 +70,7 @@
 				oninput={({ currentTarget: { value } }) => {
 					document.documentElement.style.setProperty("--font-mono", value)
 				}}
+				title="Change editor font"
 			/>
 		</div>
 
@@ -98,9 +111,7 @@
 	</div>
 </section>
 
-<div
-	class="bg-surface0 shrink-0 absolute right-0 top-1/2 -translate-y-1/2 rounded-3xl border grow-0"
-></div>
+<UploadModal bind:this={uploadModal} />
 
 <style>
 	.stroke {

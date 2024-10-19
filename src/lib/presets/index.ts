@@ -1,6 +1,6 @@
 import { flavors, type CatppuccinFlavor, type ColorName } from "@catppuccin/palette"
 import * as R from "remeda"
-import { okhsl, type Okhsl } from "culori"
+import { okhsl, type Color, type Okhsl } from "culori"
 
 type ColorPreset = {
 	name: string
