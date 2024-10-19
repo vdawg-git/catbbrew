@@ -14,7 +14,6 @@
 	"devDependencies": {
 		"@iconify-json/mingcute": "^1.2.1",
 		"@iconify-json/solar": "^1.2.1",
-		"@sveltejs/adapter-auto": "^3.2.5",
 		"@sveltejs/kit": "^2.7.1",
 		"@sveltejs/vite-plugin-svelte": "4.0.0",
 		"@types/culori": "^2.1.1",
@@ -38,6 +37,7 @@
 		"@catppuccin/palette": "^1.4.0",
 		"@catppuccin/vscode": "^3.15.2",
 		"@fontsource/m-plus-rounded-1c": "^5.1.0",
+		"@sveltejs/adapter-static": "^3.0.5",
 		"@unocss/reset": "^0.63.4",
 		"clsx": "^2.1.1",
 		"cmdk-sv": "^0.0.18",
