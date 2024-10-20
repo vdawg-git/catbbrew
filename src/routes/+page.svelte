@@ -63,13 +63,15 @@
 </section>
 
 {#if $activeColor}
-	<div class="fixed flex flex-col items-center bottom-4 z-6 left-1/2 -translate-x-1/2">
+	<div
+		class="fixed flex max-md:hidden flex-col items-center bottom-4 z-6 left-1/2 -translate-x-1/2"
+	>
 		<ColorAdjustBar />
 	</div>
 {/if}
 
 <div
-	class="fixed transform-origin-t right-6 top-1/2 -translate-y-1/2 bg-surface0 items-center flex-col gap3 outline shadow-base shadow outline-border rounded-3xl flex overflow-auto justify-stretch items-stretch flex flex-col rounded-3xl !p-0 m-0 z-10"
+	class="fixed max-sm:hidden transform-origin-t right-6 top-1/2 -translate-y-1/2 bg-surface0 items-center flex-col gap3 outline shadow-base shadow outline-border rounded-3xl flex overflow-auto justify-stretch items-stretch flex flex-col rounded-3xl !p-0 m-0 z-10"
 >
 	<ColorOverview class="flex-col" />
 </div>
