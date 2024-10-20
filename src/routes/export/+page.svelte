@@ -38,16 +38,18 @@
 
 	let selectedData = $derived(exportables.find((item) => item.value === selected))!
 
-	function createVsCodeSnippet() {
-		return highlighter.codeToHtml(
+	async function createVsCodeSnippet() {
+		const hl = await highlighter
+		return hl.codeToHtml(
 			`"catppuccin.colorOverrides": {
   "all": ${JSON.stringify(R.mapValues($colors$, formatHex), null, 4)},
 },`,
 			{ lang: "json", theme: "theme" }
 		)
 	}
-	function createVimSnippet() {
-		return highlighter.codeToHtml(
+	async function createVimSnippet() {
+		const hl = await highlighter
+		return hl.codeToHtml(
 			`color_overrides = {
   all = {
 ${Object.entries($colors$)
@@ -59,8 +61,9 @@ ${Object.entries($colors$)
 		)
 	}
 
-	function createAppSnippet() {
-		return highlighter.codeToHtml(
+	async function createAppSnippet() {
+		const hl = await highlighter
+		return hl.codeToHtml(
 			Object.entries($colors$)
 				.map(([key, value]) => `${key}="${formatHex(value)}"`)
 				.join("\n"),
@@ -113,18 +116,24 @@ ${Object.entries($colors$)
 				>
 				and add this to your <code>settings.json</code>
 
-				{@render Code(createVsCodeSnippet())}
+				{#await createVsCodeSnippet() then snippet}
+					{@render Code(snippet)}
+				{/await}
 			{:else if selected === "vim"}
 				Install the <a href="https://github.com/catppuccin/nvim">Catppuccin theme</a> and add this
 				in the <code>setup call</code>.
 
-				{@render Code(createVimSnippet())}
+				{#await createVimSnippet() then snippet}
+					{@render Code(snippet)}
+				{/await}
 			{:else if selected === "filetypes"}
 				<!-- TODO add JSON, Bash, Toml, yaml. Prop with some lib to have nicer formatting. Or maybe with Prettier? -->
 				All formats can be imported into the app again, as long as the color name is on the same line
 				as the hex hex value.
 
-				{@render Code(createAppSnippet())}
+				{#await createAppSnippet() then snippet}
+					{@render Code(snippet)}
+				{/await}
 			{/if}
 		</div>
 	</div>

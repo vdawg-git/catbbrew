@@ -13,6 +13,5 @@ export default defineConfig({
 	],
 	optimizeDeps: {
 		include: ["svelte-sonner"]
-	},
-	build: { target: "es2022" }
+	}
 })

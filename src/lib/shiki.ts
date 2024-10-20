@@ -24,7 +24,7 @@ export const shikiTheme: ThemeRegistration = {
 	semanticTokenColors: {}
 }
 
-export const highlighter = await createHighlighter({
+export const highlighter = createHighlighter({
 	themes: [shikiTheme],
 	langs: [...Object.keys(languages), "json", "lua", "bash"]
 })

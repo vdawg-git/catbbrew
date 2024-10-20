@@ -12,7 +12,8 @@
 	const toRender$ = merge(languageText$, code$).pipe(
 		filter(Boolean),
 		switchMap(async (text) => {
-			const toRender = highlighter
+			const hl = await highlighter
+			const toRender = hl
 				.codeToHtml(text, { lang: $language.name, theme: "theme" })
 				.replace(
 					'class="shiki theme"',
