@@ -3,7 +3,7 @@ import { formatHex, okhsl, rgb, type Okhsl } from "culori"
 import * as R from "remeda"
 import { fromStore } from "$lib/utils"
 import { undo } from "$lib/undo"
-import { combineLatest, map, shareReplay, type Observable } from "rxjs"
+import { combineLatest, debounceTime, map, shareReplay, skip, type Observable } from "rxjs"
 import type { ColorName } from "@catppuccin/palette"
 import { mocha, presetToOkhsl } from "$lib/presets"
 
@@ -26,7 +26,14 @@ const colorVars$ = colors$.pipe(
 	)
 )
 
+export const restoreAvailable = !!globalThis.localStorage && !!localStorage.getItem("colors")
+
+// Runs in the browser
 if (globalThis.document) {
+	colors$.pipe(skip(2), debounceTime(400)).subscribe((colors) => {
+		localStorage.setItem("colors", JSON.stringify(colors))
+	})
+
 	colorVars$.subscribe((newVariables) => {
 		newVariables.forEach(([key, value]) => {
 			globalThis.document.documentElement.style.setProperty(key, value)

@@ -5,11 +5,12 @@
 	import "@unocss/reset/tailwind.css"
 	import "virtual:uno.css"
 	import "../app.css"
-	import { activeColorHsl$, activeColor, colors$ } from "$lib/state/colors"
+	import { activeColorHsl$, activeColor, colors$, setColors } from "$lib/state/colors"
 	import { cssVar } from "$lib/utils"
 	// import { Toaster } from "svelte-sonner"
 	import { type Okhsl } from "culori"
 	import Button from "$lib/components/ui/button/button.svelte"
+	import Json from "$lib/icons/json.svelte"
 
 	function getActiveColorForeground(active: Okhsl) {
 		const lightness = active.l
@@ -22,10 +23,15 @@
 	}
 
 	let smallScreenDialog: HTMLDialogElement
+	let restoreColorsDialog: HTMLDialogElement
 
 	$effect(() => {
 		if (window.innerWidth < 640) {
 			smallScreenDialog.showModal()
+		}
+
+		if (localStorage.getItem("colors")) {
+			restoreColorsDialog.showModal()
 		}
 	})
 </script>
@@ -35,15 +41,6 @@
 </noscript>
 
 <!-- <Toaster /> -->
-<dialog bind:this={smallScreenDialog} class="bg-transparent">
-	<div
-		class="border-5 flex flex-col gap-5 rounded-xl text-xl border-red px-6 py-3 bg-crust text-rosewater"
-	>
-		This app does not work properly on small screens.
-
-		<form method="dialog"><Button onclick={() => smallScreenDialog.close()}>Okay</Button></form>
-	</div>
-</dialog>
 
 <div
 	class="min-h-screen flex flex-col max-h-screen h-screen font-sans"
@@ -54,6 +51,39 @@
 		<slot />
 	</main>
 </div>
+
+<dialog bind:this={restoreColorsDialog} class="bg-transparent border-none">
+	<div class="bg-base rounded-2xl border-2 border-subtext0 p-6 flex flex-col gap-6">
+		<h1 class="text-lg text-rosewater">Restore colors of last session?</h1>
+		<div class="flex gap-6">
+			<form method="dialog">
+				<Button variant="link" onclick={() => restoreColorsDialog.close()}>Nah</Button>
+			</form>
+			<Button
+				autofocus
+				onclick={() => {
+					const saved = localStorage.getItem("colors")
+					if (saved) {
+						const colors = JSON.parse(saved)
+						setColors(colors)
+						restoreColorsDialog.close()
+					}
+					restoreColorsDialog.close()
+				}}>Restore colors</Button
+			>
+		</div>
+	</div>
+</dialog>
+
+<dialog bind:this={smallScreenDialog} class="bg-transparent">
+	<div
+		class="border-5 flex flex-col gap-5 rounded-xl text-xl border-red px-6 py-3 bg-crust text-rosewater"
+	>
+		This app does not work properly on small screens.
+
+		<form method="dialog"><Button onclick={() => smallScreenDialog.close()}>Okay</Button></form>
+	</div>
+</dialog>
 
 <style>
 	::backdrop {
