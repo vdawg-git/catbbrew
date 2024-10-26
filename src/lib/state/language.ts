@@ -19,9 +19,12 @@ export const languages: Record<LanguageName, Language> = {
 		text: `
 // Click on the code to change the color 
 // Or use the sidebar to the right :)
+// You can also edit the code here and paste your own. 
+
 import { createHighlighter } from 'shiki'
-
-
+import { type VariantProps, tv } from "tailwind-variants"
+import type { Button as ButtonPrimitive } from "bits-ui"
+import Root from "./button.svelte"
 
 // \`createHighlighter\` is async, it initializes the internal and
 // loads the themes and languages specified.
@@ -41,9 +44,6 @@ const code = highlighter.codeToHtml('const a = 1', {
   theme: 'nord'
 })
 
-import { type VariantProps, tv } from "tailwind-variants"
-import type { Button as ButtonPrimitive } from "bits-ui"
-import Root from "./button.svelte"
 
 const buttonVariants = tv({
 	base: "",
