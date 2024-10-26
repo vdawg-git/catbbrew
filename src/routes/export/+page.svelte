@@ -76,7 +76,7 @@ ${Object.entries($colors$)
 	<title>Export colors</title>
 </svelte:head>
 
-<div class="flex flex-wrap max-w-screen flex-nowrap max-h-screen overflow-hidden">
+<div class="flex flex-wrap max-w-screen flex-nowrap h-full max-h-screen overflow-hidden">
 	<div class="border-r shrink-0">
 		<div class="flex px-6 py-3 gap-4 items-center">
 			<button onclick={() => window.history.back()}
