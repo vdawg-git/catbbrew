@@ -5,12 +5,11 @@
 	import "@unocss/reset/tailwind.css"
 	import "virtual:uno.css"
 	import "../app.css"
-	import { activeColorHsl$, activeColor, colors$, setColors } from "$lib/state/colors"
+	import { activeColorHsl$, activeColor, colors$, colorsInput$ } from "$lib/state/colors"
 	import { cssVar } from "$lib/utils"
 	// import { Toaster } from "svelte-sonner"
 	import { type Okhsl } from "culori"
 	import Button from "$lib/components/ui/button/button.svelte"
-	import Json from "$lib/icons/json.svelte"
 
 	function getActiveColorForeground(active: Okhsl) {
 		const lightness = active.l
@@ -57,7 +56,13 @@
 		<h1 class="text-lg text-rosewater">Restore colors of last session?</h1>
 		<div class="flex gap-6">
 			<form method="dialog">
-				<Button variant="link" onclick={() => restoreColorsDialog.close()}>Nah</Button>
+				<Button
+					variant="link"
+					onclick={() => {
+						restoreColorsDialog.close()
+						localStorage.removeItem("colors")
+					}}>Nope</Button
+				>
 			</form>
 			<Button
 				autofocus
@@ -65,7 +70,7 @@
 					const saved = localStorage.getItem("colors")
 					if (saved) {
 						const colors = JSON.parse(saved)
-						setColors(colors)
+						colorsInput$.next(colors)
 						restoreColorsDialog.close()
 					}
 					restoreColorsDialog.close()

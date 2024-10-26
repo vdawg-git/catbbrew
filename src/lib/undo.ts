@@ -1,19 +1,15 @@
-import { applyPatches, enablePatches, nothing, produceWithPatches, type Patch } from "immer"
 import {
+	debounceTime,
 	filter,
 	map,
 	merge,
 	Observable,
-	of,
-	pairwise,
 	pipe as rxpipe,
 	share,
-	startWith,
-	switchMap,
+	shareReplay,
+	tap,
 	type MonoTypeOperatorFunction
 } from "rxjs"
-
-enablePatches()
 
 type HistoryItem<T> = {
 	undone: T[]
@@ -34,18 +30,18 @@ const undoRedo$ = new Observable<[action: "undo" | "redo", item: string]>((subsc
 
 	function onKeydown(event: KeyboardEvent) {
 		if (event.key === "z" && event.ctrlKey) {
-			console.log("undo")
 			// not sure if this will work with multiple undo streams
 			// right now this works with one, as when an undo is done,
 			// a new value comes in which triggers a push to `toUndos` again
-			const toUndo = toUndos.splice(-2, 2)[0]
+			const toUndo = toUndos.pop()
+			console.log("undo", { toUndo, toUndos })
 			if (!toUndo) return
 			toRedos.push(toUndo)
 			subscriber.next(["undo", toUndo])
 		}
 		if (event.key === "y" && event.ctrlKey) {
-			console.log("redo")
-			const toRedo = toRedos.splice(-2, 2)[0]
+			const toRedo = toRedos.pop()
+			console.log("redo", { toRedo, toRedos })
 			if (!toRedo) return
 			toUndos.push(toRedo)
 			subscriber.next(["redo", toRedo])
@@ -57,7 +53,7 @@ const undoRedo$ = new Observable<[action: "undo" | "redo", item: string]>((subsc
 export function undo<T>(
 	/** The name of the history item. Used to differ it from other undo streams */
 	name: string,
-	debounce: number = 150
+	debounce: number = 180
 ): MonoTypeOperatorFunction<T> {
 	history[name] ??= {
 		undone: [],
@@ -65,49 +61,57 @@ export function undo<T>(
 	}
 	let isFirstRun = true
 
-	// todo fix redo
+	return rxpipe((data$) => {
+		const shared$ = data$.pipe(shareReplay({ bufferSize: 1, refCount: true }))
 
-	return rxpipe(
-		switchMap((data) => {
-			if (!isFirstRun) {
-				history[name].undoable.push(data)
+		const sideEffect$ = shared$.pipe(
+			debounceTime(debounce),
+			tap((debounced) => {
+				history[name].undoable.push(debounced)
 				history[name].undone = []
-				toUndos.push(name)
-				toRedos = toRedos.filter((item) => item !== name)
-			}
-			isFirstRun = false
 
-			const undoRedoData$ = undoRedo$.pipe(
-				filter(([, itemName]) => itemName === name),
-				map(([action]) => {
-					if (action === "undo") {
-						// the latest undoable is the current state
-						const undo = history[name].undoable.splice(-2, 2)[0] as T | undefined
-						console.log("undo patches", undo)
-						console.log("undos", toUndos)
+				console.log("added undo for:", name, history[name])
 
-						if (!undo) return
+				if (!isFirstRun) {
+					toUndos.push(name)
+					toRedos = toRedos.filter((item) => item !== name)
+				}
 
-						history[name].undone.push(undo)
+				isFirstRun = false
+			}),
+			filter(() => false)
+		)
 
-						return undo
-					}
+		const undoRedoData$ = undoRedo$.pipe(
+			filter(([, itemName]) => itemName === name),
+			map(([action]) => {
+				if (action === "undo") {
+					// the latest undoable is the current state
+					const current = history[name].undoable.pop()
+					if (!current) return
+					const undo = history[name].undoable.at(-1) as T | undefined
+					if (!undo) return
 
-					if (action === "redo") {
-						const redo = history[name].undone.pop() as T | undefined
+					console.log("trigger", { undo, toUndos })
 
-						if (!redo) return
+					history[name].undone.push(current)
 
-						history[name].undoable.push(redo)
+					return undo
+				}
 
-						console.log("redo data", redo)
-						return redo
-					}
-				}),
-				filter(Boolean)
-			)
+				if (action === "redo") {
+					const redo = history[name].undone.pop() as T | undefined
+					if (!redo) return
 
-			return merge(of(data), undoRedoData$)
-		})
-	)
+					history[name].undoable.push(redo)
+
+					console.log("redo data", redo)
+					return redo
+				}
+			}),
+			filter(Boolean)
+		)
+
+		return merge(shared$, undoRedoData$, sideEffect$)
+	})
 }

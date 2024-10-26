@@ -1,26 +1,42 @@
 import { writable } from "svelte/store"
-import { formatHex, okhsl, rgb, type Okhsl } from "culori"
+import { formatHex, rgb, type Okhsl } from "culori"
 import * as R from "remeda"
 import { fromStore } from "$lib/utils"
 import { undo } from "$lib/undo"
-import { combineLatest, debounceTime, map, shareReplay, skip, type Observable } from "rxjs"
+import {
+	BehaviorSubject,
+	combineLatest,
+	debounceTime,
+	map,
+	sampleTime,
+	shareReplay,
+	skip,
+	type Observable
+} from "rxjs"
 import type { ColorName } from "@catppuccin/palette"
 import { mocha, presetToOkhsl } from "$lib/presets"
 
-const colors = writable(presetToOkhsl(mocha))
+export const colorsInput$ = new BehaviorSubject(presetToOkhsl(mocha))
 
-export const updateColors = colors.update
-export const setColors = colors.set
-
-export const colors$ = fromStore(colors).pipe(undo("colors"), shareReplay(1))
+export const colors$ = colorsInput$.pipe(
+	// tap((x) => console.log("writable updated")),
+	undo("colors", 222),
+	shareReplay(1)
+)
 
 const colorVars$ = colors$.pipe(
 	map((colors) =>
 		Object.entries(colors).map(([key, value]) => {
 			const result = rgb(value)!
+			if (!result) {
+				console.error(`Invalid color`, value)
+			}
 
 			const { r, g, b } = result
-			const newValue = [r, g, b].map(R.multiply(255)) as [number, number, number]
+			const newValue = [r, g, b]
+				// if the lightness is 0 then rgb will give NaN values
+				.map((value) => (Number.isNaN(value) ? 0 : value))
+				.map(R.multiply(255)) as [number, number, number]
 			return [`--${key}`, `${newValue}`]
 		})
 	)
@@ -30,11 +46,13 @@ export const restoreAvailable = !!globalThis.localStorage && !!localStorage.getI
 
 // Runs in the browser
 if (globalThis.document) {
-	colors$.pipe(skip(2), debounceTime(400)).subscribe((colors) => {
+	colors$.pipe(skip(2), debounceTime(2500)).subscribe((colors) => {
 		localStorage.setItem("colors", JSON.stringify(colors))
 	})
 
-	colorVars$.subscribe((newVariables) => {
+	// We throttle elegantly
+	// as otherwise we get lags when dragging color adjustment sliders
+	colorVars$.pipe(sampleTime(50)).subscribe((newVariables) => {
 		newVariables.forEach(([key, value]) => {
 			globalThis.document.documentElement.style.setProperty(key, value)
 		})

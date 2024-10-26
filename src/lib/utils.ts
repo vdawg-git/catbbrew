@@ -95,13 +95,14 @@ export function createRgbaVar(name: ColorVariable) {
  * @param store The Svelte store to convert to an obserable
  */
 export function fromStore<T>(store: Writable<T> | Readable<T>): Observable<T> {
-	return new Observable((subscriber) => {
-		const unsubscribe = store.subscribe((value) => subscriber.next(value))
+	return (
+		new Observable((subscriber) => {
+			const unsubscribe = store.subscribe((value) => subscriber.next(value))
 
-		return unsubscribe
-	}).pipe(
-		// @ts-expect-error
-		shareReplay(1)
+			return unsubscribe
+		})
+			// @ts-ignore
+			.pipe(share())
 	)
 }
 

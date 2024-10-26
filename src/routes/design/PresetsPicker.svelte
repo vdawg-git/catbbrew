@@ -3,7 +3,7 @@
 	import * as Popover from "$lib/components/ui/popover/index.js"
 	import { Button } from "$lib/components/ui/button/index.js"
 	import { presets, presetToOkhsl } from "$lib/presets"
-	import { setColors } from "$lib/state/colors"
+	import { colorsInput$ } from "$lib/state/colors"
 	import Label from "$lib/components/ui/label/label.svelte"
 
 	let activePreset = $state("Mocha")
@@ -39,7 +39,7 @@
 							value={preset.name}
 							onSelect={() => {
 								activePreset = preset.name
-								setColors(presetToOkhsl(preset))
+								colorsInput$.next(presetToOkhsl(preset))
 								// closeAndFocusTrigger(ids.trigger)
 							}}
 							class="justify-between"

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { snapshots, type Snapshot } from "$lib/state/snapshots.svelte"
-	import { colors$, setColors } from "$lib/state/colors"
+	import { colors$, colorsInput$ } from "$lib/state/colors"
 	import Label from "$lib/components/ui/label/label.svelte"
 
 	function addSnapshot() {
@@ -35,7 +35,7 @@
 			<li>
 				<button
 					onclick={() => {
-						setColors(snapshot.colors)
+						colorsInput$.next(snapshot.colors)
 					}}
 					class="hover:text-yellow text-text"
 				>

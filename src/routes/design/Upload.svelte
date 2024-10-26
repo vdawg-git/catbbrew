@@ -10,7 +10,7 @@
 	import { type ColorName, flavors } from "@catppuccin/palette"
 	import { Button, buttonVariants } from "$lib/components/ui/button"
 	import { isNonNullish } from "remeda"
-	import { updateColors } from "$lib/state/colors"
+	import { colors$, colorsInput$ } from "$lib/state/colors"
 	import { okhsl } from "culori"
 	import { cn } from "$lib/utils"
 
@@ -182,7 +182,7 @@
 						.map(([name, color]) => [name, okhsl(color)])
 						.filter(([, color]) => color)
 
-					updateColors((colors) => ({ ...colors, ...Object.fromEntries(toImportOkhsl) }))
+					colorsInput$.next({ ...$colors$, ...Object.fromEntries(toImportOkhsl) })
 				}}
 				class="mt-6 bg-green hover:bg-blue disabled:bg-subtext1"
 				disabled={!importedColors || importedColors.size === 0}>Import colors</Button

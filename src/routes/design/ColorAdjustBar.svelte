@@ -1,46 +1,48 @@
 <script lang="ts">
 	import { produce } from "immer"
-	import { activeColor, activeColorHex$, activeColorHsl$, updateColors } from "$lib/state/colors"
 	import {
-		distinctUntilChanged,
-		combineLatest,
-		filter,
-		map,
-		Subject,
-		throttleTime,
-		share,
-		startWith
-	} from "rxjs"
+		activeColor,
+		activeColorHex$,
+		activeColorHsl$,
+		colors$,
+		colorsInput$
+	} from "$lib/state/colors"
+	import { debounceTime, distinctUntilChanged, filter, map, share } from "rxjs"
 	import * as R from "remeda"
 	import { formatHex, okhsl, samples, converter } from "culori"
-	import { copyToClipboard } from "$lib/utils"
+	import { copyToClipboard, fromStore } from "$lib/utils"
+	import { onDestroy } from "svelte"
+	import { writable } from "svelte/store"
 
 	const toOkhsl = converter("okhsl")
 
-	// const input$ = writable<Partial<HSL>>({})
-	const h$ = new Subject<number | undefined>()
-	const s$ = new Subject<number | undefined>()
-	const l$ = new Subject<number | undefined>()
-	activeColor.subscribe(() => {
-		h$.next(undefined)
-		s$.next(undefined)
-		l$.next(undefined)
-	})
+	type HSL = {
+		h?: number
+		s?: number
+		l?: number
+	}
 
-	const input$ = combineLatest([
-		h$.pipe(startWith(undefined), distinctUntilChanged()),
-		s$.pipe(startWith(undefined), distinctUntilChanged()),
-		l$.pipe(startWith(undefined), distinctUntilChanged())
-	]).pipe(
-		map(([h, s, l]) => ({ h, s, l })),
+	const input = writable<HSL>({})
+	const input$ = fromStore(input)
+
+	// When the color gets changed, for example through an undo,
+	// this values should be reset,
+	// as otherwise changing an input updates the color with the old values
+	const resetInputValuesSubscription = activeColorHsl$
+		// debounce to prevent lag when dragging sliders
+		.pipe(debounceTime(250))
+		.subscribe(() => input.set({}))
+
+	const output$ = input$.pipe(
+		filter(R.isDefined),
 		map(R.omitBy(R.anyPass([R.isNullish, Number.isNaN]))),
 		distinctUntilChanged(
 			(previous, current) => JSON.stringify(previous) === JSON.stringify(current)
 		),
+		filter(R.isNot(R.isEmpty)) as <T>(t: T) => T,
 		share()
 	)
 
-	const input$$ = input$.pipe(filter(R.isDefined))
 	const hueBackground = activeColorHsl$.pipe(
 		map((hsl) =>
 			hsl
@@ -65,18 +67,22 @@
 		.map((l) => formatHex(okhsl(`color(--okhsl 0 0 ${l})`)))
 		.join(", ")
 
-	const output$ = input$$.pipe(throttleTime(15))
-
-	output$.subscribe((current) => {
+	const subscription = output$.subscribe((current) => {
 		if (!$activeColor) {
-			console.warn("no active color hgoj")
+			console.warn("no active color")
 			return
 		}
-		updateColors(
-			produce((colors) => {
+
+		colorsInput$.next(
+			produce($colors$, (colors) => {
 				colors[$activeColor!] = { ...colors[$activeColor!], ...current }
 			})
 		)
+	})
+
+	onDestroy(() => {
+		resetInputValuesSubscription.unsubscribe()
+		subscription.unsubscribe()
 	})
 </script>
 
@@ -94,9 +100,7 @@
 						const ok = okhsl(currentTarget.value)
 						if (!ok) return
 						const { h, s, l } = ok
-						h$.next(h)
-						s$.next(s)
-						l$.next(l)
+						input.set({ h, s, l })
 					}}
 				/>
 				<div
@@ -122,9 +126,7 @@
 							const ok = toOkhsl(value)
 							if (!ok) return
 							const { h, s, l } = ok
-							h$.next(h)
-							s$.next(s)
-							l$.next(l)
+							input.set({ h, s, l })
 						}}
 					/>
 					<button
@@ -138,14 +140,32 @@
 			</div>
 			<div class="flex flex-col gap-3 py3 pr-3">
 				<div class="flex gap-3">
-					{@render control(1, 0.005, $saturationBackground ?? "", s$, $activeColorHsl$.s)}
-					{@render control(1, 0.005, lightnessBackground, l$, $activeColorHsl$.l)}
+					{@render control(
+						1,
+						0.005,
+						$saturationBackground ?? "",
+						(s) => {
+							$input.s = s
+						},
+						$activeColorHsl$.s
+					)}
+					{@render control(
+						1,
+						0.005,
+						lightnessBackground,
+						(l) => {
+							$input.l = l
+						},
+						$activeColorHsl$.l
+					)}
 				</div>
 				{@render control(
 					360,
 					1,
 					$hueBackground ?? "",
-					h$,
+					(h) => {
+						$input.h = h
+					},
 					Math.round($activeColorHsl$.h ?? 0),
 					"28rem"
 				)}
@@ -158,7 +178,7 @@
 	max: number,
 	step: number,
 	background: string,
-	input: Subject<number | undefined>,
+	oninput: (number: number) => void,
 	value: number,
 	width: string = "10rem"
 )}
@@ -172,7 +192,7 @@
 			on:input={({ currentTarget: { value } }) => {
 				const number = Number(value)
 				if (Number.isNaN(number) || number < 0 || number > max) return
-				input.next(number)
+				oninput(number)
 			}}
 			class="w-[8ch] px2 text-sm rounded text-background outline-overlay1 py1 bg-overlay2 placeholder-foreground text-center"
 		/>
@@ -181,8 +201,7 @@
 			min={0}
 			on:input={({ currentTarget: { value: string } }) => {
 				const value = Number(string)
-				// if (value === $input) return
-				input.next(value)
+				oninput(value)
 			}}
 			{step}
 			{max}
