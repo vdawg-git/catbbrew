@@ -18,11 +18,7 @@ import { mocha, presetToOkhsl } from "$lib/presets"
 
 export const colorsInput$ = new BehaviorSubject(presetToOkhsl(mocha))
 
-export const colors$ = colorsInput$.pipe(
-	// tap((x) => console.log("writable updated")),
-	undo("colors", 222),
-	shareReplay(1)
-)
+export const colors$ = colorsInput$.pipe(undo("colors", 222), shareReplay(1))
 
 const colorVars$ = colors$.pipe(
 	map((colors) =>

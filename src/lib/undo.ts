@@ -34,14 +34,12 @@ const undoRedo$ = new Observable<[action: "undo" | "redo", item: string]>((subsc
 			// right now this works with one, as when an undo is done,
 			// a new value comes in which triggers a push to `toUndos` again
 			const toUndo = toUndos.pop()
-			console.log("undo", { toUndo, toUndos })
 			if (!toUndo) return
 			toRedos.push(toUndo)
 			subscriber.next(["undo", toUndo])
 		}
 		if (event.key === "y" && event.ctrlKey) {
 			const toRedo = toRedos.pop()
-			console.log("redo", { toRedo, toRedos })
 			if (!toRedo) return
 			toUndos.push(toRedo)
 			subscriber.next(["redo", toRedo])
@@ -70,8 +68,6 @@ export function undo<T>(
 				history[name].undoable.push(debounced)
 				history[name].undone = []
 
-				console.log("added undo for:", name, history[name])
-
 				if (!isFirstRun) {
 					toUndos.push(name)
 					toRedos = toRedos.filter((item) => item !== name)
@@ -92,8 +88,6 @@ export function undo<T>(
 					const undo = history[name].undoable.at(-1) as T | undefined
 					if (!undo) return
 
-					console.log("trigger", { undo, toUndos })
-
 					history[name].undone.push(current)
 
 					return undo
@@ -105,7 +99,6 @@ export function undo<T>(
 
 					history[name].undoable.push(redo)
 
-					console.log("redo data", redo)
 					return redo
 				}
 			}),
