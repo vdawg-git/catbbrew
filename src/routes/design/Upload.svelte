@@ -112,13 +112,13 @@
 		ondragexit={handleDragOut}
 		ondragleave={handleDragOut}
 	>
-		<form method="dialog">
-			<button
-				aria-label="Close modal"
-				class="absolute text-subtext0 hover:text-text bg-transparent top-4 right-4 rounded-full"
-				><div class="i-mingcute-close-circle-line size-6"></div></button
-			>
-		</form>
+		<button
+			aria-label="Close modal"
+			class="absolute text-subtext0 hover:text-text bg-transparent top-4 right-4 rounded-full"
+			onclick={() => (isOpen = false)}
+			><div class="i-mingcute-close-circle-line size-6"></div></button
+		>
+
 		<div class="flex flex-col mt-2 gap1">
 			<h1 class="font-bold text-rosewater">Import colors 🎨</h1>
 			<p class="max-w-[60ch]">
@@ -171,9 +171,8 @@
 		{/if}
 
 		<div class="flex gap-6">
-			<form method="dialog">
-				<Button variant="link" class="mt-6">Cancel</Button>
-			</form>
+			<Button variant="link" class="mt-6" onclick={() => (isOpen = false)}>Cancel</Button>
+
 			<Button
 				onclick={() => {
 					if (!importedColors) return
