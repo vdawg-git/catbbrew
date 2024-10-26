@@ -11,6 +11,8 @@
 	import { type Okhsl } from "culori"
 	import Button from "$lib/components/ui/button/button.svelte"
 
+	let { children } = $props()
+
 	function getActiveColorForeground(active: Okhsl) {
 		const lightness = active.l
 		const a = Math.abs(lightness - $colors$.base.l)
@@ -47,7 +49,7 @@
 	style:--active-colorForeground={$activeColorHsl$ && getActiveColorForeground($activeColorHsl$)}
 >
 	<main class="grow min-h-0 flex flex-col">
-		<slot />
+		{@render children()}
 	</main>
 </div>
 
