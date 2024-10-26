@@ -112,6 +112,15 @@
 			</div>
 		{/if}
 
+		<div class="absolute bottom-8 right-8 z-30">
+			<a
+				href="https://github.com/vdawg-git/catbbrew"
+				aria-label="Github"
+				target="_blank"
+				class=" i-mingcute-github-2-line text-subtext0 hover:text-text transition-colors size-7 block"
+			></a>
+		</div>
+
 		<div class="overflow-scroll grow max-h-screen">
 			<CodeBlock />
 		</div>
