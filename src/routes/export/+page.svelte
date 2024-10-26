@@ -9,10 +9,11 @@
 	import { highlighter } from "$lib/shiki"
 	import File from "$lib/icons/_file.svelte"
 	import { copyToClipboard } from "$lib/utils"
+	import Binary from "$lib/icons/binary.svelte"
 
 	let selected = $state<SupportedExport>("vscode")
 
-	type SupportedExport = "vscode" | "vim" | "filetypes"
+	type SupportedExport = "vscode" | "vim" | "filetypes" | "base16"
 	type Exportable = {
 		name: string
 		Icon: Component
@@ -33,6 +34,11 @@
 			name: "Filetypes",
 			value: "filetypes",
 			Icon: File
+		},
+		{
+			name: "Base16",
+			value: "base16",
+			Icon: Binary
 		}
 	]
 
@@ -67,6 +73,30 @@ ${Object.entries($colors$)
 			Object.entries($colors$)
 				.map(([key, value]) => `${key}="${formatHex(value)}"`)
 				.join("\n"),
+			{ lang: "bash", theme: "theme" }
+		)
+	}
+
+	async function createBase16Snippet() {
+		const hl = await highlighter
+
+		return hl.codeToHtml(
+			`base00: "${formatHex($colors$.base)}" # base
+base01: "${formatHex($colors$.mantle)}" # mantle
+base02: "${formatHex($colors$.surface0)}" # surface0
+base03: "${formatHex($colors$.surface1)}" # surface1
+base04: "${formatHex($colors$.surface2)}" # surface2
+base05: "${formatHex($colors$.text)}" # text
+base06: "${formatHex($colors$.rosewater)}" # rosewater
+base07: "${formatHex($colors$.lavender)}" # lavender
+base08: "${formatHex($colors$.red)}" # red
+base09: "${formatHex($colors$.peach)}" # peach
+base0A: "${formatHex($colors$.yellow)}" # yellow
+base0B: "${formatHex($colors$.green)}" # green
+base0C: "${formatHex($colors$.teal)}" # teal
+base0D: "${formatHex($colors$.blue)}" # blue
+base0E: "${formatHex($colors$.mauve)}" # mauve
+base0F: "${formatHex($colors$.flamingo)}" # flamingo`,
 			{ lang: "bash", theme: "theme" }
 		)
 	}
@@ -132,6 +162,10 @@ ${Object.entries($colors$)
 				as the hex hex value.
 
 				{#await createAppSnippet() then snippet}
+					{@render Code(snippet)}
+				{/await}
+			{:else if selected === "base16"}
+				{#await createBase16Snippet() then snippet}
 					{@render Code(snippet)}
 				{/await}
 			{/if}
