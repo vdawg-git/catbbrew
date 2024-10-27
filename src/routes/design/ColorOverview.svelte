@@ -116,7 +116,7 @@
 				aria-label="Change color of {name}"
 				class={clsx(
 					"size-[2rem] min-w-[2rem]",
-					isActive ? "scale-116 duration-50 ease-out z-2" : "hover:scale-108 transition-transform"
+					isActive ? "scale-114 duration-50 ease-out z-2" : "hover:scale-108 transition-transform"
 				)}
 				class:rounded-tl-2xl={getEdge(index, vibrantsRows, vibrantsColumns) === "top-left"}
 				class:rounded-tr-2xl={getEdge(index, vibrantsRows, vibrantsColumns) === "top-right"}
@@ -138,7 +138,7 @@
 				aria-label="Change color of {name}"
 				class={clsx(
 					"size-[2rem] min-w-[2rem]",
-					isActive ? "scale-116 duration-50 ease-out z-2" : "hover:scale-108 transition-transform"
+					isActive ? "scale-114 duration-50 ease-out z-2" : "hover:scale-108 transition-transform"
 				)}
 				class:rounded-tl-2xl={getEdge(index, neutralsRows, neutralsColumns) === "top-left"}
 				class:rounded-tr-2xl={getEdge(index, neutralsRows, neutralsColumns) === "top-right"}
