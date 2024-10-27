@@ -26,13 +26,6 @@ import { type VariantProps, tv } from "tailwind-variants"
 import type { Button as ButtonPrimitive } from "bits-ui"
 import Root from "./button.svelte"
 
-// \`createHighlighter\` is async, it initializes the internal and
-// loads the themes and languages specified.
-const highlighter = await createHighlighter({
-  themes: ['nord'],
-  langs: ['javascript'],
-})
-
 type Highlighter = ReturnType<typeof createHighlighter>
 const regex = /([A-Z])\w+/g
 const a = 1 + 1
