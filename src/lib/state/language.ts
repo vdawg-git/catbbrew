@@ -34,7 +34,7 @@ const a = 1 + 1
 // with the loaded themes and languages.
 const code = highlighter.codeToHtml('const a = 1', {
   lang: 'javascript',
-  theme: 'nord'
+  theme: 'catppuccin-mocha',
 })
 
 const buttonVariants = tv({
