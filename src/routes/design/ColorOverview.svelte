@@ -4,6 +4,7 @@
 	import { cn } from "$lib/utils"
 	import { map, startWith } from "rxjs"
 	import type { ColorName } from "@catppuccin/palette"
+	import clsx from "clsx"
 
 	let {
 		vibrantsColumns = 2,
@@ -109,14 +110,19 @@
 		style="grid-template-columns: repeat({vibrantsColumns}, 1fr); grid-template-rows: repeat({vibrantsRows}, 1fr);"
 	>
 		{#each $mainColors$ as [name, color], index (name)}
+			{@const isActive = name === $activeColor}
+
 			<button
 				aria-label="Change color of {name}"
-				class="size-[2rem] min-w-[2rem] hover:outline-2 hover:outline outline-overlay1 active:outline-crust hover:z-2"
+				class={clsx(
+					"size-[2rem] min-w-[2rem]",
+					isActive ? "scale-116 duration-50 ease-out z-2" : "hover:scale-108 transition-transform"
+				)}
 				class:rounded-tl-2xl={getEdge(index, vibrantsRows, vibrantsColumns) === "top-left"}
 				class:rounded-tr-2xl={getEdge(index, vibrantsRows, vibrantsColumns) === "top-right"}
 				class:rounded-bl-2xl={getEdge(index, vibrantsRows, vibrantsColumns) === "bottom-left"}
 				class:rounded-br-2xl={getEdge(index, vibrantsRows, vibrantsColumns) === "bottom-right"}
-				style="background: rgba(var(--{name}))"
+				style="background: rgba(var(--{name})); outline-color: rgba(var(--{name}));"
 				onclick={() => activeColor.set(name)}
 			></button>
 		{/each}
@@ -127,9 +133,13 @@
 		style="grid-template-columns: repeat({neutralsColumns}, 1fr); grid-template-rows: repeat({neutralsRows}, 1fr);"
 	>
 		{#each $neutrals$ as [name, color], index (name)}
+			{@const isActive = name === $activeColor}
 			<button
 				aria-label="Change color of {name}"
-				class="size-[2rem] min-w-[2rem] hover:outline-2 hover:outline outline-overlay1 active:outline-rosewater hover:z-2"
+				class={clsx(
+					"size-[2rem] min-w-[2rem]",
+					isActive ? "scale-116 duration-50 ease-out z-2" : "hover:scale-108 transition-transform"
+				)}
 				class:rounded-tl-2xl={getEdge(index, neutralsRows, neutralsColumns) === "top-left"}
 				class:rounded-tr-2xl={getEdge(index, neutralsRows, neutralsColumns) === "top-right"}
 				class:rounded-bl-2xl={getEdge(index, neutralsRows, neutralsColumns) === "bottom-left"}
