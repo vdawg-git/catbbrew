@@ -37,7 +37,6 @@ const code = highlighter.codeToHtml('const a = 1', {
   theme: 'nord'
 })
 
-
 const buttonVariants = tv({
 	base: "",
 	variants: {
