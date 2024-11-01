@@ -121,7 +121,7 @@
 			></a>
 		</div>
 
-		<div class="overflow-scroll grow max-h-screen">
+		<div class="overflow-scroll grow max-h-screen pb-20">
 			<CodeBlock />
 		</div>
 	</div>
