@@ -1,5 +1,5 @@
 // Click on the code to change the color
-// Or use the sidebar to the right :)
+// Or on the colors to the left :)
 // You can also edit the code here and paste your own.
 
 import { createHighlighter } from "shiki"
