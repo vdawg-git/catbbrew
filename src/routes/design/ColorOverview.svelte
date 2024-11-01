@@ -115,8 +115,10 @@
 			<button
 				aria-label="Change color of {name}"
 				class={clsx(
-					"size-[2rem] min-w-[2rem]",
-					isActive ? "scale-120 duration-50 ease-out z-2" : "hover:scale-110 transition-transform"
+					"size-[2rem] min-w-[2rem] transition-transform  ",
+					isActive
+						? "scale-122  ease-out z-2 pop-ease pop-ease duration-500 "
+						: "hover:scale-110 transition-transform duration-122"
 				)}
 				class:rounded-tl-2xl={getEdge(index, vibrantsRows, vibrantsColumns) === "top-left"}
 				class:rounded-tr-2xl={getEdge(index, vibrantsRows, vibrantsColumns) === "top-right"}
@@ -137,8 +139,10 @@
 			<button
 				aria-label="Change color of {name}"
 				class={clsx(
-					"size-[2rem] min-w-[2rem]",
-					isActive ? "scale-120 duration-50 ease-out z-2" : "hover:scale-110 transition-transform"
+					"size-[2rem] min-w-[2rem] transition-transform  ",
+					isActive
+						? "scale-122  ease-out z-2 pop-ease pop-ease duration-500 "
+						: "hover:scale-110 transition-transform duration-122"
 				)}
 				class:rounded-tl-2xl={getEdge(index, neutralsRows, neutralsColumns) === "top-left"}
 				class:rounded-tr-2xl={getEdge(index, neutralsRows, neutralsColumns) === "top-right"}
@@ -150,3 +154,9 @@
 		{/each}
 	</div>
 </div>
+
+<style>
+	.pop-ease {
+		transition-timing-function: cubic-bezier(0.975, 0, 0.62, 3);
+	}
+</style>
