@@ -156,7 +156,13 @@
 				/>
 			</label>
 			<div class="p-4 rounded-xl grow -rotate-4">🖐🏻 Or drag-and-drop it 🖐🏻</div>
-			<Button variant="outline" class="border-sky rounded-xl">📋 Read from clipboard</Button>
+			<Button
+				onclick={async () => {
+					importedColors = await readColorsClipboard()
+				}}
+				variant="outline"
+				class="border-sky rounded-xl">📋 Read from clipboard</Button
+			>
 			<span class="text-subtext1 -rotate-2">Pasting also works ✅</span>
 		</div>
 
