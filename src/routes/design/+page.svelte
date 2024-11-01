@@ -49,7 +49,7 @@
 		<PresetsPicker />
 
 		<div class="mx-3 flex items-start flex-col gap-1.5">
-			<Label size="xs">Colors</Label>
+			<Label size="xs">Change colors</Label>
 			<div class="p-3 border rounded-2xl">
 				<ColorOverview
 					vibrantsColumns={7}
@@ -65,7 +65,7 @@
 		<LanguageSelection />
 
 		<div class="flex flex-col gap-1.5 px-3 grow">
-			<Label for="font selector" size="xs">Font</Label>
+			<Label for="font selector" size="xs">Change font</Label>
 			<Input
 				id="font selector"
 				value={"ui-monospace"}
