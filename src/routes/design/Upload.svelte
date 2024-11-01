@@ -126,9 +126,10 @@
 		<div class="flex flex-col mt-2 gap1">
 			<h1 class="font-bold text-rosewater">Import colors 🎨</h1>
 			<p class="max-w-[60ch]">
-				File should have color name and hex value on the <span class="text-yellow">same line</span
+				File should have each color name and its hex value on the <span class="text-yellow"
+					>same line</span
 				>.<br />
-				Not all lines need to be colors.
+				Not all lines need to be colors, so you can just copy text blocks.
 			</p>
 		</div>
 
