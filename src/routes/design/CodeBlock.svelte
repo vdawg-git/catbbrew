@@ -1,20 +1,33 @@
 <script lang="ts">
 	import { activeColor } from "$lib/state/colors"
-	import { language } from "$lib/state/language"
-	import { fromStore } from "$lib/utils"
-	import { debounceTime, filter, map, merge, share, Subject, switchMap } from "rxjs"
+	import { language$ } from "$lib/state/language"
+	import { debounceTime, combineLatest, filter, Subject, switchMap, shareReplay, merge } from "rxjs"
 	import type { ColorName } from "@catppuccin/palette"
 	import { highlighter } from "$lib/shiki"
 
-	const languageText$ = fromStore(language).pipe(map(({ text }) => text))
+	const languageText$ = language$.pipe(
+		filter((language) => language !== undefined),
+		switchMap(async ({ name }) => {
+			if (!globalThis.window) return ""
+
+			return fetch(`/api/lang/${name}`)
+				.then((res) => res.text())
+				.catch((error) => {
+					console.error(error)
+					return String(`Failed to fetch language:\n${error}`)
+				})
+		})
+	)
 	const codeInput$ = new Subject<string>()
 	const code$ = codeInput$.pipe(debounceTime(1450))
-	const toRender$ = merge(languageText$, code$).pipe(
-		filter(Boolean),
-		switchMap(async (text) => {
+	const toRender$ = combineLatest([
+		language$.pipe(filter(Boolean)),
+		merge(languageText$, code$).pipe(filter(Boolean))
+	]).pipe(
+		switchMap(async ([{ name }, text]) => {
 			const hl = await highlighter
 			const toRender = hl
-				.codeToHtml(text, { lang: $language.name, theme: "theme" })
+				.codeToHtml(text, { lang: name, theme: "theme" })
 				.replace(
 					'class="shiki theme"',
 					'contenteditable spellcheck="false" autocorrect="off" class="shiki theme"'
@@ -22,7 +35,7 @@
 
 			return toRender
 		}),
-		share()
+		shareReplay({ refCount: true, bufferSize: 1 })
 	)
 </script>
 

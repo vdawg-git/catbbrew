@@ -1,0 +1,118 @@
+mod fnv;
+mod glob;
+mod pathutil;
+
+#[cfg(feature = "serde1")]
+mod serde_impl;
+
+#[cfg(feature = "log")]
+macro_rules! debug {
+    ($($token:tt)*) => (::log::debug!($($token)*);)
+}
+
+#[cfg(not(feature = "log"))]
+macro_rules! debug {
+    ($($token:tt)*) => {};
+}
+
+/// Represents an error that can occur when parsing a glob pattern.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct Error {
+    /// The original glob provided by the caller.
+    glob: Option<String>,
+    /// The kind of error.
+    kind: ErrorKind,
+}
+
+    /// This takes a Candidate as input, which can be used to amortize the               <Label for="email">Email</Label>  <Label for="email">Email</Label>  <Label for="email">Email</Label>  <Label for="email">Email</Label>  <Label for="email">Email</Label>
+    /// cost of preparing a path for matching.
+    pub fn matches_candidate_into(
+        &self,
+        path: &Candidate<'_>,
+        into: &mut Vec<usize>,
+    ) {
+        into.clear();
+        if self.is_empty() {
+            return;
+        }
+        for strat in &self.strats {
+            strat.matches_into(path, into);
+        }
+        into.sort();
+        into.dedup();
+    }
+
+    fn new(pats: &[Glob]) -> Result<GlobSet, Error> {
+        if pats.is_empty() {
+            return Ok(GlobSet { len: 0, strats: vec![] });
+        }
+        let mut lits = LiteralStrategy::new();
+        let mut base_lits = BasenameLiteralStrategy::new();
+        let mut exts = ExtensionStrategy::new();
+        let mut prefixes = MultiStrategyBuilder::new();
+        let mut suffixes = MultiStrategyBuilder::new();
+        let mut required_exts = RequiredExtensionStrategyBuilder::new();
+        let mut regexes = MultiStrategyBuilder::new();
+        for (i, p) in pats.iter().enumerate() {
+            match MatchStrategy::new(p) {
+                MatchStrategy::Literal(lit) => {
+                    lits.add(i, lit);
+                }
+                MatchStrategy::BasenameLiteral(lit) => {
+                    base_lits.add(i, lit);
+                }
+                MatchStrategy::Extension(ext) => {
+                    exts.add(i, ext);
+                }
+                MatchStrategy::Prefix(prefix) => {
+                    prefixes.add(i, prefix);
+                }
+                MatchStrategy::Suffix { suffix, component } => {
+                    if component {
+                        lits.add(i, suffix[1..].to_string());
+                    }
+                    suffixes.add(i, suffix);
+                }
+                MatchStrategy::RequiredExtension(ext) => {
+                    required_exts.add(i, ext, p.regex().to_owned());
+                }
+                MatchStrategy::Regex => {
+                    debug!("glob converted to regex: {:?}", p);
+                    regexes.add(i, p.regex().to_owned());
+                }
+            }
+        }
+        debug!(
+            "built glob set; {} literals, {} basenames, {} extensions, \
+                {} prefixes, {} suffixes, {} required extensions, {} regexes",
+            lits.0.len(),
+            base_lits.0.len(),
+            exts.0.len(),
+            prefixes.literals.len(),
+            suffixes.literals.len(),
+            required_exts.0.len(),
+            regexes.literals.len()
+        );
+        Ok(GlobSet {
+            len: pats.len(),
+            strats: vec![
+                GlobSetMatchStrategy::Extension(exts),
+                GlobSetMatchStrategy::BasenameLiteral(base_lits),
+                GlobSetMatchStrategy::Literal(lits),
+                GlobSetMatchStrategy::Suffix(suffixes.suffix()),
+                GlobSetMatchStrategy::Prefix(prefixes.prefix()),
+                GlobSetMatchStrategy::RequiredExtension(
+                    required_exts.build()?,
+                ),
+                GlobSetMatchStrategy::Regex(regexes.regex_set()?),
+            ],
+        })
+    }
+}
+
+impl Default for GlobSet {
+    /// Create a default empty GlobSet.
+    fn default() -> Self {
+        GlobSet::empty()
+    }
+}

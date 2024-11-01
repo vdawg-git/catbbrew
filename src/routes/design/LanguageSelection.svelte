@@ -3,10 +3,10 @@
 	import * as Command from "$lib/components/ui/command/index.js"
 	import * as Popover from "$lib/components/ui/popover/index.js"
 	import { Button } from "$lib/components/ui/button/index.js"
-	import { setLanguage, language, languages, type LanguageName } from "$lib/state/language"
+	import { setLanguage, language$, languages, type LanguageName } from "$lib/state/language"
 	import Label from "$lib/components/ui/label/label.svelte"
 
-	let Icon = $derived($language.icon)
+	const Icon = $derived($language$?.icon)
 
 	let open = $state(false)
 	// We want to refocus the trigger button when the user selects
@@ -21,7 +21,7 @@
 </script>
 
 <div class="flex flex-col gap-0.5 items-start">
-	<Label size="xs" class="ml-3" for="language-select-trigger">Language</Label>
+	<Label size="xs" class="ml-3" for="language-select-trigger">Select language</Label>
 	<Popover.Root bind:open let:ids>
 		<Popover.Trigger asChild let:builder>
 			<Button
@@ -35,8 +35,10 @@
 				title="Select programming language"
 			>
 				<div class="flex gap-3 items-center">
-					<Icon class="size-6" />
-					{$language.display}
+					{#if Icon}
+						<Icon class="size-6" />
+					{/if}
+					{$language$?.display}
 				</div>
 				<div class="i-mingcute-down-line size-6 text-overlay0 group-hover:text-subtext1"></div>
 			</Button>
@@ -46,7 +48,7 @@
 				<!-- <Command.Input placeholder="Search framework..." /> -->
 				<Command.Empty>Nothing here</Command.Empty>
 				<Command.Group>
-					{#each Object.entries(languages) as [name_, data]}
+					{#each Object.entries(languages).sort(([a], [b]) => a.localeCompare(b)) as [name_, data]}
 						<Command.Item
 							value={name_}
 							onSelect={(currentValue) => {
