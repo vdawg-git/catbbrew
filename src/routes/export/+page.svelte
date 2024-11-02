@@ -125,7 +125,7 @@
 		</div>
 
 		<div
-			class="[&_pre]:rounded-2xl [&_pre]:my-4 p-6 [&_pre]:bg-mantle [&_pre]:p-4 [&_pre]:text-sm [&_pre]:border mt-14 overflow-auto"
+			class="[&_pre]:rounded-2xl h-full [&_pre]:my-4 p-6 [&_pre]:bg-mantle [&_pre]:p-4 [&_pre]:text-sm [&_pre]:border mt-14 overflow-auto"
 		>
 			{#if selected === "vscode"}
 				Install the <a
@@ -154,8 +154,8 @@
 </div>
 
 {#snippet Code(codeToRender: string)}
-	<div class="flex flex-col gap-3 min-h-60 h-80 bg-red">
-		<!-- {@html codeToRender} -->
+	<div class="flex flex-col gap-3 min-h-60 h-80">
+		{@html codeToRender}
 		<Button
 			onclick={() => copyToClipboard(codeToRender)}
 			class="justify-self-end grid-justify-self-end   flex-justify-self-end flex-self-end place-self-end"
