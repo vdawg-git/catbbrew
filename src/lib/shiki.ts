@@ -47,7 +47,25 @@ const highligher$ = syntaxTheme$.pipe(
 // highlighted code, but it updates by itself if a new syntax theme was given
 export const highlight = (code: string, lang: string) => {
 	return highligher$.pipe(
-		map((hl) => hl.codeToHtml(code, { lang, theme: "theme", mergeWhitespaces: "never" })),
+		map((hl) =>
+			hl.codeToHtml(code, {
+				lang,
+				theme: "theme",
+				mergeWhitespaces: "never",
+				transformers: [
+					{
+						span(node) {
+							if (
+								node.children.length === 0 ||
+								node.children.every((n) => n.type === "text" && n.value.trim() === "")
+							) {
+								node.properties["data-empty"] = true
+							}
+						}
+					}
+				]
+			})
+		),
 		shareReplay({ bufferSize: 1, refCount: true })
 	)
 }
@@ -61,8 +79,6 @@ function vsCodeThemeToShiki(json: string): ThemeRegistration | undefined {
 		const regex = new RegExp(`"foreground": "${toReplace}"`, "g")
 		return text.replaceAll(regex, `"foreground": "${replacement}"`)
 	}
-
-	console.log({ json })
 
 	try {
 		return pipe(

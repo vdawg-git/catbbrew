@@ -3,10 +3,9 @@
 	import { cn } from "$lib/utils"
 	import { syntaxThemeInput$ } from "$lib/shiki"
 	import * as Dialog from "$lib/components/ui/dialog"
-	import { Trigger } from "$lib/components/ui/accordion"
 </script>
 
-<Dialog.Root open>
+<Dialog.Root>
 	<Dialog.Trigger class="text-subtext0 hover:text-text" aria-label="Settings" title="Settings">
 		<div class="i-mingcute-settings-3-line size-5"></div>
 	</Dialog.Trigger>

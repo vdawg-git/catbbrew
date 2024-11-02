@@ -50,13 +50,17 @@
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
-	class="bg-base p6 [&_span:not(:has(span)):hover]:outline [&_span:not(:has(span)):hover]:outline-offset-2 font-mono [&_span:not(:has(span)):active]:bg-overlay1/20 [&_span:not(:has(span)):hover]:rounded !cursor-text ![&_pre]:outline-none"
+	id="code-preview"
 	aria-label="Preview code"
 	onclick={({ target }) => {
 		if (!target || !("tagName" in target) || !("style" in target)) return
 		if (target.tagName !== "SPAN") return
 
-		const style = target.style as CSSStyleDeclaration
+		const span = target as HTMLSpanElement
+
+		if (span.dataset.empty !== undefined) return
+
+		const style = span.style as CSSStyleDeclaration
 		const colorRg = /(?<=--).*(?=\)\))/
 		const color = style.getPropertyValue("color").match(colorRg)?.[0]
 
@@ -67,9 +71,19 @@
 	oninput={(e) => {
 		codeInput$.next(e.currentTarget.innerText)
 	}}
+	class="bg-base p-6 !cursor-text ![&_pre]:outline-none"
 >
 	{@html $toRender$}
 </div>
 
 <style>
+	#code-preview :global {
+		span[style]:not([data-empty]) {
+			&:hover {
+				outline: 1px solid;
+				outline-offset: 4px;
+				border-radius: 4px;
+			}
+		}
+	}
 </style>
