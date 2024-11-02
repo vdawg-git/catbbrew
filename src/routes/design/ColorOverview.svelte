@@ -117,7 +117,7 @@
 				class={clsx(
 					"size-[2rem] min-w-[2rem] transition-transform  ",
 					isActive
-						? "scale-122  ease-out z-2 pop-ease pop-ease duration-500 "
+						? "scale-122  ease-out z-2 pop-ease pop-ease duration-350 "
 						: "hover:scale-110 transition-transform duration-122"
 				)}
 				class:rounded-tl-2xl={getEdge(index, vibrantsRows, vibrantsColumns) === "top-left"}
@@ -141,7 +141,7 @@
 				class={clsx(
 					"size-[2rem] min-w-[2rem] transition-transform  ",
 					isActive
-						? "scale-122  ease-out z-2 pop-ease pop-ease duration-500 "
+						? "scale-122  ease-out z-2 pop-ease pop-ease duration-350 "
 						: "hover:scale-110 transition-transform duration-122"
 				)}
 				class:rounded-tl-2xl={getEdge(index, neutralsRows, neutralsColumns) === "top-left"}

@@ -4,7 +4,6 @@
 	import Label from "$lib/components/ui/label/label.svelte"
 	import Separator from "$lib/components/ui/separator/separator.svelte"
 	import { activeColor, activeColorHsl$ } from "$lib/state/colors"
-	import type { SvelteComponent } from "svelte"
 	import CodeBlock from "./CodeBlock.svelte"
 	import ColorAdjustBar from "./ColorAdjustBar.svelte"
 	import ColorOverview from "./ColorOverview.svelte"
@@ -13,11 +12,7 @@
 	import Snapshot from "./Snapshot.svelte"
 	import UploadModal from "./Upload.svelte"
 	import { base } from "$app/paths"
-
-	let uploadModal: SvelteComponent<Record<string, never>, never, never> & {
-		show: () => void
-		hide: () => void
-	}
+	import SettingsModal from "./SettingsModal.svelte"
 </script>
 
 <svelte:head>
@@ -29,21 +24,17 @@
 	<aside
 		class="py-2 relative px-3 flex flex-col pb-24 overflow-auto justify-start gap-4 max-w-74 xl:max-w-80 bg-mantle min-h-0"
 	>
-		<div class="flex justify-between px-2 mt-1">
+		<div class="flex justify-between px-2 gap-6 mt-1">
 			<a
 				href="{base}/"
 				class="text-stroke-text text-crust stroke text-stroke-4 hover:text-stroke-peach font-bold"
 				>Catbbrew</a
 			>
+			<div class="grow"></div>
 
-			<button
-				class="text-subtext0 hover:text-text"
-				aria-label="Import colors"
-				title="Import colors"
-				onclick={() => uploadModal.show()}
-			>
-				<div class="i-mingcute-upload-2-line size-5"></div>
-			</button>
+			<UploadModal />
+
+			<SettingsModal />
 		</div>
 
 		<PresetsPicker />
@@ -126,8 +117,6 @@
 		</div>
 	</div>
 </section>
-
-<UploadModal bind:this={uploadModal} />
 
 <style>
 	.stroke {

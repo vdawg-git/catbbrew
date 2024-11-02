@@ -6,7 +6,7 @@
 	import * as R from "remeda"
 	import { formatHex } from "culori"
 	import type { Component } from "svelte"
-	import { highlighter } from "$lib/shiki"
+	import { highlight } from "$lib/shiki"
 	import File from "$lib/icons/_file.svelte"
 	import { copyToClipboard } from "$lib/utils"
 	import Binary from "$lib/icons/binary.svelte"
@@ -44,62 +44,50 @@
 
 	let selectedData = $derived(exportables.find((item) => item.value === selected))!
 
-	async function createVsCodeSnippet() {
-		const hl = await highlighter
-		return hl.codeToHtml(
-			`"catppuccin.colorOverrides": {
+	const vsCodeSnippet = highlight(
+		`"catppuccin.colorOverrides": {
   "all": ${JSON.stringify(R.mapValues($colors$, formatHex), null, 4)},
 },`,
-			{ lang: "json", theme: "theme" }
-		)
-	}
-	async function createVimSnippet() {
-		const hl = await highlighter
-		return hl.codeToHtml(
-			`color_overrides = {
-  all = {
-${Object.entries($colors$)
-	.map(([color, value]) => `    ${color} = "${formatHex(value)}",`)
-	.join("\n")}
-  },
-},`,
-			{ lang: "lua", theme: "theme" }
-		)
-	}
+		"json"
+	)
 
-	async function createAppSnippet() {
-		const hl = await highlighter
-		return hl.codeToHtml(
-			Object.entries($colors$)
-				.map(([key, value]) => `${key}="${formatHex(value)}"`)
-				.join("\n"),
-			{ lang: "bash", theme: "theme" }
-		)
-	}
+	const vimSnippet = highlight(
+		`color_overrides = {
+			all = {
+			${Object.entries($colors$)
+				.map(([color, value]) => `    ${color} = "${formatHex(value)}",`)
+				.join("\n")}
+			},
+			},`,
+		"lua"
+	)
 
-	async function createBase16Snippet() {
-		const hl = await highlighter
+	const appSnippet = highlight(
+		Object.entries($colors$)
+			.map(([key, value]) => `${key}="${formatHex(value)}"`)
+			.join("\n"),
+		"bash"
+	)
 
-		return hl.codeToHtml(
-			`base00: "${formatHex($colors$.base)}" # base
-base01: "${formatHex($colors$.mantle)}" # mantle
-base02: "${formatHex($colors$.surface0)}" # surface0
-base03: "${formatHex($colors$.surface1)}" # surface1
-base04: "${formatHex($colors$.surface2)}" # surface2
-base05: "${formatHex($colors$.text)}" # text
-base06: "${formatHex($colors$.rosewater)}" # rosewater
-base07: "${formatHex($colors$.lavender)}" # lavender
-base08: "${formatHex($colors$.red)}" # red
-base09: "${formatHex($colors$.peach)}" # peach
-base0A: "${formatHex($colors$.yellow)}" # yellow
-base0B: "${formatHex($colors$.green)}" # green
-base0C: "${formatHex($colors$.teal)}" # teal
-base0D: "${formatHex($colors$.blue)}" # blue
-base0E: "${formatHex($colors$.mauve)}" # mauve
-base0F: "${formatHex($colors$.flamingo)}" # flamingo`,
-			{ lang: "bash", theme: "theme" }
-		)
-	}
+	const base16Snippet = highlight(
+		`base00: "${formatHex($colors$.base)}" # base
+			base01: "${formatHex($colors$.mantle)}" # mantle
+			base02: "${formatHex($colors$.surface0)}" # surface0
+			base03: "${formatHex($colors$.surface1)}" # surface1
+			base04: "${formatHex($colors$.surface2)}" # surface2
+			base05: "${formatHex($colors$.text)}" # text
+			base06: "${formatHex($colors$.rosewater)}" # rosewater
+			base07: "${formatHex($colors$.lavender)}" # lavender
+			base08: "${formatHex($colors$.red)}" # red
+			base09: "${formatHex($colors$.peach)}" # peach
+			base0A: "${formatHex($colors$.yellow)}" # yellow
+			base0B: "${formatHex($colors$.green)}" # green
+			base0C: "${formatHex($colors$.teal)}" # teal
+			base0D: "${formatHex($colors$.blue)}" # blue
+			base0E: "${formatHex($colors$.mauve)}" # mauve
+			base0F: "${formatHex($colors$.flamingo)}" # flamingo`,
+		"bash"
+	)
 </script>
 
 <svelte:head>
@@ -146,37 +134,33 @@ base0F: "${formatHex($colors$.flamingo)}" # flamingo`,
 				>
 				and add this to your <code>settings.json</code>
 
-				{#await createVsCodeSnippet() then snippet}
-					{@render Code(snippet)}
-				{/await}
+				{@render Code($vsCodeSnippet)}
 			{:else if selected === "vim"}
 				Install the <a href="https://github.com/catppuccin/nvim">Catppuccin theme</a> and add this
 				in the <code>setup call</code>.
 
-				{#await createVimSnippet() then snippet}
-					{@render Code(snippet)}
-				{/await}
+				{@render Code($vimSnippet)}
 			{:else if selected === "filetypes"}
 				<!-- TODO add JSON, Bash, Toml, yaml. Prop with some lib to have nicer formatting. Or maybe with Prettier? -->
 				All formats can be imported into the app again, as long as the color name is on the same line
 				as the hex hex value.
 
-				{#await createAppSnippet() then snippet}
-					{@render Code(snippet)}
-				{/await}
+				{@render Code($appSnippet)}
 			{:else if selected === "base16"}
-				{#await createBase16Snippet() then snippet}
-					{@render Code(snippet)}
-				{/await}
+				{@render Code($base16Snippet)}
 			{/if}
 		</div>
 	</div>
 </div>
 
 {#snippet Code(codeToRender: string)}
-	<div class="flex flex-col gap-3">
-		{@html codeToRender}
-		<Button onclick={() => copyToClipboard(codeToRender)}>Copy</Button>
+	<div class="flex flex-col gap-3 min-h-60 h-80 bg-red">
+		<!-- {@html codeToRender} -->
+		<Button
+			onclick={() => copyToClipboard(codeToRender)}
+			class="justify-self-end grid-justify-self-end   flex-justify-self-end flex-self-end place-self-end"
+			>Copy</Button
+		>
 	</div>
 {/snippet}
 

@@ -1,9 +1,18 @@
 <script lang="ts">
 	import { activeColor } from "$lib/state/colors"
 	import { language$ } from "$lib/state/language"
-	import { debounceTime, combineLatest, filter, Subject, switchMap, shareReplay, merge } from "rxjs"
+	import {
+		debounceTime,
+		combineLatest,
+		filter,
+		Subject,
+		map,
+		switchMap,
+		shareReplay,
+		merge
+	} from "rxjs"
 	import type { ColorName } from "@catppuccin/palette"
-	import { highlighter } from "$lib/shiki"
+	import { highlight } from "$lib/shiki"
 
 	const languageText$ = language$.pipe(
 		filter((language) => language !== undefined),
@@ -24,17 +33,16 @@
 		language$.pipe(filter(Boolean)),
 		merge(languageText$, code$).pipe(filter(Boolean))
 	]).pipe(
-		switchMap(async ([{ name }, text]) => {
-			const hl = await highlighter
-			const toRender = hl
-				.codeToHtml(text, { lang: name, theme: "theme" })
-				.replace(
-					'class="shiki theme"',
-					'contenteditable spellcheck="false" autocorrect="off" class="shiki theme"'
+		switchMap(([{ name }, text]) =>
+			highlight(text, name).pipe(
+				map((code) =>
+					code.replace(
+						'class="shiki theme"',
+						'contenteditable spellcheck="false" autocorrect="off" class="shiki theme"'
+					)
 				)
-
-			return toRender
-		}),
+			)
+		),
 		shareReplay({ refCount: true, bufferSize: 1 })
 	)
 </script>

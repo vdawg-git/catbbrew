@@ -13,6 +13,7 @@
 	import { colors$, colorsInput$ } from "$lib/state/colors"
 	import { okhsl } from "culori"
 	import { cn } from "$lib/utils"
+	import * as Dialog from "$lib/components/ui/dialog"
 
 	let importedColors: Map<ColorName, string> | undefined = $state(undefined)
 	let modal: HTMLDialogElement
@@ -54,10 +55,8 @@
 
 	$effect(() => {
 		if (isOpen) {
-			!modal.open && modal.showModal()
 			document.addEventListener("keydown", handlePaste)
 		} else {
-			modal.close()
 			document.removeEventListener("keydown", handlePaste)
 		}
 	})
@@ -92,12 +91,16 @@
 	}
 </script>
 
-<dialog
-	bind:this={modal}
-	class="bg-base text-text border-2 p-8 rounded-2xl"
-	onclose={() => (isOpen = false)}
->
-	<div
+<Dialog.Root onOpenChange={(value) => (isOpen = value)}>
+	<Dialog.Trigger
+		class="text-subtext0 hover:text-text"
+		aria-label="Import colors"
+		title="Import colors"
+	>
+		<div class="i-mingcute-upload-2-line size-5"></div>
+	</Dialog.Trigger>
+
+	<Dialog.Content
 		class="max-w-xl"
 		role="dialog"
 		ondragenter={handleDragOver}
@@ -116,22 +119,15 @@
 		ondragexit={handleDragOut}
 		ondragleave={handleDragOut}
 	>
-		<button
-			aria-label="Close modal"
-			class="absolute text-subtext0 hover:text-text bg-transparent top-4 right-4 rounded-full"
-			onclick={() => (isOpen = false)}
-			><div class="i-mingcute-close-circle-line size-6"></div></button
-		>
-
-		<div class="flex flex-col mt-2 gap1">
-			<h1 class="font-bold text-rosewater">Import colors 🎨</h1>
-			<p class="max-w-[60ch]">
+		<Dialog.Header>
+			<Dialog.Title class="font-bold text-rosewater mb-5">Import colors 🎨</Dialog.Title>
+			<Dialog.Description class="max-w-[60ch]">
 				File should have each color name and its hex value on the <span class="text-yellow"
 					>same line</span
 				>.<br />
 				Not all lines need to be colors, so you can just copy text blocks.
-			</p>
-		</div>
+			</Dialog.Description>
+		</Dialog.Header>
 
 		<div class="flex flex-wrap gap-4 mt-5 items-center font-medium">
 			<label
@@ -181,7 +177,7 @@
 			</div>
 		{/if}
 
-		<div class="flex gap-6">
+		<Dialog.Footer class="!justify-start ">
 			<Button variant="link" class="mt-6" onclick={() => (isOpen = false)}>Cancel</Button>
 
 			<Button
@@ -197,10 +193,17 @@
 				class="mt-6 bg-green hover:bg-blue disabled:bg-subtext1"
 				disabled={!importedColors || importedColors.size === 0}>Import colors</Button
 			>
-		</div>
+		</Dialog.Footer>
 
 		{#if isDragZone}
 			<div class="absolute inset-0 bg-crust/10">Drop here :)</div>
 		{/if}
-	</div>
-</dialog>
+	</Dialog.Content>
+</Dialog.Root>
+
+<!-- <dialog
+	bind:this={modal}
+	class="bg-base text-text border-2 p-8 rounded-2xl backdrop:bg-crust/60 backdrop:transition-all backdrop:transition-discrete starting:backdrop:bg-crust/01"
+	onclose={() => (isOpen = false)}
+>
+</dialog> -->
