@@ -153,15 +153,17 @@
 	</div>
 </div>
 
-{#snippet Code(codeToRender: string)}
-	<div class="flex flex-col gap-3 min-h-60 h-80">
-		{@html codeToRender}
-		<Button
-			onclick={() => copyToClipboard(codeToRender)}
-			class="justify-self-end grid-justify-self-end   flex-justify-self-end flex-self-end place-self-end"
-			>Copy</Button
-		>
-	</div>
+{#snippet Code(codeToRender: string | undefined)}
+	{#if codeToRender}
+		<div class="flex flex-col gap-3 min-h-60 h-80">
+			{@html codeToRender}
+			<Button
+				onclick={() => copyToClipboard(codeToRender)}
+				class="justify-self-end grid-justify-self-end   flex-justify-self-end flex-self-end place-self-end"
+				>Copy</Button
+			>
+		</div>
+	{/if}
 {/snippet}
 
 <style>
