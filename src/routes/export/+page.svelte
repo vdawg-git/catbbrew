@@ -53,12 +53,12 @@
 
 	const vimSnippet = highlight(
 		`color_overrides = {
-			all = {
-			${Object.entries($colors$)
-				.map(([color, value]) => `    ${color} = "${formatHex(value)}",`)
-				.join("\n")}
-			},
-			},`,
+  all = {
+${Object.entries($colors$)
+	.map(([color, value]) => `    ${color} = "${formatHex(value)}",`)
+	.join("\n")}
+  },
+},`,
 		"lua"
 	)
 
@@ -71,21 +71,21 @@
 
 	const base16Snippet = highlight(
 		`base00: "${formatHex($colors$.base)}" # base
-			base01: "${formatHex($colors$.mantle)}" # mantle
-			base02: "${formatHex($colors$.surface0)}" # surface0
-			base03: "${formatHex($colors$.surface1)}" # surface1
-			base04: "${formatHex($colors$.surface2)}" # surface2
-			base05: "${formatHex($colors$.text)}" # text
-			base06: "${formatHex($colors$.rosewater)}" # rosewater
-			base07: "${formatHex($colors$.lavender)}" # lavender
-			base08: "${formatHex($colors$.red)}" # red
-			base09: "${formatHex($colors$.peach)}" # peach
-			base0A: "${formatHex($colors$.yellow)}" # yellow
-			base0B: "${formatHex($colors$.green)}" # green
-			base0C: "${formatHex($colors$.teal)}" # teal
-			base0D: "${formatHex($colors$.blue)}" # blue
-			base0E: "${formatHex($colors$.mauve)}" # mauve
-			base0F: "${formatHex($colors$.flamingo)}" # flamingo`,
+base01: "${formatHex($colors$.mantle)}" # mantle
+base02: "${formatHex($colors$.surface0)}" # surface0
+base03: "${formatHex($colors$.surface1)}" # surface1
+base04: "${formatHex($colors$.surface2)}" # surface2
+base05: "${formatHex($colors$.text)}" # text
+base06: "${formatHex($colors$.rosewater)}" # rosewater
+base07: "${formatHex($colors$.lavender)}" # lavender
+base08: "${formatHex($colors$.red)}" # red
+base09: "${formatHex($colors$.peach)}" # peach
+base0A: "${formatHex($colors$.yellow)}" # yellow
+base0B: "${formatHex($colors$.green)}" # green
+base0C: "${formatHex($colors$.teal)}" # teal
+base0D: "${formatHex($colors$.blue)}" # blue
+base0E: "${formatHex($colors$.mauve)}" # mauve
+base0F: "${formatHex($colors$.flamingo)}" # flamingo`,
 		"bash"
 	)
 </script>
