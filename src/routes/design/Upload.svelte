@@ -23,6 +23,7 @@
 
 	function getColorsFromText(text: string): Map<ColorName, string> {
 		return text
+			.toLowerCase()
 			.split("\n")
 			.map(getColorFromLine)
 			.filter(isNonNullish)
