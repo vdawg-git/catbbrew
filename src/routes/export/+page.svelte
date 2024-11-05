@@ -1,15 +1,11 @@
 <script lang="ts">
-	import { Button } from "$lib/components/ui/button/index.js"
 	import Vscode from "$lib/icons/vscode.svelte"
 	import Vim from "$lib/icons/vim.svelte"
-	import { colors$ } from "$lib/state/colors"
-	import * as R from "remeda"
-	import { formatHex } from "culori"
 	import type { Component } from "svelte"
-	import { highlight } from "$lib/shiki"
 	import File from "$lib/icons/_file.svelte"
-	import { copyToClipboard } from "$lib/utils"
 	import Binary from "$lib/icons/binary.svelte"
+	import * as snippets from "./snippets"
+	import CodeExportBlock from "./CodeExportBlock.svelte"
 
 	let selected = $state<SupportedExport>("vscode")
 
@@ -43,51 +39,6 @@
 	]
 
 	let selectedData = $derived(exportables.find((item) => item.value === selected))!
-
-	const vsCodeSnippet = highlight(
-		`"catppuccin.colorOverrides": {
-  "all": ${JSON.stringify(R.mapValues($colors$, formatHex), null, 4)},
-},`,
-		"json"
-	)
-
-	const vimSnippet = highlight(
-		`color_overrides = {
-  all = {
-${Object.entries($colors$)
-	.map(([color, value]) => `    ${color} = "${formatHex(value)}",`)
-	.join("\n")}
-  },
-},`,
-		"lua"
-	)
-
-	const appSnippet = highlight(
-		Object.entries($colors$)
-			.map(([key, value]) => `${key}="${formatHex(value)}"`)
-			.join("\n"),
-		"bash"
-	)
-
-	const base16Snippet = highlight(
-		`base00: "${formatHex($colors$.base)}" # base
-base01: "${formatHex($colors$.mantle)}" # mantle
-base02: "${formatHex($colors$.surface0)}" # surface0
-base03: "${formatHex($colors$.surface1)}" # surface1
-base04: "${formatHex($colors$.surface2)}" # surface2
-base05: "${formatHex($colors$.text)}" # text
-base06: "${formatHex($colors$.rosewater)}" # rosewater
-base07: "${formatHex($colors$.lavender)}" # lavender
-base08: "${formatHex($colors$.red)}" # red
-base09: "${formatHex($colors$.peach)}" # peach
-base0A: "${formatHex($colors$.yellow)}" # yellow
-base0B: "${formatHex($colors$.green)}" # green
-base0C: "${formatHex($colors$.teal)}" # teal
-base0D: "${formatHex($colors$.blue)}" # blue
-base0E: "${formatHex($colors$.mauve)}" # mauve
-base0F: "${formatHex($colors$.flamingo)}" # flamingo`,
-		"bash"
-	)
 </script>
 
 <svelte:head>
@@ -134,37 +85,24 @@ base0F: "${formatHex($colors$.flamingo)}" # flamingo`,
 				>
 				and add this to your <code>settings.json</code>
 
-				{@render Code($vsCodeSnippet)}
+				<CodeExportBlock snippet={snippets.vsCode} />
 			{:else if selected === "vim"}
 				Install the <a href="https://github.com/catppuccin/nvim">Catppuccin theme</a> and add this
 				in the <code>setup call</code>.
 
-				{@render Code($vimSnippet)}
+				<CodeExportBlock snippet={snippets.vim} />
 			{:else if selected === "filetypes"}
 				<!-- TODO add JSON, Bash, Toml, yaml. Prop with some lib to have nicer formatting. Or maybe with Prettier? -->
 				All formats can be imported into the app again, as long as the color name is on the same line
 				as the hex hex value.
 
-				{@render Code($appSnippet)}
+				<CodeExportBlock snippet={snippets.bash} />
 			{:else if selected === "base16"}
-				{@render Code($base16Snippet)}
+				<CodeExportBlock snippet={snippets.base16} />
 			{/if}
 		</div>
 	</div>
 </div>
-
-{#snippet Code(codeToRender: string | undefined)}
-	{#if codeToRender}
-		<div class="flex flex-col gap-3 min-h-60 h-80">
-			{@html codeToRender}
-			<Button
-				onclick={() => copyToClipboard(codeToRender)}
-				class="justify-self-end grid-justify-self-end   flex-justify-self-end flex-self-end place-self-end"
-				>Copy</Button
-			>
-		</div>
-	{/if}
-{/snippet}
 
 <style>
 	a {
