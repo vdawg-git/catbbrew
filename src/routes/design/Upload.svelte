@@ -16,7 +16,6 @@
 	import * as Dialog from "$lib/components/ui/dialog"
 
 	let importedColors: Map<ColorName, string> | undefined = $state(undefined)
-	let modal: HTMLDialogElement
 	let isDragZone = $state(false)
 
 	let isOpen = $state(false)

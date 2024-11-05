@@ -1,7 +1,7 @@
 import { writable } from "svelte/store"
 import { formatHex, rgb, type Okhsl } from "culori"
 import * as R from "remeda"
-import { fromStore } from "$lib/utils"
+import { storeToObservable } from "$lib/utils"
 import { undo } from "$lib/undo"
 import {
 	BehaviorSubject,
@@ -56,7 +56,7 @@ if (globalThis.document) {
 }
 
 export const activeColor = writable<ColorName | undefined>(undefined)
-const activeColor$ = fromStore(activeColor)
+const activeColor$ = storeToObservable(activeColor)
 export const activeColorHsl$: Observable<Okhsl | undefined> = combineLatest([
 	activeColor$,
 	colors$

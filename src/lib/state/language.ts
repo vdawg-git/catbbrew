@@ -1,4 +1,4 @@
-import { derived, writable } from "svelte/store"
+import { writable } from "svelte/store"
 
 import Rust from "$lib/icons/rust.svelte"
 import Typescript from "$lib/icons/typescript.svelte"
@@ -8,8 +8,8 @@ import Bash from "$lib/icons/bash.svelte"
 import Javascript from "$lib/icons/javascript.svelte"
 import Python from "$lib/icons/python.svelte"
 import Cpp from "$lib/icons/cpp.svelte"
-import { fromStore } from "$lib/utils"
-import { map, share, shareReplay, switchMap, tap, type Observable } from "rxjs"
+import { storeToObservable } from "$lib/utils"
+import { map, shareReplay, type Observable } from "rxjs"
 
 type Language = {
 	display: string
@@ -59,7 +59,7 @@ export type LanguageName = keyof typeof languages
 
 const state = writable<LanguageName>("typescript")
 export const setLanguage = state.set
-export const language$: Observable<(Language & { name: string }) | undefined> = fromStore(
+export const language$: Observable<(Language & { name: string }) | undefined> = storeToObservable(
 	state
 ).pipe(
 	map((name) => ({ ...languages[name], name })),

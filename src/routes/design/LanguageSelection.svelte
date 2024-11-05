@@ -6,8 +6,6 @@
 	import { setLanguage, language$, languages, type LanguageName } from "$lib/state/language"
 	import Label from "$lib/components/ui/label/label.svelte"
 
-	const Icon = $derived($language$?.icon)
-
 	let open = $state(false)
 	// We want to refocus the trigger button when the user selects
 	// an item from the list so users can continue navigating the
@@ -35,10 +33,11 @@
 				title="Select programming language"
 			>
 				<div class="flex gap-3 items-center">
-					{#if Icon}
-						<Icon class="size-6" />
+					{#if $language$?.icon}
+						<!-- svelte-ignore svelte_component_deprecated -->
+						<svelte:component this={$language$.icon ?? undefined} class="size-6" />
 					{/if}
-					{$language$?.display}
+					{$language$?.display ?? ""}
 				</div>
 				<div class="i-mingcute-down-line size-6 text-overlay0 group-hover:text-subtext1"></div>
 			</Button>

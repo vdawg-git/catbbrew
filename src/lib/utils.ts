@@ -3,8 +3,7 @@ import { twMerge } from "tailwind-merge"
 import { cubicOut } from "svelte/easing"
 import type { TransitionConfig } from "svelte/transition"
 import type { ColorVariable } from "./types"
-import { Observable, share, shareReplay } from "rxjs"
-import { toast } from "svelte-sonner"
+import { Observable, share } from "rxjs"
 import type { Writable } from "svelte/store"
 import type { Readable } from "svelte/motion"
 
@@ -94,7 +93,7 @@ export function createRgbaVar(name: ColorVariable) {
  * Convert a Svelte store to an Rxjs observable
  * @param store The Svelte store to convert to an obserable
  */
-export function fromStore<T>(store: Writable<T> | Readable<T>): Observable<T> {
+export function storeToObservable<T>(store: Writable<T> | Readable<T>): Observable<T> {
 	return (
 		new Observable((subscriber) => {
 			const unsubscribe = store.subscribe((value) => subscriber.next(value))
@@ -106,8 +105,8 @@ export function fromStore<T>(store: Writable<T> | Readable<T>): Observable<T> {
 	)
 }
 
-export function copyToClipboard(text: string) {
-	navigator.clipboard
+export async function copyToClipboard(text: string) {
+	return navigator.clipboard
 		.writeText(text)
 		.then(() => {
 			// toast.success(`Copied: ${text}`, { dismissable: true })

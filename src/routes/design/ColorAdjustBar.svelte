@@ -10,7 +10,7 @@
 	import { debounceTime, distinctUntilChanged, filter, map, share } from "rxjs"
 	import * as R from "remeda"
 	import { formatHex, okhsl, samples, converter } from "culori"
-	import { copyToClipboard, fromStore } from "$lib/utils"
+	import { copyToClipboard, storeToObservable } from "$lib/utils"
 	import { onDestroy } from "svelte"
 	import { writable } from "svelte/store"
 
@@ -23,7 +23,7 @@
 	}
 
 	const input = writable<HSL>({})
-	const input$ = fromStore(input)
+	const input$ = storeToObservable(input)
 
 	// When the color gets changed, for example through an undo,
 	// this values should be reset,
