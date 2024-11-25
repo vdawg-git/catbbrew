@@ -12,6 +12,7 @@ import { storeToObservable } from "$lib/utils"
 import { map, shareReplay, type Observable } from "rxjs"
 import Php from "$lib/icons/php.svelte"
 import Css from "$lib/icons/css.svelte"
+import Java from "$lib/icons/java.svelte"
 
 type Language = {
 	display: string
@@ -64,6 +65,11 @@ export const languages = {
 		display: "Scss",
 		icon: Css,
 		fileName: "scss.txt"
+	},
+	java: {
+		display: "Java",
+		icon: Java,
+		fileName: "java.txt"
 	}
 } as const satisfies Record<string, Language>
 
