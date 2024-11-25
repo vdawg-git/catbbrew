@@ -10,6 +10,7 @@ import Python from "$lib/icons/python.svelte"
 import Cpp from "$lib/icons/cpp.svelte"
 import { storeToObservable } from "$lib/utils"
 import { map, shareReplay, type Observable } from "rxjs"
+import Php from "$lib/icons/php.svelte"
 
 type Language = {
 	display: string
@@ -52,6 +53,11 @@ export const languages = {
 		display: "C++",
 		icon: Cpp,
 		fileName: "cpp.txt"
+	},
+	php: {
+		display: "PHP",
+		icon: Php,
+		fileName: "php.txt"
 	}
 } as const satisfies Record<string, Language>
 
