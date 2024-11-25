@@ -4,8 +4,7 @@ import { cubicOut } from "svelte/easing"
 import type { TransitionConfig } from "svelte/transition"
 import type { ColorVariable } from "./types"
 import { Observable, share } from "rxjs"
-import type { Writable } from "svelte/store"
-import type { Readable } from "svelte/motion"
+import type { Writable, Readable } from "svelte/store"
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
