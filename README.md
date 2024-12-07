@@ -5,14 +5,17 @@
 <b>
 Brew your Catppuccin flavor 
 </b>
+</br>
+<a href="https://catbbrew.com">💥Check it out </a>
 
+</br>
 </br>
 </br>
 </div>
 
 Easily create your own Catppuccin variant and export it to your favorite editor.
 
-## Features
+## 🎨 Features
 
 - Supports everything Catppuccin supports (a lot)
 - Better Okhsl color picker for constant lightness
@@ -24,7 +27,7 @@ Easily create your own Catppuccin variant and export it to your favorite editor.
 
 Make it more awesome. Contributions are welcome!
 
-## Development
+## 💻 Development
 
 We use [pnpm](https://pnpm.io/) as our package manager.
 
