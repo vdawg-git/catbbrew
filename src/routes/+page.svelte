@@ -4,6 +4,8 @@
 	import ColorOverview from "./design/ColorOverview.svelte"
 	import Foam from "$lib/images/foam.svelte"
 	import { base } from "$app/paths"
+	import Logo from "$lib/images/Logo.svelte"
+	import { createRgbaVar } from "$lib/utils"
 </script>
 
 <svelte:head>
@@ -14,37 +16,36 @@
 	/>
 </svelte:head>
 
-<header class="flex z-20 items-center justify-center w-full">
-	<div class="max-w-screen-sm flex items-center justify-between w-full px-4">
-		<div class="text-center text-lg"></div>
-
-		<ul class="flex gap-2 text-neutral-5">
-			<li></li>
-		</ul>
-	</div>
-</header>
-
 <section class="flex z-10 self-center my-auto flex-col relative items-center justify-center">
-	<p
-		class="text-stroke-8 text-pink text-lg absolute left-0 -top-8 md:text-3xl text-stroke-crust font-bold self-start ml-6 -rotate-15"
-	>
-		Catbbrew
-	</p>
+	<Logo
+		size={120}
+		stroke={createRgbaVar("yellow")}
+		strokeWidth={2}
+		class="drop-shadow-[6px_6px_0px_rgba(var(--crust))] "
+	/>
 
-	<a
-		href="https://github.com/vdawg-git/catbbrew"
-		class="rotate-12 absolute hover:-translate-y-1 hover:rotate-10 transition-transform right-0 -top-28 xl:-top-1"
-		aria-label="Github"
-	>
-		<div class="p-2 rounded-full border-yellow b-dotted border-2 text-yellow">
-			<div class="i-mingcute-github-2-fill size-8"></div>
-		</div></a
-	>
-	<div class="flex flex-col gap-3 items-center text-lg">
-		<h1 class="text-4xl md:text-7xl lg:text-8xl font-bold max-w-[15ch] text-center">
-			Create your own color theme
-		</h1>
-		<p class="font-medium p bg-peach tracking-wider">Based on the awesome Catppuccin system</p>
+	<div class="relative">
+		<p
+			class="text-stroke-8 text-pink text-lg absolute left-0 -top-8 md:text-3xl text-stroke-crust font-bold self-start ml-6 -rotate-15"
+		>
+			Catbbrew
+		</p>
+
+		<a
+			href="https://github.com/vdawg-git/catbbrew"
+			class="rotate-12 absolute hover:-translate-y-1 hover:rotate-10 transition-transform right-0 -top-28 xl:-top-1"
+			aria-label="Github"
+		>
+			<div class="p-2 rounded-full border-yellow b-dotted border-2 text-yellow">
+				<div class="i-mingcute-github-2-fill size-8"></div>
+			</div></a
+		>
+		<div class="flex flex-col gap-3 items-center text-lg">
+			<h1 class="text-4xl md:text-7xl lg:text-8xl font-bold max-w-[15ch] text-center">
+				Create your own color theme
+			</h1>
+			<p class="font-medium p bg-peach tracking-wider">Based on the awesome Catppuccin system</p>
+		</div>
 	</div>
 
 	<div class="flex gap-1 items-center mt-10 relative">
