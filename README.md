@@ -1,35 +1,32 @@
-# Catbbrew
+<div align="center">
 
-## Brew your own flavor
+<img src="./static/logo.png" alt="logo" width="200" height="200">
+<h1> Catbbrew </h1>
+<b>
+Brew your Catppuccin flavor 
+</b>
 
-An awesome color theme creator using the [Catppuccin](https://github.com/catppuccin/catppuccin) system.
+</br>
+</br>
+</div>
+
+Easily create your own Catppuccin variant and export it to your favorite editor.
 
 ## Features
 
-- It's awesome
 - Supports everything Catppuccin supports (a lot)
 - Better Okhsl color picker for constant lightness
 - Smooth workflow: Click on codeblocks to change their color direclty
 - Editable preview code
 - Create a familiar setup by changing the font
-- Presets (Todo)
-- Save your progress in the history and have different versions (Todo)
-
-Ideas for the future:
-
-- Nice random palette generator
-  - Monochrome, Duotone, Tria, Colorful
-  - Use base color(s)
-  - Settings: Warm <-> Cool, Gray <-> Colorful
-- Harmonize colors
-- Text block preview (only see a text skeleton to focus on the colors)
-- More IDE UI elements (maybe a statusline?)
+- Presets
+- History and snapshots so that you can iterate nicely
 
 Make it more awesome. Contributions are welcome!
 
 ## Development
 
-You need to have [pnpm](https://pnpm.io/) installed.
+We use [pnpm](https://pnpm.io/) as our package manager.
 
 ```bash
 pnpm  install
