@@ -84,6 +84,10 @@
 				outline-offset: 4px;
 				border-radius: 4px;
 			}
+
+			&:active {
+				outline-width: 2px;
+			}
 		}
 	}
 </style>
