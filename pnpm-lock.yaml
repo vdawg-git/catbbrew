@@ -23,6 +23,9 @@ importers:
       '@unocss/reset':
         specifier: ^0.64.0
         version: 0.64.0
+      bits-ui:
+        specifier: ^0.21.16
+        version: 0.21.16(svelte@5.1.10)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -41,6 +44,9 @@ importers:
       immer:
         specifier: ^10.1.1
         version: 10.1.1
+      lucide-svelte:
+        specifier: ^0.454.0
+        version: 0.454.0(svelte@5.1.10)
       remeda:
         specifier: ^2.16.0
         version: 2.16.0
@@ -50,6 +56,9 @@ importers:
       shiki:
         specifier: ^1.22.2
         version: 1.22.2
+      svelte:
+        specifier: 5.1.10
+        version: 5.1.10
       svelte-sonner:
         specifier: ^0.3.28
         version: 0.3.28(svelte@5.1.10)
@@ -81,12 +90,6 @@ importers:
       '@unocss/extractor-svelte':
         specifier: ^0.64.0
         version: 0.64.0
-      bits-ui:
-        specifier: ^0.21.16
-        version: 0.21.16(svelte@5.1.10)
-      lucide-svelte:
-        specifier: ^0.454.0
-        version: 0.454.0(svelte@5.1.10)
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
@@ -96,9 +99,6 @@ importers:
       replace-in-file:
         specifier: ^8.2.0
         version: 8.2.0
-      svelte:
-        specifier: 5.1.10
-        version: 5.1.10
       svelte-check:
         specifier: ^4.0.5
         version: 4.0.5(picomatch@4.0.2)(svelte@5.1.10)(typescript@5.6.3)
